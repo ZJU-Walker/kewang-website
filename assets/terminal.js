@@ -1,19 +1,21 @@
 (function () {
   const $ = (sel) => document.querySelector(sel);
 
+  const terminal = $("#terminal");
   const output = $("#term-output");
   const input = $("#term-input");
 
-  if (!output || !input) return;
+  if (!terminal || !output || !input) return;
 
-//   const BASE = window.__BASEURL__ || ""; // injected from template
-  const BASE = document.documentElement.getAttribute("data-baseurl") || "";
+  // 🔑 Read baseurl from <html data-baseurl="...">
+  const BASE = (document.documentElement.getAttribute("data-baseurl") || "")
+    .replace(/\/$/, "");
 
   const pages = {
-    about: `${BASE}/about`,
-    research: `${BASE}/research`,
-    publications: `${BASE}/publications`,
-    cv: `${BASE}/cv`,
+    about: "/about",
+    research: "/research",
+    publications: "/publications",
+    cv: "/cv",
   };
 
   const HELP = [
@@ -27,14 +29,12 @@
   ].join("\n");
 
   const PREVIEWS = {
-    about:
-      "Ke Wang — MS @ Stanford.\nRobotics, RL, safety-critical control.",
+    about: "Ke Wang — MS @ Stanford.\nRobotics, RL, safety-critical control.",
     research:
       "Humanoids (VLA), Safe RL/MPC/CBF, Onboard drone navigation.",
     publications:
       "Ego-Pi (CVPR 2026 submission) + more papers/preprints.",
-    cv:
-      "Education, research, experience. (Later: PDF download link.)",
+    cv: "Education, research, experience. (PDF coming soon.)",
   };
 
   function print(text, cls = "") {
@@ -50,7 +50,7 @@
   }
 
   function banner() {
-    printBlock("kewang.ai terminal (prototype)", "term-muted");
+    printBlock("kewang.ai terminal", "term-muted");
     printBlock("Type 'help' to see commands.", "term-muted");
     print("");
   }
@@ -66,7 +66,7 @@
       return;
     }
     print(`Opening ${key} ...`, "term-muted");
-    window.location.href = pages[key];
+    window.location.href = `${BASE}${pages[key]}`;
   }
 
   function cmd_cat(arg) {
@@ -97,7 +97,6 @@
     const line = raw.trim();
     if (!line) return;
 
-    // echo prompt line
     print(`$ ${line}`, "term-accent");
 
     const [cmd, ...rest] = line.split(/\s+/);
@@ -127,10 +126,9 @@
         print("Type 'help' to see available commands.", "term-muted");
     }
 
-    print(""); // spacing
+    print("");
   }
 
-  // init
   banner();
 
   input.addEventListener("keydown", (e) => {
@@ -143,7 +141,6 @@
     }
   });
 
-  // focus on click anywhere in terminal
-  $("#terminal").addEventListener("click", () => input.focus());
+  terminal.addEventListener("click", () => input.focus());
   input.focus();
 })();
