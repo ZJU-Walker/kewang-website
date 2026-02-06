@@ -30,11 +30,32 @@ title: Home
     </p>
 
     <div class="home-actions">
-      <a class="home-btn" href="{{ "/research" | relative_url }}">Research</a>
-      <a class="home-btn" href="{{ "/publications" | relative_url }}">Publications</a>
-      <a class="home-btn" href="{{ "/cv" | relative_url }}">CV</a>
-      <a class="home-btn secondary" href="https://github.com/ZJU-Walker" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a
+        class="home-btn"
+        href="https://github.com/ZJU-Walker"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        GitHub
+    </a>
+
+    <a
+        class="home-btn"
+        href="mailto:kewalk@stanford.edu"
+    >
+        Email
+    </a>
+
+    <a
+        class="home-btn secondary"
+        href="https://scholar.google.com/citations?user=Fqchg9QAAAAJ&hl=en"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Google Scholar
+    </a>
     </div>
+
   </div>
 </div>
 
