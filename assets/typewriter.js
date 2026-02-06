@@ -4,10 +4,10 @@
 
   // Lines you want to loop through
   const lines = [
-    "I want to build a robot — what's next?",
-    "Start with a simple task, then iterate fast.",
-    "Sim first. Real robot next. Safety always.",
-    "Collect good data. Train. Evaluate. Repeat."
+    "I am building robots that can operate beyond the lab.",
+    "I want them to learn from people and generalize safely.",
+    "From simulation to reality, with structure and rigor.",
+    "Data, learning, evaluation — repeated until it works."
   ];
 
   // Timing (tweak if you want)
