@@ -358,23 +358,12 @@ main .cv-btn:hover {
 }
 
 /* =========================
-   Home section dividers
+   Home: dividers between Education / Experience / News
    ========================= */
 
-/* Divider under intro block */
-.home-intro {
-  padding-bottom: 1.6rem;
-  border-bottom: 1px dashed var(--border-color);
-}
-
-/* Each Home section separated by dashed line */
-.home-section {
+/* Add dashed divider ONLY between sections */
+.home-section:not(:last-child) {
   padding-bottom: 1.4rem;
+  margin-bottom: 1.4rem;
   border-bottom: 1px dashed var(--border-color);
-}
-
-/* Do not show divider after the last section */
-.home-section:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
 }
