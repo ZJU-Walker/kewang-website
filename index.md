@@ -4,39 +4,43 @@ title: Home
 ---
 
 <div class="home-intro">
-
-  <img src="{{ "/assets/img/profile.jpg" | relative_url }}"
-       alt="Ke Wang"
-       class="profile-img" />
+  <img
+    src="{{ "/assets/img/profile.jpg" | relative_url }}"
+    alt="Ke Wang"
+    class="profile-img"
+  />
 
   <div class="home-text">
-    <h1>Ke Wang</h1>
+    <h1 class="home-name">Ke Wang</h1>
     <p class="home-subtitle">
       MS @ Stanford University · Robotics · Reinforcement Learning · Safe Control
     </p>
 
-    <p>
+    <p class="home-paragraph">
       I am a Master's student in Mechanical Engineering at Stanford University and a Research Assistant at
-      Stanford Artificial Intelligence Laboratory (SAIL), advised by Prof. Chelsea Finn and Prof. Mac Schwager.
+      Stanford Artificial Intelligence Laboratory (SAIL), advised by
+      <a href="https://ai.stanford.edu/~cbfinn/" target="_blank" rel="noopener noreferrer">Prof. Chelsea Finn</a>
+      and
+      <a href="https://msl.stanford.edu/people/macfie-schwager" target="_blank" rel="noopener noreferrer">Prof. Mac Schwager</a>.
     </p>
 
-    <p>
+    <p class="home-paragraph">
       My research focuses on robot learning for real-world autonomy, including dexterous humanoid manipulation
       with egocentric human data and onboard drone navigation in dynamic environments.
     </p>
 
-    <p class="home-links">
-      <a href="{{ "/research" | relative_url }}">Research</a> ·
-      <a href="{{ "/publications" | relative_url }}">Publications</a> ·
-      <a href="{{ "/cv" | relative_url }}">CV</a>
-    </p>
+    <div class="home-actions">
+      <a class="home-btn" href="{{ "/research" | relative_url }}">Research</a>
+      <a class="home-btn" href="{{ "/publications" | relative_url }}">Publications</a>
+      <a class="home-btn" href="{{ "/cv" | relative_url }}">CV</a>
+      <a class="home-btn secondary" href="https://github.com/ZJU-Walker" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
   </div>
-
 </div>
 
 <hr />
 
-<!-- Terminal academic tool panel -->
+<!-- Academic tools (terminal panel) -->
 <div id="terminal" class="terminal">
   <div id="term-output"></div>
   <input id="term-input" type="text" autocomplete="off"

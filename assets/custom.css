@@ -50,45 +50,89 @@ html[data-theme="dark"] {
   padding-right: 2rem;
 }
 
-/* Home intro layout */
+/* -------------------------
+   Home polish
+   ------------------------- */
+
 .home-intro {
   display: flex;
-  gap: 2rem;
+  gap: 2.2rem;
   align-items: flex-start;
   margin-top: 1.5rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
+.home-text {
+  max-width: 720px;
+}
+
+.home-name {
+  margin: 0 0 0.25rem 0;
+  line-height: 1.1;
+}
+
+.home-subtitle {
+  margin: 0 0 1rem 0;
+  color: var(--accent-color);
+}
+
+.home-paragraph {
+  margin: 0 0 0.9rem 0;
+  text-align: left;
+  text-indent: 0;
+  white-space: normal;
+}
+
+/* Links inside home paragraphs: subtle */
+.home-text a {
+  color: var(--accent-color);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.home-text a:hover {
+  border-bottom-color: var(--accent-color);
+}
+
+/* Action buttons */
+.home-actions {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.home-btn {
+  display: inline-block;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.home-btn:hover {
+  border-color: var(--accent-color);
+}
+
+.home-btn.secondary {
+  opacity: 0.9;
+}
+
+/* Portrait: smaller + auto-crop */
 .profile-img {
   width: 140px;
   height: 140px;
   object-fit: cover;
-  object-position: center top; /* better for portraits */
+  object-position: center top;
   border-radius: 14px;
   border: 1px solid var(--border-color);
 }
 
-.home-text h1 {
-  margin-top: 0;
-  margin-bottom: 0.25rem;
-}
+/* -------------------------
+   Mobile
+   ------------------------- */
 
-.home-subtitle {
-  color: var(--accent-color);
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.home-links a {
-  color: var(--accent-color);
-  text-decoration: none;
-}
-
-.home-links a:hover {
-  text-decoration: underline;
-}
-
-/* Mobile friendly */
 @media (max-width: 700px) {
   .home-intro {
     flex-direction: column;
@@ -96,10 +140,18 @@ html[data-theme="dark"] {
     text-align: center;
   }
 
+  .home-text {
+    max-width: 100%;
+  }
+
+  .home-paragraph {
+    text-align: left;
+  }
+
   .profile-img {
     width: 120px;
     height: 120px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
   }
 
   .container {
