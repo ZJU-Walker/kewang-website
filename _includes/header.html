@@ -4,12 +4,14 @@
   <div class="menu">
     <ul>
       {%- for path in page_paths -%}
-        {%- assign my_page = site.pages | where: "path", path | first -%}
-        {%- if my_page.title -%}
-        <li>
-          <a href="{{ my_page.url | relative_url }}"{% if page.url == my_page.url %} aria-current="page"{% endif %}>{{ my_page.title | escape }}</a>
-        </li>
-        {%- endif -%}
+        {%- unless path == "404.html" -%}
+          {%- assign my_page = site.pages | where: "path", path | first -%}
+          {%- if my_page.title -%}
+          <li>
+            <a href="{{ my_page.url | relative_url }}"{% if page.url == my_page.url %} aria-current="page"{% endif %}>{{ my_page.title | escape }}</a>
+          </li>
+          {%- endif -%}
+        {%- endunless -%}
       {%- endfor -%}
     </ul>
   </div>
