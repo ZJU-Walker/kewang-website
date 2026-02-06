@@ -162,3 +162,52 @@ html[data-theme="dark"] {
     padding-right: 1.25rem;
   }
 }
+
+
+/* -------------------------
+   Collapsible tools panel
+   ------------------------- */
+
+.tools {
+  margin-top: 1rem;
+}
+
+.tools-summary {
+  cursor: pointer;
+  user-select: none;
+  color: var(--accent-color);
+  list-style: none;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+/* remove default triangle in some browsers */
+.tools-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* custom marker */
+.tools-summary::before {
+  content: "▶";
+  display: inline-block;
+  transform: translateY(-0.5px);
+  opacity: 0.9;
+}
+
+details[open] > .tools-summary::before {
+  content: "▼";
+}
+
+.tools-body {
+  margin-top: 0.75rem;
+}
+
+/* make terminal look like a nested panel */
+.tools .terminal {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem;
+}
