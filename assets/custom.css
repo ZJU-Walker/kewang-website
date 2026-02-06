@@ -504,3 +504,39 @@ main .cv-btn:hover {
   50% { opacity: 0; }
 }
 
+/* =========================
+   Mobile polish: name + typewriter (no ellipsis)
+   ========================= */
+
+@media (max-width: 700px) {
+  /* Make name readable on mobile */
+  .home-name {
+    font-size: 2.2rem !important;
+    line-height: 1.08;
+  }
+
+  /* Typewriter: keep 2-line height, allow wrapping, NO ellipsis */
+  .typewriter-line {
+    line-height: 1.4;
+    min-height: calc(2 * 1.4em);
+  }
+
+  .tw-text {
+    /* remove clamp if you had it */
+    display: block !important;
+    overflow: hidden;
+    white-space: normal;
+
+    /* IMPORTANT: hide overflow WITHOUT ellipsis */
+    text-overflow: clip !important;
+
+    /* keep it max two lines worth of height */
+    max-height: calc(2 * 1.4em);
+  }
+
+  /* If you previously used -webkit-line-clamp, neutralize it */
+  .tw-text {
+    -webkit-line-clamp: unset !important;
+    -webkit-box-orient: unset !important;
+  }
+}
