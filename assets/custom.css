@@ -451,4 +451,52 @@ main .cv-btn:hover {
 }
 
 
+/* =========================
+   Typewriter: 2-line stable + wrapping cursor
+   ========================= */
+
+.typewriter-line {
+  margin-top: 1.1rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--border-color);
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+
+  /* Reserve exactly 2 lines so layout never jumps */
+  line-height: 1.4;
+  min-height: calc(2 * 1.4em);
+}
+
+.tw-prompt {
+  color: var(--accent-color);
+  flex: 0 0 auto;
+}
+
+/* The text wraps, but is clamped to 2 lines */
+.tw-text {
+  color: rgba(140, 160, 170, 0.95);
+  flex: 1 1 auto;
+  min-width: 0;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;      /* max 2 lines */
+  overflow: hidden;
+  white-space: normal;
+  word-break: normal;
+}
+
+/* Cursor is part of tw-text so it naturally follows wrapping */
+.tw-text::after {
+  content: "▌";
+  display: inline-block;
+  margin-left: 0.15rem;
+  animation: tw-blink 1s step-end infinite;
+  opacity: 0.9;
+}
+
+@keyframes tw-blink {
+  50% { opacity: 0; }
+}
 

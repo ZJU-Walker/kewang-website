@@ -47,7 +47,6 @@ title: Home
     <div class="typewriter-line" aria-label="Animated tagline">
       <span class="tw-prompt">&gt;</span>
       <span id="tw-text" class="tw-text"></span>
-      <span class="tw-cursor" aria-hidden="true">▌</span>
     </div>
   </div>
 </div>
