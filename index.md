@@ -27,9 +27,18 @@ title: Home
     </p>
 
     <div class="home-actions">
-      <a class="home-btn" href="https://github.com/ZJU-Walker" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a class="home-btn" href="mailto:kewang@stanford.edu">Email</a>
-      <a class="home-btn secondary" href="https://scholar.google.com/citations?user=Fqchg9QAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+      <a class="home-btn"
+         href="https://github.com/ZJU-Walker"
+         target="_blank"
+         rel="noopener noreferrer">GitHub</a>
+
+      <a class="home-btn"
+         href="mailto:kewang@stanford.edu">Email</a>
+
+      <a class="home-btn secondary"
+         href="https://scholar.google.com/citations?user=Fqchg9QAAAAJ&hl=en"
+         target="_blank"
+         rel="noopener noreferrer">
         Google Scholar
       </a>
     </div>
@@ -43,42 +52,44 @@ title: Home
   </div>
 </div>
 
- <div class="home-sections">
-   <div class="home-section">
-     <h2>Education</h2>
-     <ul class="clean-list">
-       <li>
-         <strong>Stanford University</strong> —
-         M.S. Mechanical Engineering <span class="item-date">(2024–2026 expected)</span>
-       </li>
-       <li>
-         <strong>Zhejiang University</strong> —
-         B.S. Mechanical Engineering <span class="item-date">(2019–2023)</span>
-       </li>
-     </ul>
-   </div>
+<div class="home-sections">
+  <div class="home-section">
+    <h2>Education</h2>
+    <ul class="clean-list">
+      <li>
+        <strong>Stanford University</strong> —
+        M.S. Mechanical Engineering
+        <span class="item-date">(2024–2026 expected)</span>
+      </li>
+      <li>
+        <strong>Zhejiang University</strong> —
+        B.S. Mechanical Engineering
+        <span class="item-date">(2020–2024)</span>
+      </li>
+    </ul>
+  </div>
 
-   <div class="home-section">
-     <h2>Experience</h2>
-     <ul class="clean-list">
-       <li>
-         <strong>Research Assistant</strong>, Stanford Artificial Intelligence Laboratory (SAIL)
-         <span class="item-date">(2024–Present)</span> —
-         humanoid manipulation and robot learning
-       </li>
-       <li>
-         <strong>Research Assistant</strong>, Stanford Multi-Robot Systems Lab (MSL)
-         <span class="item-date">(2024–Present)</span> —
-         onboard perception and safe navigation for drones
-       </li>
-       <li>
-         <strong>Research Intern</strong>, UC Berkeley
-         <span class="item-date">(Jun–Sep 2023)</span> —
-         safety-critical control (MPC + CBF) for quadruped robots
-       </li>
-     </ul>
-   </div>
- </div>
-
-
+  <div class="home-section">
+    <h2>Experience</h2>
+    <ul class="clean-list">
+      <li>
+        <strong>Research Assistant</strong>,
+        Stanford Artificial Intelligence Laboratory (SAIL)
+        <span class="item-date">(2024–Present)</span> —
+        humanoid manipulation and robot learning
+      </li>
+      <li>
+        <strong>Research Assistant</strong>,
+        Stanford Multi-Robot Systems Lab (MSL)
+        <span class="item-date">(2024–Present)</span> —
+        onboard perception and safe navigation for drones
+      </li>
+      <li>
+        <strong>Research Intern</strong>,
+        UC Berkeley
+        <span class="item-date">(Jun–Sep 2023)</span> —
+        safety-critical control (MPC + CBF) for quadruped robots
+      </li>
+    </ul>
+  </div>
 </div>
