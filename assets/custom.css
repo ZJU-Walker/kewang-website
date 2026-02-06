@@ -80,12 +80,15 @@ html[data-theme="dark"] {
 }
 
 .home-name {
-  margin: 0 0 0.9rem 0;
-  font-size: 2.0rem;
+  font-family: "Playfair Display", serif;
   font-weight: 600;
-  line-height: 1.15;
+  font-size: clamp(2.2rem, 3.6vw, 3.1rem);
+  line-height: 1.05;
   letter-spacing: -0.01em;
+  margin: 0 0 0.9rem 0;
 }
+
+
 
 
 .home-paragraph {
