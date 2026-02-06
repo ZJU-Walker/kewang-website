@@ -89,11 +89,11 @@ html[data-theme="dark"] {
 
 
 .home-paragraph {
-  margin: 0 auto 0.9rem auto;
-  text-align: center;
+  margin: 0 0 0.9rem 0;
+  text-align: justify;
   text-indent: 0;
   white-space: normal;
-  max-width: 640px;
+  max-width: 720px;
 }
 
 
