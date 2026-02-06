@@ -254,3 +254,28 @@ details[open] > .tools-summary::before {
     text-align: left;
   }
 }
+
+/* =========================
+   Decorative terminal block
+   ========================= */
+
+.deco-terminal {
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+  margin-top: 1.25rem;
+}
+
+.deco-title {
+  font-size: 0.9rem;
+  color: rgba(140, 160, 170, 0.85);
+  margin-bottom: 0.6rem;
+}
+
+.deco-screen {
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.55;
+  font-size: 0.95rem;
+  min-height: 220px;
+}
