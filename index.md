@@ -62,12 +62,12 @@ title: Home
         Received admission offer to the Ph.D. program in Aeronautics & Astronautics at Stanford University.
       </li>
       <li>
-        <span class="item-date">Jan 2026</span>
-        Research on egocentric human demonstrations for dexterous manipulation ongoing at Stanford SAIL.
+        <span class="item-date">Jun 2025</span>
+        Joined the Stanford Multi-Robot Systems Lab (MSL) as a Research Assistant.
       </li>
       <li>
-        <span class="item-date">Dec 2025</span>
-        Working on onboard perception and safe navigation for drones with the MSL team.
+        <span class="item-date">Apr 2025</span>
+        Joined Stanford Artificial Intelligence Laboratory (SAIL) as a Research Assistant.
       </li>
     </ul>
   </div>
