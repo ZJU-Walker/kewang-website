@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<!-- <html lang="{{ page.lang | default: site.lang | default: 'en' }}"> -->
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}" data-baseurl="{{ site.baseurl }}">
+
 {%- comment -%}
   Build a practical CSP. It remains strict by default while allowing
   common use cases like external images and Google Fonts.

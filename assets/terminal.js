@@ -6,7 +6,9 @@
 
   if (!output || !input) return;
 
-  const BASE = window.__BASEURL__ || ""; // injected from template
+//   const BASE = window.__BASEURL__ || ""; // injected from template
+  const BASE = document.documentElement.getAttribute("data-baseurl") || "";
+
   const pages = {
     about: `${BASE}/about`,
     research: `${BASE}/research`,
