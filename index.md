@@ -13,10 +13,6 @@ title: Home
   <div class="home-text">
     <h1 class="home-name">Ke Wang</h1>
 
-    <p class="home-meta">
-      MS @ Stanford University · Robotics · Reinforcement Learning · Safe Control
-    </p>
-
     <p class="home-paragraph">
       I am a Master's student in Mechanical Engineering at Stanford University and a Research Assistant at
       Stanford Artificial Intelligence Laboratory (SAIL), advised by
