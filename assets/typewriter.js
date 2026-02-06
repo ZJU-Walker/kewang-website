@@ -3,22 +3,12 @@
   if (!el) return;
 
   // Lines you want to loop through
-  const linesDesktop = [
-    "I am building robots that work in the real world.",
-    "I want them to learn from humans and act safely.",
-    "Simulation first, deployment next — with guarantees.",
-    "Collect data. Learn policies. Validate in reality."
+  const lines = [
+    "I am building robots that can operate beyond the lab.",
+    "I want them to learn from people and generalize safely.",
+    "From simulation to reality, with structure and rigor.",
+    "Data, learning, evaluation — repeated until it works."
   ];
-
-  const linesMobile = [
-    "Building real-world robots.",
-    "Learning from humans — safely.",
-    "Sim → real, with rigor.",
-    "Data → policy → deploy."
-  ];
-
-  const isMobile = window.matchMedia("(max-width: 700px)").matches;
-  const lines = isMobile ? linesMobile : linesDesktop;
 
   // Timing (tweak if you want)
   const TYPE_MS = 35;       // typing speed
