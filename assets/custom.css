@@ -9,16 +9,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #031f26;
+    --bg-color: #031f26; /* your deep teal/navy */
     --text-color: #e6edf3;
     --accent-color: #6fb1ff;
     --border-color: #1e3a5a;
   }
 }
 
+/* Ensure our theme wins against the base theme */
+html,
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
   font-family: "JetBrains Mono", monospace;
 }
 
@@ -35,10 +37,17 @@ html[data-theme="light"] {
 }
 
 html[data-theme="dark"] {
-  --bg-color: #0b1d2d;
+  --bg-color: #0b1d2d; /* manual dark */
   --text-color: #e6edf3;
   --accent-color: #6fb1ff;
   --border-color: #1e3a5a;
+}
+
+/* Make the layout less narrow (theme default is too tight) */
+.container {
+  max-width: 1000px;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 /* Home intro layout */
@@ -46,14 +55,16 @@ html[data-theme="dark"] {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
-  margin-bottom: 2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .profile-img {
-  width: 180px;
-  height: 180px;
+  width: 140px;
+  height: 140px;
   object-fit: cover;
-  border-radius: 12px;
+  object-position: center top; /* better for portraits */
+  border-radius: 14px;
   border: 1px solid var(--border-color);
 }
 
@@ -86,8 +97,13 @@ html[data-theme="dark"] {
   }
 
   .profile-img {
-    width: 160px;
-    height: 160px;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+  }
+
+  .container {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
   }
 }
-
