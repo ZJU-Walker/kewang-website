@@ -1,20 +1,12 @@
-> ssh ke@kewang.ai
+> whoami
+Ke Wang — MS @ Stanford | Robotics | RL | Safe Control
 
-Welcome.
+> ls
+- [about](about)
+- [research](research)
+- [publications](publications)
+- [cv](cv)
 
-I am Ke Wang, an MS student at Stanford University,
-working on robotics, reinforcement learning,
-and safety-critical control.
-
-[Research Interests]
-- Vision-Language-Action models for humanoids
-- Safe RL, MPC, and control
-- Drone navigation with onboard perception
-
-[Affiliation]
-- Stanford University
-- Stanford AI Lab (SAIL)
-
-[Contact]
-- Email: kewalk@stanford.edu
-- GitHub: https://github.com/ZJU-Walker
+> contact
+Email: kewalk@stanford.edu
+GitHub: https://github.com/ZJU-Walker
