@@ -356,3 +356,25 @@ main .cv-btn:hover {
     line-height: 1.08 !important;
   }
 }
+
+/* =========================
+   Home section dividers
+   ========================= */
+
+/* Divider under intro block */
+.home-intro {
+  padding-bottom: 1.6rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+/* Each Home section separated by dashed line */
+.home-section {
+  padding-bottom: 1.4rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+/* Do not show divider after the last section */
+.home-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
