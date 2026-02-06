@@ -86,7 +86,7 @@ title: Home
       <li>
         Zhejiang University —
         B.S. Mechanical Engineering
-        <span class="item-date">(2019–2023)</span>
+        <span class="item-date">(2020–2024)</span>
       </li>
     </ul>
   </div>
