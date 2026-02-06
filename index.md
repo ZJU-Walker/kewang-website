@@ -57,13 +57,19 @@ title: Home
 
 <hr />
 
-<!-- Academic terminal panel -->
-<div id="terminal" class="terminal">
-  <div id="term-output"></div>
-  <input
-    id="term-input"
-    type="text"
-    autocomplete="off"
-    placeholder="help · pub · bib egopi · theme dark"
-  />
-</div>
+<details class="tools">
+  <summary class="tools-summary">Academic tools (optional)</summary>
+
+  <div class="tools-body">
+    <div id="terminal" class="terminal">
+      <div id="term-output"></div>
+      <input
+        id="term-input"
+        type="text"
+        autocomplete="off"
+        placeholder="help · pub · bib egopi · theme dark"
+      />
+    </div>
+  </div>
+</details>
+
