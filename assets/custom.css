@@ -353,4 +353,12 @@ main .cv-btn:hover {
   }
 }
 
+/* Dates in Education / Experience */
+.item-date {
+  color: rgba(140, 160, 170, 0.8);
+  font-size: 0.9em;
+  margin-left: 0.25rem;
+}
+
+
 
