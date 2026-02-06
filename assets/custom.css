@@ -358,12 +358,12 @@ main .cv-btn:hover {
 }
 
 /* =========================
-   Home: dividers between Education / Experience / News
+   Home: dashed dividers between News / Education / Experience blocks
    ========================= */
 
-/* Add dashed divider ONLY between sections */
-.home-section:not(:last-child) {
-  padding-bottom: 1.4rem;
-  margin-bottom: 1.4rem;
-  border-bottom: 1px dashed var(--border-color);
+/* Add divider ABOVE each home-sections block except the first one */
+.home-sections + .home-sections {
+  margin-top: 1.6rem;
+  padding-top: 1.6rem;
+  border-top: 1px dashed var(--border-color);
 }
