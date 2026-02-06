@@ -82,11 +82,12 @@ a {
 .home-name {
   font-family: "Cormorant Garamond", serif;
   font-weight: 600;
-  font-size: clamp(1.9rem, 3vw, 2.6rem);
-  line-height: 1.1;
+  font-size: 2.6rem;   /* desktop baseline */
+  line-height: 1.08;
   letter-spacing: -0.01em;
   margin: 0 0 0.9rem 0;
 }
+
 
 .home-paragraph {
   margin: 0 0 0.9rem 0;
