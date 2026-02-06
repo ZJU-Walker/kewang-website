@@ -211,3 +211,46 @@ details[open] > .tools-summary::before {
   border-radius: 10px;
   padding: 1rem;
 }
+
+
+/* =========================
+   Research project cards
+   ========================= */
+
+.research-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  margin-top: 1.5rem;
+}
+
+.project-card {
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  background-color: transparent;
+}
+
+.project-title {
+  margin: 0 0 0.6rem 0;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.project-desc {
+  margin: 0 0 0.8rem 0;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.project-meta {
+  font-size: 0.9rem;
+  color: rgba(140, 160, 170, 0.8);
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .project-desc {
+    text-align: left;
+  }
+}
