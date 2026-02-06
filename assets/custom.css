@@ -318,4 +318,39 @@ main .cv-btn:hover {
   color: var(--accent-color);
 }
 
+/* Home: Education / Experience */
+.home-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.home-section h2 {
+  margin: 0 0 0.8rem 0;
+  font-size: 1.15rem;
+}
+
+.clean-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.clean-list li {
+  margin: 0 0 0.7rem 0;
+  text-align: justify;
+  hyphens: auto;
+}
+
+@media (max-width: 900px) {
+  .home-sections {
+    grid-template-columns: 1fr;
+  }
+
+  .clean-list li {
+    text-align: left;
+  }
+}
+
 

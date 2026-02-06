@@ -42,3 +42,32 @@ title: Home
     </div>
   </div>
 </div>
+
+<div class="home-sections">
+  <div class="home-section">
+    <h2>Education</h2>
+    <ul class="clean-list">
+      <li><strong>Stanford University</strong> — M.S. Mechanical Engineering (expected 2026)</li>
+      <li><strong>Zhejiang University</strong> — B.S. Mechanical Engineering</li>
+    </ul>
+  </div>
+
+ <div class="home-section">
+   <h2>Experience</h2>
+   <ul class="clean-list">
+     <li>
+       <strong>Research Assistant</strong>, Stanford Artificial Intelligence Laboratory   (SAIL) —
+       humanoid manipulation and robot learning
+     </li>
+     <li>
+       <strong>Research Assistant</strong>, Stanford Multi-Robot Systems Lab (MSL) —
+       onboard perception and safe navigation for drones
+     </li>
+     <li>
+       <strong>Research Intern</strong>, UC Berkeley —
+       safety-critical control (MPC + CBF) for quadruped robots
+     </li>
+   </ul>
+ </div>
+
+</div>
