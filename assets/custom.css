@@ -41,3 +41,53 @@ html[data-theme="dark"] {
   --border-color: #1e3a5a;
 }
 
+/* Home intro layout */
+.home-intro {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.profile-img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.home-text h1 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.home-subtitle {
+  color: var(--accent-color);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.home-links a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.home-links a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile friendly */
+@media (max-width: 700px) {
+  .home-intro {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-img {
+    width: 160px;
+    height: 160px;
+  }
+}
+
