@@ -359,7 +359,7 @@ main .cv-btn:hover {
 
 .news-list li {
   display: flex;
-  gap: 0.8rem;
+  gap: 0.6rem;
   align-items: baseline;
 }
 
