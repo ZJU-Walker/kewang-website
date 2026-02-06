@@ -1,4 +1,9 @@
+<script>
+  window.__BASEURL__ = "{{ site.baseurl }}";
+</script>
+
 <head>
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -30,6 +35,9 @@
   {%- endif -%}
   {%- endif -%}
   <link rel="stylesheet" href="{{ "/assets/custom.css" | relative_url }}">
+  <link rel="stylesheet" href="{{ "/assets/terminal.css" | relative_url }}">
+  <script defer src="{{ "/assets/terminal.js" | relative_url }}"></script>
+
 
   {%- if jekyll.environment == 'production' and site.tracking -%}
   {%- include tracker.html -%}
