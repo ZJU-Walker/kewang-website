@@ -370,4 +370,85 @@ main .cv-btn:hover {
 }
 
 
+/* =========================
+   Responsive layout upgrades
+   ========================= */
+
+/* Make container scale smoothly instead of feeling narrow/wide abruptly */
+.container {
+  max-width: min(1000px, calc(100vw - 3.5rem));
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+/* Home intro: responsive spacing + stable proportions */
+.home-intro {
+  gap: clamp(1.2rem, 3vw, 2.2rem);
+}
+
+/* Avatar scales with window size (but stays within a tasteful range) */
+.profile-img {
+  width: clamp(110px, 14vw, 150px);
+  height: clamp(110px, 14vw, 150px);
+}
+
+/* Name scales slightly (not huge jumps) */
+.home-name {
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1.12;
+}
+
+/* Paragraph width improves readability on wide screens */
+.home-text {
+  max-width: 740px;
+}
+
+/* Buttons wrap nicely on narrower widths */
+.home-actions {
+  gap: 0.55rem;
+}
+
+/* Education/Experience/News: keep readable line-length */
+.home-section {
+  max-width: 900px;
+}
+
+/* Mid-size window: keep two-column intro but avoid cramped text */
+@media (max-width: 980px) {
+  .home-text {
+    max-width: 100%;
+  }
+}
+
+/* Small screens: stack, but keep left-aligned text for readability */
+@media (max-width: 720px) {
+  .container {
+    max-width: calc(100vw - 2.2rem);
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+  }
+
+  .home-intro {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home-text {
+    text-align: left;
+  }
+
+  .typewriter-line {
+    width: 100%;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 420px) {
+  .home-btn {
+    padding: 0.32rem 0.6rem;
+    border-radius: 8px;
+  }
+}
+
+
 
