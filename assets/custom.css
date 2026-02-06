@@ -318,13 +318,16 @@ main .cv-btn:hover {
   color: var(--accent-color);
 }
 
-/* Home: Education / Experience */
+/* =========================
+   Home: Education / Experience (stacked)
+   ========================= */
+
 .home-sections {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
   margin-top: 1.8rem;
-  margin-bottom: 0.5rem;
+}
+
+.home-section {
+  margin-bottom: 1.6rem;
 }
 
 .home-section h2 {
@@ -343,17 +346,7 @@ main .cv-btn:hover {
   hyphens: auto;
 }
 
-@media (max-width: 900px) {
-  .home-sections {
-    grid-template-columns: 1fr;
-  }
-
-  .clean-list li {
-    text-align: left;
-  }
-}
-
-/* Dates in Education / Experience */
+/* Dates */
 .item-date {
   color: rgba(140, 160, 170, 0.8);
   font-size: 0.9em;

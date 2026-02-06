@@ -52,6 +52,7 @@ title: Home
   </div>
 </div>
 
+<!-- Education -->
 <div class="home-sections">
   <div class="home-section">
     <h2>Education</h2>
@@ -64,11 +65,14 @@ title: Home
       <li>
         <strong>Zhejiang University</strong> —
         B.S. Mechanical Engineering
-        <span class="item-date">(2020–2024)</span>
+        <span class="item-date">(2019–2023)</span>
       </li>
     </ul>
   </div>
+</div>
 
+<!-- Experience -->
+<div class="home-sections">
   <div class="home-section">
     <h2>Experience</h2>
     <ul class="clean-list">
