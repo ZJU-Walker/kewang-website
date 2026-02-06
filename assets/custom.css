@@ -80,16 +80,8 @@ html[data-theme="dark"] {
 }
 
 .home-name {
-  margin: 0 0 0.15rem 0;
+  margin: 0 0 0.8rem 0;
   line-height: 1.1;
-}
-
-/* ⭐ Academic meta line */
-.home-meta {
-  margin: 0.2rem 0 1.1rem 0;
-  font-size: 0.95rem;
-  color: rgba(180, 200, 210, 0.75);
-  letter-spacing: 0.02em;
 }
 
 .home-paragraph {

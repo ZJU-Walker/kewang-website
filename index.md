@@ -38,14 +38,14 @@ title: Home
 
       <a
         class="home-btn"
-        href="mailto:kewang@stanford.edu"
+        href="mailto:kewalk@stanford.edu"
       >
         Email
       </a>
 
       <a
         class="home-btn secondary"
-        href="https://scholar.google.com/citations?user=XXXXXXX"
+        href="https://scholar.google.com/citations?user=Fqchg9QAAAAJ&hl=en"
         target="_blank"
         rel="noopener noreferrer"
       >
