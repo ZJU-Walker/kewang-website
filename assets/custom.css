@@ -289,12 +289,37 @@ details[open] > .tools-summary::before {
   50% { opacity: 0; }
 }
 
-/* CV PDF embed */
-.cv-embed iframe {
-  width: 100%;
-  height: 85vh;
+/* =========================
+   CV page
+   ========================= */
+
+.cv-links {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.cv-btn {
+  padding: 0.55rem 1.4rem;
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  transition: all 0.15s ease;
   background: transparent;
 }
+
+.cv-btn:hover {
+  background: rgba(100, 120, 130, 0.08);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.cv-btn.secondary {
+  color: var(--accent-color);
+}
+
 
