@@ -98,13 +98,13 @@ title: Home
     <h2>Experience</h2>
     <ul class="clean-list">
       <li>
-        <strong>Research Assistant</strong>,
+        Research Assistant,
         Stanford Artificial Intelligence Laboratory (SAIL)
         <span class="item-date">(2024–Present)</span> —
         humanoid manipulation and robot learning
       </li>
       <li>
-        <strong>Research Assistant</strong>,
+        Research Assistant,
         Stanford Multi-Robot Systems Lab (MSL)
         <span class="item-date">(2024–Present)</span> —
         onboard perception and safe navigation for drones
