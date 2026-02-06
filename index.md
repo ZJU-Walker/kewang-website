@@ -52,6 +52,28 @@ title: Home
   </div>
 </div>
 
+<!-- News -->
+<div class="home-sections">
+  <div class="home-section">
+    <h2>News</h2>
+    <ul class="clean-list news-list">
+      <li>
+        <span class="item-date">Feb 2026</span>
+        Received admission offer to the Ph.D. program in Aeronautics & Astronautics at Stanford University.
+      </li>
+      <li>
+        <span class="item-date">Jan 2026</span>
+        Research on egocentric human demonstrations for dexterous manipulation ongoing at Stanford SAIL.
+      </li>
+      <li>
+        <span class="item-date">Dec 2025</span>
+        Working on onboard perception and safe navigation for drones with the MSL team.
+      </li>
+    </ul>
+  </div>
+</div>
+
+
 <!-- Education -->
 <div class="home-sections">
   <div class="home-section">
@@ -91,7 +113,7 @@ title: Home
       <li>
         <strong>Research Intern</strong>,
         UC Berkeley
-        <span class="item-date">(Jun–Sep 2023)</span> —
+        <span class="item-date">(2023)</span> —
         safety-critical control (MPC + CBF) for quadruped robots
       </li>
     </ul>

@@ -353,5 +353,21 @@ main .cv-btn:hover {
   margin-left: 0.25rem;
 }
 
+/* =========================
+   Home: News
+   ========================= */
+
+.news-list li {
+  display: flex;
+  gap: 0.8rem;
+  align-items: baseline;
+}
+
+.news-list .item-date {
+  min-width: 4.5rem;
+  font-size: 0.85em;
+  color: rgba(140, 160, 170, 0.8);
+}
+
 
 
