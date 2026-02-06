@@ -67,8 +67,8 @@ a {
 }
 
 .profile-img {
-  width: clamp(150px, 14vw, 180px);
-  height: clamp(150px, 14vw, 180px);
+  width: clamp(180px, 14vw, 220px);
+  height: clamp(180px, 14vw, 220px);
   object-fit: cover;
   object-position: center top;
   border-radius: 14px;
