@@ -108,7 +108,7 @@ title: Home
         <span class="item-date">(2024–Present)</span> 
       </li>
       <li>
-        <strong>Research Intern</strong>,
+        Research Intern,
         UC Berkeley
         <span class="item-date">(2023)</span> 
       </li>
