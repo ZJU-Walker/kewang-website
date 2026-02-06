@@ -33,13 +33,12 @@ title: Home
         Google Scholar
       </a>
     </div>
+
+    <!-- One-line typewriter (decorative) -->
+    <div class="typewriter-line" aria-label="Animated tagline">
+      <span class="tw-prompt">&gt;</span>
+      <span id="tw-text" class="tw-text"></span>
+      <span class="tw-cursor" aria-hidden="true">▌</span>
+    </div>
   </div>
-</div>
-
-<hr />
-
-<!-- Decorative terminal (no input, no folding) -->
-<div class="deco-terminal" aria-label="Decorative terminal">
-  <div class="deco-title">kewang.ai — session</div>
-  <pre id="deco-term" class="deco-screen"></pre>
 </div>

@@ -256,26 +256,36 @@ details[open] > .tools-summary::before {
 }
 
 /* =========================
-   Decorative terminal block
+   One-line typewriter
    ========================= */
 
-.deco-terminal {
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 1rem 1.1rem;
-  margin-top: 1.25rem;
+.typewriter-line {
+  margin-top: 1.1rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--border-color);
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  color: rgba(140, 160, 170, 0.9);
+  font-size: 0.98rem;
 }
 
-.deco-title {
-  font-size: 0.9rem;
-  color: rgba(140, 160, 170, 0.85);
-  margin-bottom: 0.6rem;
+.tw-prompt {
+  color: var(--accent-color);
 }
 
-.deco-screen {
-  margin: 0;
-  white-space: pre-wrap;
-  line-height: 1.55;
-  font-size: 0.95rem;
-  min-height: 220px;
+.tw-text {
+  color: rgba(140, 160, 170, 0.95);
 }
+
+.tw-cursor {
+  display: inline-block;
+  width: 0.6ch;
+  animation: tw-blink 1s step-end infinite;
+  opacity: 0.9;
+}
+
+@keyframes tw-blink {
+  50% { opacity: 0; }
+}
+
