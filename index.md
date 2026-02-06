@@ -1,7 +1,10 @@
 ---
 layout: page
 title: Home
+permalink: /
+seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
 ---
+
 
 <div class="home-intro">
   <img
