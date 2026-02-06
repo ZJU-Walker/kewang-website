@@ -32,8 +32,8 @@ plugins:
 #
 # # Extend CSP to allow your tracker sources (script-src/connect-src/img-src as needed)
 # # csp_extra: "script-src 'self' https://analytics.example.com; connect-src 'self' https://analytics.example.com; img-src 'self' https://analytics.example.com;"
-url: https://kewang.ai
-baseurl: ""   # ⚠️ 必须是空字符串
+url: "https://ZJU-Walker.github.io"
+baseurl: "/kewang-website"
 
 title: "Ke Wang"
 description: "MS @ Stanford | Robotics | RL | Safe Control"
