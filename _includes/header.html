@@ -1,17 +1,21 @@
 {%- assign default_paths = site.html_pages | map: 'path' -%}
 {%- assign page_paths = site.header_pages | default: default_paths -%}
+
 <header>
   <div class="menu">
     <ul>
       {%- for path in page_paths -%}
-        {%- unless path == "404.html" -%}
-          {%- assign my_page = site.pages | where: "path", path | first -%}
-          {%- if my_page.title -%}
+        {%- assign my_page = site.pages | where: "path", path | first -%}
+
+        {%- if my_page.title and my_page.title != "404" -%}
           <li>
-            <a href="{{ my_page.url | relative_url }}"{% if page.url == my_page.url %} aria-current="page"{% endif %}>{{ my_page.title | escape }}</a>
+            <a href="{{ my_page.url | relative_url }}"
+               {% if page.url == my_page.url %}aria-current="page"{% endif %}>
+              {{ my_page.title | escape }}
+            </a>
           </li>
-          {%- endif -%}
-        {%- endunless -%}
+        {%- endif -%}
+
       {%- endfor -%}
     </ul>
   </div>
