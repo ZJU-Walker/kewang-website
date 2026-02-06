@@ -9,45 +9,13 @@
 
   const BASE = (document.documentElement.getAttribute("data-baseurl") || "").replace(/\/$/, "");
 
-  // ====== EDIT THIS SECTION (your profile data) ======
-  const PROFILE = {
-    name: "Ke Wang",
-    tagline: "MS @ Stanford | Robotics | RL | Safe Control",
-    email: "ke@stanford.edu",
-    github: "https://github.com/ZJU-Walker",
-    scholar: "",     // put your Google Scholar link here
-    website: "",     // optional: your personal site link
-    linkedin: "",    // optional
-    x: "",           // optional
-  };
+  // Data file path (project-site safe)
+  const DATA_URL = `${BASE}/assets/panel.json`;
 
-  // Publications / Preprints (edit freely)
-  // key: used by `bib <key>`
-  const PUBS = [
-    {
-      key: "egopi",
-      title: "Ego-Pi",
-      venue: "CVPR 2026 submission",
-      year: "2026",
-      authors: "Ke Wang*, ...",
-      link: "", // arXiv / project page / pdf
-      bibtex: `@inproceedings{egopi2026,
-  title     = {Ego-Pi},
-  author    = {Wang, Ke and ...},
-  booktitle = {Conference on Computer Vision and Pattern Recognition (CVPR)},
-  year      = {2026}
-}`
-    },
-  ];
+  // Runtime state (loaded from panel.json)
+  let DATA = null;
 
-  // Updates / changelog style (edit freely)
-  const NEWS = [
-    { date: "2026-02-06", text: "Website launched (terminal academic panel)." },
-  ];
-
-  // ====== End editable section ======
-
-  // ---- utilities ----
+  // ---- helpers ----
   const HISTORY = [];
   let histIdx = -1;
 
@@ -73,12 +41,12 @@
     text.split("\n").forEach((line) => print(line, cls));
   }
 
-  function printLink(text, href) {
+  function printLink(label, href) {
     const div = document.createElement("div");
     div.className = "term-line";
     const a = document.createElement("a");
     a.href = href;
-    a.textContent = text;
+    a.textContent = label;
     a.className = "term-link";
     a.rel = "noopener noreferrer";
     div.appendChild(a);
@@ -116,46 +84,66 @@
     window.location.href = `${BASE}${path}`;
   }
 
+  async function loadData() {
+    const res = await fetch(DATA_URL, { cache: "no-store" });
+    if (!res.ok) throw new Error(`Failed to load ${DATA_URL}: ${res.status}`);
+    return await res.json();
+  }
+
   // ---- commands ----
-  const HELP = [
-    "Academic terminal panel — commands:",
-    "  help                      show this help",
-    "  whoami                    short bio",
-    "  links                     important links (scholar/github/etc.)",
-    "  pub                       list publications/preprints",
-    "  bib <key>                 print BibTeX and copy to clipboard (e.g., bib egopi)",
-    "  cv                        open CV page",
-    "  email                     show email",
-    "  copy email                copy email to clipboard",
-    "  news                      recent updates",
-    "  theme light|dark|auto      set theme",
-    "  clear                     clear screen",
-  ].join("\n");
+  function helpText() {
+    return [
+      "Academic terminal panel — commands:",
+      "  help                      show this help",
+      "  whoami                    short bio",
+      "  links                     important links (scholar/github/etc.)",
+      "  pub                       list publications/preprints",
+      "  bib <key>                 print BibTeX and copy to clipboard",
+      "  cv                        open CV page",
+      "  email                     show email",
+      "  copy email                copy email to clipboard",
+      "  news                      recent updates",
+      "  theme light|dark|auto      set theme",
+      "  clear                     clear screen",
+    ].join("\n");
+  }
+
+  function requireData() {
+    if (DATA) return true;
+    print("Data not loaded yet. Try again in a moment.", "term-muted");
+    return false;
+  }
 
   function cmd_whoami() {
-    print(`${PROFILE.name}`);
-    print(`${PROFILE.tagline}`, "term-muted");
+    if (!requireData()) return;
+    const p = DATA.profile || {};
+    print(p.name || "Ke Wang");
+    print(p.tagline || "", "term-muted");
     printBlank();
-    print("Try: pub | bib egopi | links | theme dark", "term-muted");
+    print("Try: pub | bib <key> | links | theme dark", "term-muted");
   }
 
   function cmd_links() {
-    if (PROFILE.github) printLink(`github: ${PROFILE.github}`, PROFILE.github);
-    if (PROFILE.scholar) printLink(`scholar: ${PROFILE.scholar}`, PROFILE.scholar);
-    if (PROFILE.linkedin) printLink(`linkedin: ${PROFILE.linkedin}`, PROFILE.linkedin);
-    if (PROFILE.x) printLink(`x: ${PROFILE.x}`, PROFILE.x);
-    if (PROFILE.website) printLink(`site: ${PROFILE.website}`, PROFILE.website);
-    if (!PROFILE.github && !PROFILE.scholar && !PROFILE.linkedin && !PROFILE.x && !PROFILE.website) {
-      print("No links configured yet. Edit PROFILE in assets/terminal.js", "term-muted");
+    if (!requireData()) return;
+    const links = (DATA.profile && DATA.profile.links) || {};
+    const entries = Object.entries(links).filter(([, v]) => (v || "").trim().length > 0);
+    if (!entries.length) {
+      print("No links configured in assets/panel.json", "term-muted");
+      return;
+    }
+    for (const [k, v] of entries) {
+      printLink(`${k}: ${v}`, v);
     }
   }
 
   function cmd_pub() {
-    if (!PUBS.length) {
-      print("No publications configured yet. Edit PUBS in assets/terminal.js", "term-muted");
+    if (!requireData()) return;
+    const pubs = DATA.publications || [];
+    if (!pubs.length) {
+      print("No publications configured in assets/panel.json", "term-muted");
       return;
     }
-    PUBS.forEach((p) => {
+    pubs.forEach((p) => {
       print(`${p.key}  ${p.year}  ${p.venue}`, "term-muted");
       print(`${p.title}`);
       if (p.authors) print(`${p.authors}`, "term-muted");
@@ -166,14 +154,16 @@
   }
 
   async function cmd_bib(arg) {
+    if (!requireData()) return;
     const key = (arg || "").toLowerCase();
-    const p = PUBS.find((x) => x.key.toLowerCase() === key);
+    const pubs = DATA.publications || [];
+    const p = pubs.find((x) => (x.key || "").toLowerCase() === key);
     if (!p) {
       print(`bib: unknown key '${arg}'. Try: pub`, "term-muted");
       return;
     }
     if (!p.bibtex) {
-      print(`bib: no bibtex for '${key}' yet. Edit PUBS in assets/terminal.js`, "term-muted");
+      print(`bib: no bibtex for '${key}' yet (set it in assets/panel.json)`, "term-muted");
       return;
     }
     printBlock(p.bibtex);
@@ -182,36 +172,35 @@
   }
 
   function cmd_cv() {
-    // opens your cv page (cv.md). If you later have a PDF, we can point to it.
     openPath("/cv");
   }
 
   function cmd_email() {
-    print(PROFILE.email || "No email configured.", PROFILE.email ? "" : "term-muted");
+    if (!requireData()) return;
+    const email = (DATA.profile && DATA.profile.email) || "";
+    if (!email) return print("No email configured in assets/panel.json", "term-muted");
+    print(email);
   }
 
   async function cmd_copy_email() {
-    if (!PROFILE.email) {
-      print("No email configured.", "term-muted");
-      return;
-    }
-    const ok = await copyToClipboard(PROFILE.email);
+    if (!requireData()) return;
+    const email = (DATA.profile && DATA.profile.email) || "";
+    if (!email) return print("No email configured in assets/panel.json", "term-muted");
+    const ok = await copyToClipboard(email);
     print(ok ? "Copied email to clipboard." : "Could not copy automatically (browser blocked).", "term-muted");
   }
 
   function cmd_news() {
-    if (!NEWS.length) {
-      print("No updates yet.", "term-muted");
-      return;
-    }
-    NEWS.forEach((n) => print(`${n.date}  ${n.text}`));
+    if (!requireData()) return;
+    const news = DATA.news || [];
+    if (!news.length) return print("No updates yet (assets/panel.json).", "term-muted");
+    news.forEach((n) => print(`${n.date}  ${n.text}`));
   }
 
   function clear() {
     output.innerHTML = "";
   }
 
-  // ---- runner ----
   function echoCmd(line) {
     print(`$ ${line}`, "term-accent");
   }
@@ -230,7 +219,7 @@
 
     switch ((cmd || "").toLowerCase()) {
       case "help":
-        printBlock(HELP);
+        printBlock(helpText());
         break;
       case "whoami":
         cmd_whoami();
@@ -281,8 +270,20 @@
   // init
   applySavedTheme();
   print("Academic terminal panel", "term-muted");
-  print("Type 'help' for commands. Try: pub | bib egopi | theme dark", "term-muted");
+  print(`Loading data: ${DATA_URL}`, "term-muted");
   printBlank();
+
+  loadData()
+    .then((json) => {
+      DATA = json;
+      print("Data loaded. Try: whoami | pub | bib <key> | news", "term-muted");
+      printBlank();
+    })
+    .catch((err) => {
+      print(`Failed to load data: ${err.message}`, "term-muted");
+      print("Check that assets/panel.json exists and is reachable.", "term-muted");
+      printBlank();
+    });
 
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
