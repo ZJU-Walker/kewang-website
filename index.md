@@ -12,7 +12,8 @@ title: Home
 
   <div class="home-text">
     <h1 class="home-name">Ke Wang</h1>
-    <p class="home-subtitle">
+
+    <p class="home-meta">
       MS @ Stanford University · Robotics · Reinforcement Learning · Safe Control
     </p>
 
@@ -30,40 +31,43 @@ title: Home
     </p>
 
     <div class="home-actions">
-    <a
+      <a
         class="home-btn"
         href="https://github.com/ZJU-Walker"
         target="_blank"
         rel="noopener noreferrer"
-    >
+      >
         GitHub
-    </a>
+      </a>
 
-    <a
+      <a
         class="home-btn"
-        href="mailto:kewalk@stanford.edu"
-    >
+        href="mailto:kewang@stanford.edu"
+      >
         Email
-    </a>
+      </a>
 
-    <a
+      <a
         class="home-btn secondary"
-        href="https://scholar.google.com/citations?user=Fqchg9QAAAAJ&hl=en"
+        href="https://scholar.google.com/citations?user=XXXXXXX"
         target="_blank"
         rel="noopener noreferrer"
-    >
+      >
         Google Scholar
-    </a>
+      </a>
     </div>
-
   </div>
 </div>
 
 <hr />
 
-<!-- Academic tools (terminal panel) -->
+<!-- Academic terminal panel -->
 <div id="terminal" class="terminal">
   <div id="term-output"></div>
-  <input id="term-input" type="text" autocomplete="off"
-         placeholder="help · pub · bib egopi · theme dark" />
+  <input
+    id="term-input"
+    type="text"
+    autocomplete="off"
+    placeholder="help · pub · bib egopi · theme dark"
+  />
 </div>
