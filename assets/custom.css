@@ -18,17 +18,6 @@
   }
 }
 
-html,
-body {
-  background-color: var(--bg-color) !important;
-  color: var(--text-color) !important;
-  font-family: "JetBrains Mono", monospace;
-}
-
-a {
-  color: var(--accent-color);
-}
-
 /* Manual override */
 html[data-theme="light"] {
   --bg-color: #f5f1e8;
@@ -44,31 +33,42 @@ html[data-theme="dark"] {
   --border-color: #1e3a5a;
 }
 
-/* =========================
-   Layout
-   ========================= */
+html,
+body {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  font-family: "JetBrains Mono", monospace;
+}
 
-.container {
-  max-width: 1000px;
-  padding-left: 2rem;
-  padding-right: 2rem;
+a {
+  color: var(--accent-color);
 }
 
 /* =========================
-   Home
+   Layout (responsive)
+   ========================= */
+
+.container {
+  max-width: min(1000px, calc(100vw - 3.5rem));
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+/* =========================
+   Home: Intro
    ========================= */
 
 .home-intro {
   display: flex;
-  gap: 2.2rem;
   align-items: flex-start;
   margin-top: 1.5rem;
   margin-bottom: 2rem;
+  gap: clamp(1.2rem, 3vw, 2.2rem);
 }
 
 .profile-img {
-  width: 180px;
-  height: 180px;
+  width: clamp(110px, 14vw, 150px);
+  height: clamp(110px, 14vw, 150px);
   object-fit: cover;
   object-position: center top;
   border-radius: 14px;
@@ -76,30 +76,26 @@ html[data-theme="dark"] {
 }
 
 .home-text {
-  max-width: 720px;
+  max-width: 740px;
 }
 
 .home-name {
   font-family: "Cormorant Garamond", serif;
   font-weight: 600;
-  font-size: clamp(1.9rem, 3vw, 2.5rem);
-  line-height: 1.02;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1.1;
   letter-spacing: -0.01em;
   margin: 0 0 0.9rem 0;
 }
 
-
-
-
-
 .home-paragraph {
   margin: 0 0 0.9rem 0;
+  max-width: 720px;
   text-align: justify;
   text-indent: 0;
   white-space: normal;
-  max-width: 720px;
+  hyphens: auto;
 }
-
 
 .home-text a {
   color: var(--accent-color);
@@ -116,7 +112,7 @@ html[data-theme="dark"] {
   margin-top: 1.1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.55rem;
 }
 
 .home-btn {
@@ -137,85 +133,103 @@ html[data-theme="dark"] {
 }
 
 /* =========================
-   Mobile
+   Typewriter: 2-line stable + wrapping cursor
+   (No ellipsis, no layout jump)
    ========================= */
 
-@media (max-width: 700px) {
-  .home-intro {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+.typewriter-line {
+  margin-top: 1.1rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--border-color);
 
-  .home-text {
-    max-width: 100%;
-  }
-
-  .home-paragraph {
-    text-align: left;
-  }
-
-  .profile-img {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 0.8rem;
-  }
-
-  .container {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-}
-
-
-/* -------------------------
-   Collapsible tools panel
-   ------------------------- */
-
-.tools {
-  margin-top: 1rem;
-}
-
-.tools-summary {
-  cursor: pointer;
-  user-select: none;
-  color: var(--accent-color);
-  list-style: none;
-  outline: none;
-  display: inline-flex;
-  align-items: center;
+  display: flex;
   gap: 0.5rem;
-  padding: 0.25rem 0;
+  align-items: flex-start;
+
+  line-height: 1.4;
+  min-height: calc(2 * 1.4em); /* reserve 2 lines */
+  color: rgba(140, 160, 170, 0.9);
+  font-size: 0.98rem;
 }
 
-/* remove default triangle in some browsers */
-.tools-summary::-webkit-details-marker {
-  display: none;
+.tw-prompt {
+  color: var(--accent-color);
+  flex: 0 0 auto;
 }
 
-/* custom marker */
-.tools-summary::before {
-  content: "▶";
+.tw-text {
+  color: rgba(140, 160, 170, 0.95);
+  flex: 1 1 auto;
+  min-width: 0;
+
+  /* allow wrap, but limit height to 2 lines (no ellipsis) */
+  white-space: normal;
+  overflow: hidden;
+  max-height: calc(2 * 1.4em);
+  text-overflow: clip;
+}
+
+/* cursor follows wrapping naturally */
+.tw-text::after {
+  content: "▌";
   display: inline-block;
-  transform: translateY(-0.5px);
+  margin-left: 0.15rem;
+  animation: tw-blink 1s step-end infinite;
   opacity: 0.9;
 }
 
-details[open] > .tools-summary::before {
-  content: "▼";
+@keyframes tw-blink {
+  50% { opacity: 0; }
 }
 
-.tools-body {
-  margin-top: 0.75rem;
+/* =========================
+   Home: Education / Experience / News (stacked)
+   ========================= */
+
+.home-sections {
+  margin-top: 1.8rem;
 }
 
-/* make terminal look like a nested panel */
-.tools .terminal {
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 1rem;
+.home-section {
+  margin-bottom: 1.6rem;
+  max-width: 900px;
 }
 
+.home-section h2 {
+  margin: 0 0 0.8rem 0;
+  font-size: 1.15rem;
+}
+
+.clean-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.clean-list li {
+  margin: 0 0 0.7rem 0;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Dates */
+.item-date {
+  color: rgba(140, 160, 170, 0.8);
+  font-size: 0.9em;
+  margin-left: 0.25rem;
+}
+
+/* News */
+.news-list li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.news-list .item-date {
+  min-width: 4.5rem;
+  font-size: 0.85em;
+  color: rgba(140, 160, 170, 0.8);
+}
 
 /* =========================
    Research project cards
@@ -252,48 +266,10 @@ details[open] > .tools-summary::before {
   color: rgba(140, 160, 170, 0.8);
 }
 
-/* Mobile */
-@media (max-width: 700px) {
-  .project-desc {
-    text-align: left;
-  }
-}
-
 /* =========================
-   One-line typewriter
+   CV buttons (force apply)
    ========================= */
 
-.typewriter-line {
-  margin-top: 1.1rem;
-  padding-top: 0.8rem;
-  border-top: 1px dashed var(--border-color);
-  display: flex;
-  gap: 0.5rem;
-  align-items: baseline;
-  color: rgba(140, 160, 170, 0.9);
-  font-size: 0.98rem;
-}
-
-.tw-prompt {
-  color: var(--accent-color);
-}
-
-.tw-text {
-  color: rgba(140, 160, 170, 0.95);
-}
-
-.tw-cursor {
-  display: inline-block;
-  width: 0.6ch;
-  animation: tw-blink 1s step-end infinite;
-  opacity: 0.9;
-}
-
-@keyframes tw-blink {
-  50% { opacity: 0; }
-}
-
-/* Force CV buttons styling on page layout */
 .page .cv-links,
 main .cv-links {
   display: flex;
@@ -323,108 +299,13 @@ main .cv-btn:hover {
 }
 
 /* =========================
-   Home: Education / Experience (stacked)
+   Responsive breakpoints
    ========================= */
 
-.home-sections {
-  margin-top: 1.8rem;
-}
-
-.home-section {
-  margin-bottom: 1.6rem;
-}
-
-.home-section h2 {
-  margin: 0 0 0.8rem 0;
-  font-size: 1.15rem;
-}
-
-.clean-list {
-  margin: 0;
-  padding-left: 1.1rem;
-}
-
-.clean-list li {
-  margin: 0 0 0.7rem 0;
-  text-align: justify;
-  hyphens: auto;
-}
-
-/* Dates */
-.item-date {
-  color: rgba(140, 160, 170, 0.8);
-  font-size: 0.9em;
-  margin-left: 0.25rem;
-}
-
-/* =========================
-   Home: News
-   ========================= */
-
-.news-list li {
-  display: flex;
-  gap: 0.6rem;
-  align-items: baseline;
-}
-
-.news-list .item-date {
-  min-width: 4.5rem;
-  font-size: 0.85em;
-  color: rgba(140, 160, 170, 0.8);
-}
-
-
-/* =========================
-   Responsive layout upgrades
-   ========================= */
-
-/* Make container scale smoothly instead of feeling narrow/wide abruptly */
-.container {
-  max-width: min(1000px, calc(100vw - 3.5rem));
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
-}
-
-/* Home intro: responsive spacing + stable proportions */
-.home-intro {
-  gap: clamp(1.2rem, 3vw, 2.2rem);
-}
-
-/* Avatar scales with window size (but stays within a tasteful range) */
-.profile-img {
-  width: clamp(110px, 14vw, 150px);
-  height: clamp(110px, 14vw, 150px);
-}
-
-/* Name scales slightly (not huge jumps) */
-.home-name {
-  font-size: clamp(1.9rem, 3vw, 2.6rem);
-  line-height: 1.12;
-}
-
-/* Paragraph width improves readability on wide screens */
-.home-text {
-  max-width: 740px;
-}
-
-/* Buttons wrap nicely on narrower widths */
-.home-actions {
-  gap: 0.55rem;
-}
-
-/* Education/Experience/News: keep readable line-length */
-.home-section {
-  max-width: 900px;
-}
-
-/* Mid-size window: keep two-column intro but avoid cramped text */
 @media (max-width: 980px) {
-  .home-text {
-    max-width: 100%;
-  }
+  .home-text { max-width: 100%; }
 }
 
-/* Small screens: stack, but keep left-aligned text for readability */
 @media (max-width: 720px) {
   .container {
     max-width: calc(100vw - 2.2rem);
@@ -439,104 +320,23 @@ main .cv-btn:hover {
 
   .home-text {
     text-align: left;
+    max-width: 100%;
   }
 
-  .typewriter-line {
-    width: 100%;
+  .home-paragraph {
+    text-align: left;
+  }
+
+  /* keep name readable on mobile */
+  .home-name {
+    font-size: 2.2rem;
+    line-height: 1.08;
   }
 }
 
-/* Very small screens */
 @media (max-width: 420px) {
   .home-btn {
     padding: 0.32rem 0.6rem;
     border-radius: 8px;
-  }
-}
-
-
-/* =========================
-   Typewriter: 2-line stable + wrapping cursor
-   ========================= */
-
-.typewriter-line {
-  margin-top: 1.1rem;
-  padding-top: 0.8rem;
-  border-top: 1px dashed var(--border-color);
-  display: flex;
-  gap: 0.5rem;
-  align-items: flex-start;
-
-  /* Reserve exactly 2 lines so layout never jumps */
-  line-height: 1.4;
-  min-height: calc(2 * 1.4em);
-}
-
-.tw-prompt {
-  color: var(--accent-color);
-  flex: 0 0 auto;
-}
-
-/* The text wraps, but is clamped to 2 lines */
-.tw-text {
-  color: rgba(140, 160, 170, 0.95);
-  flex: 1 1 auto;
-  min-width: 0;
-
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;      /* max 2 lines */
-  overflow: hidden;
-  white-space: normal;
-  word-break: normal;
-}
-
-/* Cursor is part of tw-text so it naturally follows wrapping */
-.tw-text::after {
-  content: "▌";
-  display: inline-block;
-  margin-left: 0.15rem;
-  animation: tw-blink 1s step-end infinite;
-  opacity: 0.9;
-}
-
-@keyframes tw-blink {
-  50% { opacity: 0; }
-}
-
-/* =========================
-   Mobile polish: name + typewriter (no ellipsis)
-   ========================= */
-
-@media (max-width: 700px) {
-  /* Make name readable on mobile */
-  .home-name {
-    font-size: 2.2rem !important;
-    line-height: 1.08;
-  }
-
-  /* Typewriter: keep 2-line height, allow wrapping, NO ellipsis */
-  .typewriter-line {
-    line-height: 1.4;
-    min-height: calc(2 * 1.4em);
-  }
-
-  .tw-text {
-    /* remove clamp if you had it */
-    display: block !important;
-    overflow: hidden;
-    white-space: normal;
-
-    /* IMPORTANT: hide overflow WITHOUT ellipsis */
-    text-overflow: clip !important;
-
-    /* keep it max two lines worth of height */
-    max-height: calc(2 * 1.4em);
-  }
-
-  /* If you previously used -webkit-line-clamp, neutralize it */
-  .tw-text {
-    -webkit-line-clamp: unset !important;
-    -webkit-box-orient: unset !important;
   }
 }
