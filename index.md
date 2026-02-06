@@ -100,20 +100,17 @@ title: Home
       <li>
         Research Assistant,
         Stanford Artificial Intelligence Laboratory (SAIL)
-        <span class="item-date">(2024–Present)</span> —
-        humanoid manipulation and robot learning
+        <span class="item-date">(2024–Present)</span>
       </li>
       <li>
         Research Assistant,
         Stanford Multi-Robot Systems Lab (MSL)
-        <span class="item-date">(2024–Present)</span> —
-        onboard perception and safe navigation for drones
+        <span class="item-date">(2024–Present)</span> 
       </li>
       <li>
         <strong>Research Intern</strong>,
         UC Berkeley
-        <span class="item-date">(2023)</span> —
-        safety-critical control (MPC + CBF) for quadruped robots
+        <span class="item-date">(2023)</span> 
       </li>
     </ul>
   </div>
