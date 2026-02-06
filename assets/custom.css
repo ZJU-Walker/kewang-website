@@ -289,11 +289,9 @@ details[open] > .tools-summary::before {
   50% { opacity: 0; }
 }
 
-/* =========================
-   CV page
-   ========================= */
-
-.cv-links {
+/* Force CV buttons styling on page layout */
+.page .cv-links,
+main .cv-links {
   display: flex;
   gap: 1.2rem;
   justify-content: center;
@@ -301,24 +299,22 @@ details[open] > .tools-summary::before {
   margin-top: 3rem;
 }
 
-.cv-btn {
+.page .cv-btn,
+main .cv-btn {
   padding: 0.55rem 1.4rem;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  text-decoration: none;
+  text-decoration: none !important;
   color: var(--text-color);
   font-size: 0.95rem;
-  transition: all 0.15s ease;
   background: transparent;
+  transition: all 0.15s ease;
 }
 
-.cv-btn:hover {
+.page .cv-btn:hover,
+main .cv-btn:hover {
   background: rgba(100, 120, 130, 0.08);
   border-color: var(--accent-color);
-  color: var(--accent-color);
-}
-
-.cv-btn.secondary {
   color: var(--accent-color);
 }
 
