@@ -80,12 +80,12 @@ title: Home
     <h2>Education</h2>
     <ul class="clean-list">
       <li>
-        <strong>Stanford University</strong> —
+        Stanford University —
         M.S. Mechanical Engineering
         <span class="item-date">(2024–2026 expected)</span>
       </li>
       <li>
-        <strong>Zhejiang University</strong> —
+        Zhejiang University —
         B.S. Mechanical Engineering
         <span class="item-date">(2019–2023)</span>
       </li>
