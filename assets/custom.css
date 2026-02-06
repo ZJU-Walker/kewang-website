@@ -345,14 +345,14 @@ main .cv-btn:hover {
 /* Force bigger name on mobile (override everything) */
 @media (max-width: 720px) {
   .home-name {
-    font-size: 10.6rem !important;
+    font-size: 3.6rem !important;
     line-height: 1.08 !important;
   }
 }
 
 @media (max-width: 700px) {
   .home-name {
-    font-size: 10.6rem !important;
+    font-size: 3.6rem !important;
     line-height: 1.08 !important;
   }
 }
