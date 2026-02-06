@@ -34,3 +34,8 @@ plugins:
 # # csp_extra: "script-src 'self' https://analytics.example.com; connect-src 'self' https://analytics.example.com; img-src 'self' https://analytics.example.com;"
 url: "https://ZJU-Walker.github.io"
 baseurl: "/kewang-website"
+
+title: "Ke Wang"
+description: "MS @ Stanford | Robotics | RL | Safe Control"
+author: "Ke Wang"
+email: "ke@stanford.edu"
