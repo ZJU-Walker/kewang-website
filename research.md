@@ -7,7 +7,7 @@ permalink: /research/
 <div class="research-timeline">
 
   <!-- Published -->
-  <a class="r-entry published" href="#" target="_self" rel="noopener noreferrer">
+  <a class="r-entry published" href="https://egopipaper.github.io/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">Ego-Pi: Egocentric Human Data for Humanoid Manipulation</div>
