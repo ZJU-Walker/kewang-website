@@ -109,8 +109,8 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
         Research Assistant, Stanford Multi-Robot Systems Lab (MSL)
       </li>
       <li>
-        <span class="item-date">2023</span>
-                Research Intern, UC Berkeley
+        <span class="item-date">2023-2023        </span>
+        Research Intern, UC Berkeley
       </li>
     </ul>
   </div>
