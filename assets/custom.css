@@ -684,4 +684,7 @@ header .menu a[aria-current="page"] {
 
 .research-typewriter {
   margin-bottom: 1.5rem;
+  /* Align with timeline content: line-x + gutter + extra padding */
+  padding-left: calc(0.75rem + 1.35rem + 0.4rem);
+  max-width: 760px;
 }
