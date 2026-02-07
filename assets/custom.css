@@ -204,8 +204,6 @@ a {
   margin-top: 2.2rem;
   padding-left: 1.6rem;
 
-  /* left vertical line */
-  border-left: 1px solid rgba(140, 160, 170, 0.45);
 
   /* keep content narrower like PI */
   max-width: 760px;
@@ -409,4 +407,98 @@ main, .page, .container {
   margin-left: 0;
 }
 .news-list li::marker { content: ""; }
+
+/* =========================
+   Research timeline: marker sits ON the line
+   Paste this at the END of custom.css
+   ========================= */
+
+.research-timeline {
+  position: relative;
+  margin-top: 2.2rem;
+  padding-left: 1.6rem;
+
+  /* keep it not too wide */
+  max-width: 760px;
+
+  /* the x-position of the timeline line */
+  --timeline-x: 0.6rem;
+}
+
+/* draw the vertical line (instead of border-left) */
+.research-timeline::before {
+  content: "";
+  position: absolute;
+  left: var(--timeline-x);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(140, 160, 170, 0.45);
+}
+
+/* each entry is relative so marker can be positioned */
+.r-entry {
+  position: relative;
+}
+
+/* marker (default: hollow square) sits ON the line */
+.r-entry::before {
+  content: "";
+  position: absolute;
+
+  /* center marker on the line */
+  width: 0.62rem;
+  height: 0.62rem;
+  left: calc(var(--timeline-x) - 0.31rem); /* half of width */
+
+  top: 0.55rem;
+  background: var(--bg-color);
+  border: 1px solid rgba(140, 160, 170, 0.85);
+}
+
+/* published marker becomes solid */
+.r-entry.published::before {
+  background: var(--text-color);
+  border-color: var(--text-color);
+}
+
+/* dark mode: make line/marker visible + published marker white */
+@media (prefers-color-scheme: dark) {
+  .research-timeline::before {
+    background: rgba(230, 237, 243, 0.35);
+  }
+
+  .r-entry::before {
+    border-color: rgba(230, 237, 243, 0.75);
+  }
+
+  .r-entry.published::before {
+    background: rgba(230, 237, 243, 0.95);
+    border-color: rgba(230, 237, 243, 0.95);
+  }
+}
+
+/* manual dark override too (if you use html[data-theme="dark"]) */
+html[data-theme="dark"] .research-timeline::before {
+  background: rgba(230, 237, 243, 0.35);
+}
+html[data-theme="dark"] .r-entry::before {
+  border-color: rgba(230, 237, 243, 0.75);
+}
+html[data-theme="dark"] .r-entry.published::before {
+  background: rgba(230, 237, 243, 0.95);
+  border-color: rgba(230, 237, 243, 0.95);
+}
+
+/* mobile tweak */
+@media (max-width: 700px) {
+  .research-timeline {
+    padding-left: 1.2rem;
+    --timeline-x: 0.4rem;
+  }
+
+  .r-entry::before {
+    top: 0.45rem;
+  }
+}
 
