@@ -61,7 +61,7 @@ permalink: /research/
         <div class="r-date">2023</div>
       </div>
       <div class="r-desc">
-        We design a bionic lightweight limb leg unit for hydraulic quadruped using topology optimization and additive manufacturing, achieving reduced weight and improved performance.
+        We design a bionic lightweight limb leg unit for hydraulic quadruped using topology optimization and additive manufacturing, reduced weight and improved performance.
       </div>
       <div class="r-tags">
         Bionic Design · Topology Optimization · Additive Manufacturing · Hydraulic Quadruped Robots
