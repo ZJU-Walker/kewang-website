@@ -1,5 +1,5 @@
 /* =========================
-   Day / Night Theme
+   Global theme & typography
    ========================= */
 
 :root {
@@ -7,6 +7,9 @@
   --text-color: #2b2b2b;
   --accent-color: #3a6f5c;
   --border-color: #d6d1c4;
+
+  /* global font scale */
+  --base-font-size: 1.05rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,110 +21,79 @@
   }
 }
 
-/* Manual override */
-html[data-theme="light"] {
-  --bg-color: #f5f1e8;
-  --text-color: #2b2b2b;
-  --accent-color: #3a6f5c;
-  --border-color: #d6d1c4;
-}
-
-html[data-theme="dark"] {
-  --bg-color: #0b1d2d;
-  --text-color: #e6edf3;
-  --accent-color: #6fb1ff;
-  --border-color: #1e3a5a;
-}
-
 html,
 body {
-  background-color: var(--bg-color) !important;
-  color: var(--text-color) !important;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   font-family: "JetBrains Mono", monospace;
+  font-size: var(--base-font-size);
+  line-height: 1.65;
 }
 
 a {
   color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 /* =========================
-   Layout (responsive)
+   Layout
    ========================= */
 
 .container {
-  max-width: min(1000px, calc(100vw - 3.5rem));
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
+  max-width: min(1000px, calc(100vw - 3rem));
+  padding: 0 1.5rem;
 }
 
 /* =========================
-   Home: Intro
+   Home intro
    ========================= */
 
 .home-intro {
   display: flex;
+  gap: 2rem;
+  margin: 2rem 0;
   align-items: flex-start;
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-  gap: clamp(1.2rem, 3vw, 2.2rem);
 }
 
 .profile-img {
-  width: clamp(180px, 14vw, 220px);
-  height: clamp(180px, 14vw, 220px);
+  width: 200px;
+  height: 200px;
   object-fit: cover;
-  object-position: center top;
-  border-radius: 14px;
   border: 1px solid var(--border-color);
 }
 
 .home-text {
-  max-width: 740px;
+  max-width: 760px;
 }
 
 .home-name {
   font-family: "Cormorant Garamond", serif;
+  font-size: 2.9rem;
   font-weight: 600;
-  font-size: 2.6rem;   /* desktop baseline */
-  line-height: 1.08;
-  letter-spacing: -0.01em;
-  margin: 0 0 0.9rem 0;
+  margin: 0 0 1rem 0;
 }
 
-
 .home-paragraph {
-  margin: 0 0 0.9rem 0;
-  max-width: 720px;
+  margin: 0 0 1rem 0;
   text-align: justify;
-  text-indent: 0;
-  white-space: normal;
   hyphens: auto;
 }
 
-.home-text a {
-  color: var(--accent-color);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--border-color);
-}
-
-.home-text a:hover {
-  border-bottom-color: var(--accent-color);
-}
-
-/* Buttons */
+/* buttons */
 .home-actions {
-  margin-top: 1.1rem;
+  margin-top: 1.2rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.6rem;
 }
 
 .home-btn {
-  display: inline-block;
-  padding: 0.35rem 0.7rem;
+  padding: 0.4rem 0.8rem;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  text-decoration: none;
   color: var(--text-color);
 }
 
@@ -129,17 +101,12 @@ a {
   border-color: var(--accent-color);
 }
 
-.home-btn.secondary {
-  opacity: 0.9;
-}
-
 /* =========================
-   Typewriter: 2-line stable + wrapping cursor
-   (No ellipsis, no layout jump)
+   Typewriter (2-line stable)
    ========================= */
 
 .typewriter-line {
-  margin-top: 1.1rem;
+  margin-top: 1.2rem;
   padding-top: 0.8rem;
   border-top: 1px dashed var(--border-color);
 
@@ -147,171 +114,165 @@ a {
   gap: 0.5rem;
   align-items: flex-start;
 
-  line-height: 1.4;
-  min-height: calc(2 * 1.4em); /* reserve 2 lines */
+  min-height: calc(2 * 1.4em);
+  font-size: 1rem;
   color: rgba(140, 160, 170, 0.9);
-  font-size: 0.98rem;
 }
 
 .tw-prompt {
   color: var(--accent-color);
-  flex: 0 0 auto;
 }
 
 .tw-text {
-  color: rgba(140, 160, 170, 0.95);
-  flex: 1 1 auto;
-  min-width: 0;
-
-  /* allow wrap, but limit height to 2 lines (no ellipsis) */
   white-space: normal;
   overflow: hidden;
   max-height: calc(2 * 1.4em);
-  text-overflow: clip;
 }
 
-/* cursor follows wrapping naturally */
 .tw-text::after {
   content: "▌";
-  display: inline-block;
   margin-left: 0.15rem;
-  animation: tw-blink 1s step-end infinite;
-  opacity: 0.9;
+  animation: blink 1s step-end infinite;
 }
 
-@keyframes tw-blink {
+@keyframes blink {
   50% { opacity: 0; }
 }
 
 /* =========================
-   Home: Education / Experience / News (stacked)
+   Home sections
    ========================= */
 
 .home-sections {
-  margin-top: 1.8rem;
+  margin-top: 2rem;
 }
 
-.home-section {
-  margin-bottom: 1.6rem;
-  max-width: 900px;
+.home-sections + .home-sections {
+  border-top: 1px dashed var(--border-color);
+  padding-top: 1.6rem;
 }
 
 .home-section h2 {
-  margin: 0 0 0.8rem 0;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
+  margin-bottom: 0.8rem;
 }
 
 .clean-list {
-  margin: 0;
-  padding-left: 1.1rem;
+  padding-left: 1.2rem;
 }
 
 .clean-list li {
-  margin: 0 0 0.7rem 0;
+  margin-bottom: 0.6rem;
   text-align: justify;
-  hyphens: auto;
 }
 
-/* Dates */
 .item-date {
   color: rgba(140, 160, 170, 0.8);
   font-size: 0.9em;
-  margin-left: 0.25rem;
 }
 
-/* News */
+/* News aligns date left */
 .news-list li {
   display: flex;
-  gap: 0.6rem;
+  gap: 0.7rem;
   align-items: baseline;
 }
 
-.news-list .item-date {
-  min-width: 4.5rem;
-  font-size: 0.85em;
-  color: rgba(140, 160, 170, 0.8);
-}
-
 /* =========================
-   Research project cards
+   Research timeline (PI-like)
    ========================= */
 
-.research-list {
+.research-timeline {
+  margin-top: 2.5rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid rgba(140, 160, 170, 0.5);
+  max-width: 760px;
+}
+
+.r-entry {
+  position: relative;
+  margin-bottom: 2.4rem;
+}
+
+.r-entry::before {
+  content: "";
+  position: absolute;
+  left: -0.35rem;
+  top: 0.5rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--bg-color);
+  border: 1px solid rgba(140, 160, 170, 0.8);
+}
+
+.r-content {
+  padding-left: 0.6rem;
+}
+
+.r-header {
   display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
-  margin-top: 1.5rem;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.project-card {
-  padding: 1.2rem 1.4rem;
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  background-color: transparent;
+.r-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
 }
 
-.project-title {
-  margin: 0 0 0.6rem 0;
-  font-size: 1.35rem;
-  line-height: 1.25;
-}
-
-.project-desc {
-  margin: 0 0 0.8rem 0;
-  text-align: justify;
-  hyphens: auto;
-}
-
-.project-meta {
+.r-date {
   font-size: 0.9rem;
-  color: rgba(140, 160, 170, 0.8);
+  color: rgba(140, 160, 170, 0.85);
+}
+
+.r-desc {
+  margin: 0.6rem 0;
+  line-height: 1.6;
+}
+
+.r-tags {
+  font-size: 0.9rem;
+  color: rgba(140, 160, 170, 0.75);
+}
+
+/* published emphasis */
+.r-entry.published .r-content {
+  border: 2px solid var(--text-color);
+  padding: 0.9rem;
+  margin-left: -0.9rem;
 }
 
 /* =========================
-   CV buttons (force apply)
+   Dark mode tweaks
    ========================= */
 
-.page .cv-links,
-main .cv-links {
-  display: flex;
-  gap: 1.2rem;
-  justify-content: center;
-  align-items: center;
-  margin-top: 3rem;
-}
+@media (prefers-color-scheme: dark) {
+  .research-timeline {
+    border-left-color: rgba(230, 237, 243, 0.4);
+  }
 
-.page .cv-btn,
-main .cv-btn {
-  padding: 0.55rem 1.4rem;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  text-decoration: none !important;
-  color: var(--text-color);
-  font-size: 0.95rem;
-  background: transparent;
-  transition: all 0.15s ease;
-}
+  .r-entry::before {
+    border-color: rgba(230, 237, 243, 0.8);
+  }
 
-.page .cv-btn:hover,
-main .cv-btn:hover {
-  background: rgba(100, 120, 130, 0.08);
-  border-color: var(--accent-color);
-  color: var(--accent-color);
+  .r-entry.published .r-content {
+    border-color: rgba(230, 237, 243, 0.9);
+  }
+
+  .r-entry.published::before {
+    background: rgba(230, 237, 243, 0.95);
+    border-color: rgba(230, 237, 243, 0.95);
+  }
 }
 
 /* =========================
-   Responsive breakpoints
+   Mobile
    ========================= */
-
-@media (max-width: 980px) {
-  .home-text { max-width: 100%; }
-}
 
 @media (max-width: 720px) {
-  .container {
-    max-width: calc(100vw - 2.2rem);
-    padding-left: 1.1rem;
-    padding-right: 1.1rem;
+  body {
+    --base-font-size: 1.1rem;
   }
 
   .home-intro {
@@ -319,295 +280,16 @@ main .cv-btn:hover {
     align-items: center;
   }
 
-  .home-text {
-    text-align: left;
-    max-width: 100%;
-  }
-
-  .home-paragraph {
-    text-align: left;
-  }
-
-  /* keep name readable on mobile */
   .home-name {
     font-size: 3.2rem;
-    line-height: 1.08;
-  }
-}
-
-@media (max-width: 420px) {
-  .home-btn {
-    padding: 0.32rem 0.6rem;
-    border-radius: 8px;
-  }
-}
-
-/* Force bigger name on mobile (override everything) */
-@media (max-width: 720px) {
-  .home-name {
-    font-size: 3.6rem !important;
-    line-height: 1.08 !important;
-  }
-}
-
-@media (max-width: 700px) {
-  .home-name {
-    font-size: 3.6rem !important;
-    line-height: 1.08 !important;
-  }
-}
-
-/* =========================
-   Home: dashed dividers between News / Education / Experience blocks
-   ========================= */
-
-/* Add divider ABOVE each home-sections block except the first one */
-.home-sections + .home-sections {
-  margin-top: 1.6rem;
-  padding-top: 1.6rem;
-  border-top: 1px dashed var(--border-color);
-}
-
-/* Two-column list layout (match News style) */
-.two-col-list li {
-  display: flex;
-  gap: 0.6rem;
-  align-items: baseline;
-}
-
-.two-col-list .item-date {
-  min-width: 4.5rem; /* same as news */
-  font-size: 0.85em;
-  color: rgba(140, 160, 170, 0.8);
-}
-
-/* subtle muted text for "(expected)" */
-.muted {
-  color: rgba(140, 160, 170, 0.8);
-  font-size: 0.9em;
-}
-
-/* =========================
-   Research: block list (like note cards)
-   ========================= */
-
-.research-blocks {
-  margin-top: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.r-item {
-  display: block;
-  padding: 1.15rem 1.25rem;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  text-decoration: none;
-  color: var(--text-color);
-  background: transparent;
-  transition: border-color 0.15s ease, transform 0.15s ease;
-}
-
-.r-item:hover {
-  border-color: var(--accent-color);
-  transform: translateY(-1px);
-}
-
-.r-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.r-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.r-date {
-  font-size: 0.95rem;
-  color: rgba(140, 160, 170, 0.85);
-  white-space: nowrap;
-}
-
-.r-desc {
-  margin-top: 0.55rem;
-  color: rgba(140, 160, 170, 0.95);
-  line-height: 1.55;
-  text-align: left;
-}
-
-.r-tags {
-  margin-top: 0.75rem;
-  font-size: 0.9rem;
-  color: rgba(140, 160, 170, 0.75);
-}
-
-/* Published / public items: black frame look */
-.r-item.published {
-  border-color: var(--text-color);
-  box-shadow: 6px 6px 0 rgba(0,0,0,0.25);
-}
-
-@media (prefers-color-scheme: dark) {
-  .r-item.published {
-    box-shadow: 6px 6px 0 rgba(0,0,0,0.45);
-  }
-}
-
-/* Mobile: stack title/date */
-@media (max-width: 700px) {
-  .r-head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-}
-
-/* =========================
-   Research: archival timeline style (pi-like)
-   ========================= */
-
-.research-timeline {
-  position: relative;
-  margin-top: 2rem;
-  padding-left: 1.6rem;
-
-  /* left vertical line */
-  border-left: 1px solid rgba(140, 160, 170, 0.5);
-
-  /* keep it not too wide */
-  max-width: 760px;
-}
-
-/* one entry */
-.r-entry {
-  position: relative;
-  margin-bottom: 2.2rem;
-}
-
-/* left marker (default: hollow) */
-.r-entry::before {
-  content: "";
-  position: absolute;
-  left: -0.35rem;
-  top: 0.45rem;
-  width: 0.55rem;
-  height: 0.55rem;
-  background: var(--bg-color);
-  border: 1px solid rgba(140, 160, 170, 0.8);
-}
-
-/* content block */
-.r-content {
-  padding-left: 0.6rem;
-}
-
-/* title + date */
-.r-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.r-title {
-  margin: 0;
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.r-date {
-  font-size: 0.9rem;
-  color: rgba(140, 160, 170, 0.85);
-  white-space: nowrap;
-}
-
-/* description */
-.r-desc {
-  margin: 0.5rem 0 0.6rem 0;
-  line-height: 1.6;
-  color: rgba(140, 160, 170, 0.95);
-  text-align: left;
-}
-
-/* tags */
-.r-tags {
-  font-size: 0.9rem;
-  color: rgba(140, 160, 170, 0.7);
-}
-
-/* =========================
-   Published emphasis (no round corners)
-   ========================= */
-
-.r-entry.published .r-content {
-  border: 2px solid var(--text-color);
-  padding: 0.85rem 0.9rem;
-  margin-left: -0.9rem;
-}
-
-/* =========================
-   Dark mode contrast boost + solid white marker for published
-   ========================= */
-
-@media (prefers-color-scheme: dark) {
-  .research-timeline {
-    border-left-color: rgba(230, 237, 243, 0.45);
   }
 
-  .r-entry::before {
-    background: var(--bg-color);
-    border-color: rgba(230, 237, 243, 0.8);
-  }
-
-  /* published frame becomes light */
-  .r-entry.published .r-content {
-    border-color: rgba(230, 237, 243, 0.9);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-  }
-
-  /* published marker becomes solid white */
-  .r-entry.published::before {
-    background: rgba(230, 237, 243, 0.95);
-    border-color: rgba(230, 237, 243, 0.95);
-  }
-}
-
-/* If you also support manual theme switching, keep this too */
-html[data-theme="dark"] .research-timeline {
-  border-left-color: rgba(230, 237, 243, 0.45);
-}
-html[data-theme="dark"] .r-entry::before {
-  border-color: rgba(230, 237, 243, 0.8);
-}
-html[data-theme="dark"] .r-entry.published .r-content {
-  border-color: rgba(230, 237, 243, 0.9);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-html[data-theme="dark"] .r-entry.published::before {
-  background: rgba(230, 237, 243, 0.95);
-  border-color: rgba(230, 237, 243, 0.95);
-}
-
-/* Mobile: stack title/date */
-@media (max-width: 700px) {
-  .research-timeline {
-    padding-left: 1.2rem;
+  .home-text {
+    max-width: 100%;
   }
 
   .r-header {
     flex-direction: column;
-    align-items: flex-start;
     gap: 0.2rem;
   }
-
-  .r-entry.published .r-content {
-    margin-left: -0.6rem;
-  }
 }
-
