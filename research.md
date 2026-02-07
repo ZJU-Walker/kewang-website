@@ -27,7 +27,7 @@ permalink: /research/
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">GRaD-Nav-Onboard: Vision-Based Drone Navigation</div>
-        <div class="r-date">2024–Present</div>
+        <div class="r-date">2025–Present</div>
       </div>
       <div class="r-desc">
         Vision-only onboard navigation for drones in dynamic environments, integrating efficient perception, velocity estimation, and safety-aware autonomy on embedded platforms.
