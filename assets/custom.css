@@ -574,3 +574,23 @@ html[data-theme="dark"] .r-entry.published::before {
     margin-bottom: 1.2rem;
   }
 }
+
+
+/* =========================
+   Improve text-to-frame spacing in timeline
+   ========================= */
+
+/* 所有 entry：文字整体离左边更远一点 */
+.r-entry {
+  padding-left: calc(var(--line-x) + var(--gutter) + 0.4rem);
+}
+
+/* published：框内文字更松一点 */
+.r-entry.published .r-body {
+  padding: 1.05rem 1.15rem;   /* 原来 ~0.85 / 0.95，整体放松 */
+}
+
+/* 未 published：给一点“隐形内边距”，看起来不贴边 */
+.r-entry:not(.published) .r-body {
+  padding-left: 0.15rem;
+}
