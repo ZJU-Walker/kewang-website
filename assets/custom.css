@@ -659,3 +659,13 @@ main .r-entry.published .r-body,
   min-width: 6rem;      /* 你可以微调：8rem ~ 10rem */
   flex-shrink: 0;
 }
+
+/* =========================
+   Navigation: underline current page
+   ========================= */
+
+header .menu a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
