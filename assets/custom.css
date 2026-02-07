@@ -656,6 +656,6 @@ main .r-entry.published .r-body,
 
 /* 固定日期列宽度，让右侧内容左对齐 */
 .home-sections ul.news-list .item-date {
-  min-width: 8rem;      /* 你可以微调：8rem ~ 10rem */
+  min-width: 4rem;      /* 你可以微调：8rem ~ 10rem */
   flex-shrink: 0;
 }
