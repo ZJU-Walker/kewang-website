@@ -5,7 +5,7 @@ title: Publications
 
 ## 2026
 **Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data** (Under Review)
-J. W. Kim*, **K. Wang***, Z. Fu, S. Chen, C. Zhao, J. Lai, and C. Finn (* Equal contribution)
+J. W. Kim*, **K. Wang* **, Z. Fu, S. Chen, C. Zhao, J. Lai, and C. Finn (* Equal contribution)
 
 
 ## 2024
