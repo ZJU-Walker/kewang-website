@@ -9,6 +9,6 @@ J. W. Kim\*, **K. Wang**\*, Z. Fu, S. Chen, C. Zhao, J. Lai, and C. Finn (\* Equ
 
 
 ## 2024
-Bionic lightweight design of limb leg units for hydraulic quadruped robots by additive manufacturing and topology optimization
+Bionic lightweight design of limb leg units for hydraulic quadruped robots by additive manufacturing and topology optimization, Bio-design and Manufacturing, 2024
 H. Zong, J. Zhang, L. Jiang, K. Zhang, J. Shen, Z. Lu, **K. Wang**, Y. Wang, and B. Xu
-Bio-design and Manufacturing, 2024
+
