@@ -1,5 +1,5 @@
 /* =========================
-   Global theme & typography
+   Theme (Day / Night)
    ========================= */
 
 :root {
@@ -8,7 +8,7 @@
   --accent-color: #3a6f5c;
   --border-color: #d6d1c4;
 
-  /* global font scale */
+  /* global font scale (slightly larger than default, but not huge) */
   --base-font-size: 1.05rem;
 }
 
@@ -21,10 +21,25 @@
   }
 }
 
+/* manual override support */
+html[data-theme="light"] {
+  --bg-color: #f5f1e8;
+  --text-color: #2b2b2b;
+  --accent-color: #3a6f5c;
+  --border-color: #d6d1c4;
+}
+
+html[data-theme="dark"] {
+  --bg-color: #031f26;
+  --text-color: #e6edf3;
+  --accent-color: #6fb1ff;
+  --border-color: #1e3a5a;
+}
+
 html,
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
   font-family: "JetBrains Mono", monospace;
   font-size: var(--base-font-size);
   line-height: 1.65;
@@ -32,11 +47,6 @@ body {
 
 a {
   color: var(--accent-color);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 /* =========================
@@ -44,25 +54,28 @@ a:hover {
    ========================= */
 
 .container {
-  max-width: min(1000px, calc(100vw - 3rem));
-  padding: 0 1.5rem;
+  max-width: min(980px, calc(100vw - 3rem));
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 /* =========================
-   Home intro
+   Home: Intro
    ========================= */
 
 .home-intro {
   display: flex;
   gap: 2rem;
-  margin: 2rem 0;
   align-items: flex-start;
+  margin-top: 1.8rem;
+  margin-bottom: 2rem;
 }
 
 .profile-img {
   width: 200px;
   height: 200px;
   object-fit: cover;
+  object-position: center top;
   border: 1px solid var(--border-color);
 }
 
@@ -72,8 +85,9 @@ a:hover {
 
 .home-name {
   font-family: "Cormorant Garamond", serif;
-  font-size: 2.9rem;
   font-weight: 600;
+  font-size: 2.9rem;
+  line-height: 1.05;
   margin: 0 0 1rem 0;
 }
 
@@ -83,7 +97,6 @@ a:hover {
   hyphens: auto;
 }
 
-/* buttons */
 .home-actions {
   margin-top: 1.2rem;
   display: flex;
@@ -92,8 +105,10 @@ a:hover {
 }
 
 .home-btn {
+  display: inline-block;
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--border-color);
+  text-decoration: none;
   color: var(--text-color);
 }
 
@@ -140,7 +155,7 @@ a:hover {
 }
 
 /* =========================
-   Home sections
+   Home sections: News / Education / Experience
    ========================= */
 
 .home-sections {
@@ -153,25 +168,27 @@ a:hover {
 }
 
 .home-section h2 {
-  font-size: 1.25rem;
-  margin-bottom: 0.8rem;
+  font-size: 1.15rem;
+  margin: 0 0 0.8rem 0;
 }
 
 .clean-list {
+  margin: 0;
   padding-left: 1.2rem;
 }
 
 .clean-list li {
-  margin-bottom: 0.6rem;
+  margin: 0 0 0.6rem 0;
   text-align: justify;
+  hyphens: auto;
 }
 
 .item-date {
   color: rgba(140, 160, 170, 0.8);
   font-size: 0.9em;
+  margin-right: 0.25rem;
 }
 
-/* News aligns date left */
 .news-list li {
   display: flex;
   gap: 0.7rem;
@@ -179,91 +196,135 @@ a:hover {
 }
 
 /* =========================
-   Research timeline (PI-like)
+   Research: PI-like timeline (not too wide, retro, no rounded corners)
    ========================= */
 
 .research-timeline {
-  margin-top: 2.5rem;
-  padding-left: 1.5rem;
-  border-left: 1px solid rgba(140, 160, 170, 0.5);
+  position: relative;
+  margin-top: 2.2rem;
+  padding-left: 1.6rem;
+
+  /* left vertical line */
+  border-left: 1px solid rgba(140, 160, 170, 0.45);
+
+  /* keep content narrower like PI */
   max-width: 760px;
 }
 
+/* each entry is a link block */
 .r-entry {
   position: relative;
-  margin-bottom: 2.4rem;
+  display: block;
+  color: var(--text-color);
+  text-decoration: none;
+  margin: 0 0 2.2rem 0;
 }
 
+/* left dot */
 .r-entry::before {
   content: "";
   position: absolute;
-  left: -0.35rem;
-  top: 0.5rem;
-  width: 0.55rem;
-  height: 0.55rem;
+  left: -0.38rem;
+  top: 0.55rem;
+  width: 0.62rem;
+  height: 0.62rem;
   background: var(--bg-color);
-  border: 1px solid rgba(140, 160, 170, 0.8);
+  border: 1px solid rgba(140, 160, 170, 0.85);
 }
 
-.r-content {
+/* text body */
+.r-body {
   padding-left: 0.6rem;
 }
 
-.r-header {
+/* header: title left, date right */
+.r-head {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
 }
 
+/* slightly smaller than your current (more PI-like) */
 .r-title {
-  font-size: 1.25rem;
+  font-size: 1.12rem;
   font-weight: 700;
-  margin: 0;
+  line-height: 1.35;
 }
 
 .r-date {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: rgba(140, 160, 170, 0.85);
+  white-space: nowrap;
 }
 
 .r-desc {
-  margin: 0.6rem 0;
+  margin-top: 0.55rem;
   line-height: 1.6;
+  color: rgba(140, 160, 170, 0.95);
+  text-align: left;
 }
 
 .r-tags {
+  margin-top: 0.65rem;
   font-size: 0.9rem;
-  color: rgba(140, 160, 170, 0.75);
+  color: rgba(140, 160, 170, 0.72);
 }
 
-/* published emphasis */
-.r-entry.published .r-content {
+/* published: framed + shadow (retro box), no rounded corners */
+.r-entry.published .r-body {
   border: 2px solid var(--text-color);
-  padding: 0.9rem;
-  margin-left: -0.9rem;
+  padding: 0.85rem 0.95rem;
+  margin-left: -0.95rem;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.22);
+}
+
+/* hover: subtle */
+.r-entry:hover .r-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 /* =========================
-   Dark mode tweaks
+   Dark mode: make line/frames visible + published dot filled white
    ========================= */
 
 @media (prefers-color-scheme: dark) {
   .research-timeline {
-    border-left-color: rgba(230, 237, 243, 0.4);
+    border-left-color: rgba(230, 237, 243, 0.35);
   }
 
   .r-entry::before {
-    border-color: rgba(230, 237, 243, 0.8);
+    border-color: rgba(230, 237, 243, 0.75);
   }
 
-  .r-entry.published .r-content {
+  .r-entry.published .r-body {
     border-color: rgba(230, 237, 243, 0.9);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
   }
 
+  /* published marker becomes solid white */
   .r-entry.published::before {
     background: rgba(230, 237, 243, 0.95);
     border-color: rgba(230, 237, 243, 0.95);
   }
+}
+
+/* manual dark override too */
+html[data-theme="dark"] .research-timeline {
+  border-left-color: rgba(230, 237, 243, 0.35);
+}
+html[data-theme="dark"] .r-entry::before {
+  border-color: rgba(230, 237, 243, 0.75);
+}
+html[data-theme="dark"] .r-entry.published .r-body {
+  border-color: rgba(230, 237, 243, 0.9);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
+}
+html[data-theme="dark"] .r-entry.published::before {
+  background: rgba(230, 237, 243, 0.95);
+  border-color: rgba(230, 237, 243, 0.95);
 }
 
 /* =========================
@@ -271,8 +332,14 @@ a:hover {
    ========================= */
 
 @media (max-width: 720px) {
-  body {
-    --base-font-size: 1.1rem;
+  :root {
+    --base-font-size: 1.08rem;
+  }
+
+  .container {
+    max-width: calc(100vw - 2.2rem);
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
   }
 
   .home-intro {
@@ -280,16 +347,25 @@ a:hover {
     align-items: center;
   }
 
-  .home-name {
-    font-size: 3.2rem;
-  }
-
   .home-text {
     max-width: 100%;
   }
 
-  .r-header {
+  .home-paragraph {
+    text-align: left;
+  }
+
+  .home-name {
+    font-size: 3.1rem;
+  }
+
+  .r-head {
     flex-direction: column;
-    gap: 0.2rem;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .r-entry.published .r-body {
+    margin-left: -0.6rem;
   }
 }
