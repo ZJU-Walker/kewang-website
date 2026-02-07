@@ -443,3 +443,119 @@ html[data-theme="dark"] .r-entry.published::before {
     top: 0.9rem;
   }
 }
+
+/* =========================
+   Research timeline FIX (marker stays on the line, outside boxes)
+   Put this at the VERY END
+   ========================= */
+
+.research-timeline {
+  position: relative;
+  margin-top: 2.2rem;
+
+  --line-x: 0.75rem;   /* 竖线位置（从容器左边算） */
+  --marker: 0.62rem;   /* 方块尺寸 */
+  --gutter: 1.35rem;   /* 竖线到内容的间距 */
+
+  padding-left: 0 !important;   /* ✅ 关键：不要让容器整体右移 */
+  max-width: 760px;
+}
+
+/* 竖线 */
+.research-timeline::before {
+  content: "";
+  position: absolute;
+  left: var(--line-x);
+  top: 0.2rem;
+  bottom: 0.2rem;
+  width: 1px;
+  background: rgba(140, 160, 170, 0.45);
+}
+
+/* 每条 entry 自己负责把内容往右挪开 */
+.r-entry {
+  position: relative;
+  display: block;
+  margin: 0 0 2.2rem 0;
+  padding-left: calc(var(--line-x) + var(--gutter));  /* ✅ 内容缩进在这里 */
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* 方块：相对 entry 的左边（这时 entry 左边就是容器左边） */
+.r-entry::before {
+  content: "";
+  position: absolute;
+  width: var(--marker);
+  height: var(--marker);
+  left: calc(var(--line-x) - (var(--marker) / 2)); /* ✅ 正好压在竖线上 */
+  top: 1.05rem;
+
+  background: var(--bg-color);
+  border: 1px solid rgba(140, 160, 170, 0.85);
+  box-sizing: border-box;
+
+  z-index: 3; /* ✅ 确保在框上面，不会被盖住 */
+}
+
+/* body 不再额外加左 padding */
+.r-body {
+  padding-left: 0 !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* published 框：不要负 margin，否则会压回竖线 */
+.r-entry.published .r-body {
+  border: 2px solid var(--text-color);
+  padding: 0.85rem 0.95rem;
+  margin-left: 0 !important;   /* ✅ 关键：避免与线/方块重叠 */
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.22);
+}
+
+/* published 方块实心（light） */
+.r-entry.published::before {
+  background: var(--text-color);
+  border-color: var(--text-color);
+}
+
+/* dark mode */
+@media (prefers-color-scheme: dark) {
+  .research-timeline::before {
+    background: rgba(230, 237, 243, 0.35);
+  }
+  .r-entry::before {
+    border-color: rgba(230, 237, 243, 0.75);
+  }
+  .r-entry.published .r-body {
+    border-color: rgba(230, 237, 243, 0.9);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
+  }
+  .r-entry.published::before {
+    background: rgba(230, 237, 243, 0.95);
+    border-color: rgba(230, 237, 243, 0.95);
+  }
+}
+
+/* manual dark override */
+html[data-theme="dark"] .research-timeline::before {
+  background: rgba(230, 237, 243, 0.35);
+}
+html[data-theme="dark"] .r-entry::before {
+  border-color: rgba(230, 237, 243, 0.75);
+}
+html[data-theme="dark"] .r-entry.published::before {
+  background: rgba(230, 237, 243, 0.95);
+  border-color: rgba(230, 237, 243, 0.95);
+}
+
+/* mobile tweak */
+@media (max-width: 700px) {
+  .research-timeline {
+    --line-x: 0.55rem;
+    --gutter: 1.05rem;
+  }
+  .r-entry::before {
+    top: 0.9rem;
+  }
+}
