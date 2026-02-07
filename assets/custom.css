@@ -632,7 +632,7 @@ html[data-theme="dark"] .r-entry.published::before {
 
 .r-entry.published .r-body {
   /* 上  右   下   左 */
-  padding: 1.05rem 1.2rem 1.05rem 1.5rem;
+  padding: 1.15rem 1.2rem 1.05rem 1.5rem;
 }
 
 
