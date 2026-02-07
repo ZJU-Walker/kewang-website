@@ -1,51 +1,51 @@
 ---
 layout: page
 title: Research
+permalink: /research/
 ---
 
-<div class="research-list">
+<div class="research-blocks">
 
-  <div class="project-card">
-    <h2 class="project-title">Ego-Pi: Egocentric Human Data for Humanoid Manipulation</h2>
-
-    <p class="project-desc">
-      Ego-Pi explores fine-tuning large Vision-Language-Action (VLA) models for dexterous humanoid manipulation
-      using aligned egocentric human demonstrations and robot data.
-      The project focuses on cross-embodiment generalization, bimanual coordination, and scalable data curation
-      for real-world humanoid learning.
-    </p>
-
-    <p class="project-meta">
+  <!-- Published / Public -->
+  <a class="r-item published" href="#" target="_self" rel="noopener noreferrer">
+    <div class="r-head">
+      <div class="r-title">Ego-Pi: Egocentric Human Data for Humanoid Manipulation</div>
+      <div class="r-date">2025–Present</div>
+    </div>
+    <div class="r-desc">
+      Fine-tuning vision-language-action (VLA) models for dexterous humanoid manipulation using aligned egocentric human demonstrations and robot data.
+    </div>
+    <div class="r-tags">
       Vision-Language-Action · Humanoid Manipulation · Imitation Learning · Foundation Models
-    </p>
-  </div>
+    </div>
+  </a>
 
-  <div class="project-card">
-    <h2 class="project-title">GRaD-Nav-Onboard: Vision-Based Drone Navigation</h2>
+  <!-- Ongoing -->
+  <a class="r-item" href="#" target="_self" rel="noopener noreferrer">
+    <div class="r-head">
+      <div class="r-title">GRaD-Nav-Onboard: Vision-Based Drone Navigation</div>
+      <div class="r-date">2024–Present</div>
+    </div>
+    <div class="r-desc">
+      Onboard, vision-only navigation for drones in dynamic environments, integrating velocity estimation and safe real-time autonomy on embedded platforms.
+    </div>
+    <div class="r-tags">
+      Onboard Autonomy · Drone Navigation · Safe RL · Real-Time Systems
+    </div>
+  </a>
 
-    <p class="project-desc">
-      This project studies onboard, vision-only navigation for drones in dynamic environments.
-      We integrate Gaussian Splatting, velocity estimation networks, and reinforcement learning
-      to enable safe, real-time navigation with dynamic obstacles on embedded platforms.
-    </p>
-
-    <p class="project-meta">
-      Autonomous Drones · Reinforcement Learning · Safe Control · Onboard Perception
-    </p>
-  </div>
-
-  <div class="project-card">
-    <h2 class="project-title">Safety-Critical Control for Quadruped Robots</h2>
-
-    <p class="project-desc">
-      This line of work focuses on safety-critical control for quadruped robots using
-      Model Predictive Control (MPC) combined with Control Barrier Functions (CBFs).
-      The approach ensures safe navigation and motion generation under physical and environmental constraints.
-    </p>
-
-    <p class="project-meta">
-      Quadruped Robots · MPC · Control Barrier Functions · Safe Robotics
-    </p>
-  </div>
+  <!-- Example: Published item (replace with your actual published work) -->
+  <a class="r-item" href="#" target="_self" rel="noopener noreferrer">
+    <div class="r-head">
+      <div class="r-title">Safety-Critical Control for Quadruped Robots (MPC + CBF)</div>
+      <div class="r-date">2023</div>
+    </div>
+    <div class="r-desc">
+      Safety-aware locomotion and navigation using control barrier functions integrated with model predictive control for reliable deployment.
+    </div>
+    <div class="r-tags">
+      Safety-Critical Control · MPC · Control Barrier Functions · Quadrupeds
+    </div>
+  </a>
 
 </div>
