@@ -634,3 +634,36 @@ html[data-theme="dark"] .r-entry.published::before {
   /* 上  右   下   左 */
   padding: 1.05rem 1.2rem 1.05rem 1.5rem;
 }
+
+
+/* =========================
+   Home mobile: align Education / Experience with News (no left indent)
+   ========================= */
+@media (max-width: 768px) {
+  /* 只针对 Home 的 Education/Experience（two-col-list） */
+  .home-sections ul.clean-list.two-col-list {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .home-sections ul.clean-list.two-col-list li {
+    margin-left: 0 !important;
+  }
+
+  .home-sections ul.clean-list.two-col-list li::marker {
+    content: "" !important;
+  }
+
+  /* 让两列效果在手机上和 News 一样（日期 + 内容） */
+  .home-sections ul.clean-list.two-col-list li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: baseline;
+  }
+
+  .home-sections ul.clean-list.two-col-list .item-date {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
