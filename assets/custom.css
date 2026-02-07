@@ -369,3 +369,44 @@ html[data-theme="dark"] .r-entry.published::before {
     margin-left: -0.6rem;
   }
 }
+
+/* =========================
+   Fix Home layout drift (override theme defaults)
+   ========================= */
+
+/* Ensure Home intro text is left-aligned and wraps normally */
+.home-text {
+  text-align: left !important;
+}
+
+.home-paragraph {
+  text-align: left !important;      /* remove that centered/monospace-poem look */
+  white-space: normal !important;   /* avoid pre-like wrapping */
+  word-break: normal !important;
+  overflow-wrap: anywhere;          /* prevent long words/links breaking layout */
+  max-width: 760px;
+}
+
+/* Keep typewriter line only (not affecting paragraphs) */
+.typewriter-line {
+  text-align: left !important;
+}
+
+/* Make the whole page content not centered by theme */
+main, .page, .container {
+  text-align: left;
+}
+
+.profile-img {
+  width: 190px;
+  height: 190px;
+  border-radius: 6px;
+}
+
+.news-list {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+.news-list li::marker { content: ""; }
+
