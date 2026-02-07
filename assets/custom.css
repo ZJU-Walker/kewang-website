@@ -650,28 +650,3 @@ main .r-entry.published .r-body,
   }
 }
 
-/* Home lists: standard date column alignment for .news-list */
-.home-sections ul.clean-list {
-  list-style: none;
-  padding-left: 0;
-  margin-left: 0;
-}
-.home-sections ul.clean-list li::marker { content: ""; }
-
-.home-sections ul.news-list li {
-  display: grid;
-  grid-template-columns: var(--date-col, 10ch) 1fr;
-  column-gap: 0.8rem;
-  align-items: start;
-}
-
-.home-sections ul.news-list .item-date {
-  white-space: normal;   /* ✅ allow wrap */
-  line-height: 1.35;
-}
-
-@media (max-width: 768px) {
-  .home-sections ul.news-list li {
-    grid-template-columns: var(--date-col-mobile, 9ch) 1fr;
-  }
-}

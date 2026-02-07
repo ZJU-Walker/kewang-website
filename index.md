@@ -78,12 +78,10 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
 <div class="home-sections">
   <div class="home-section">
     <h2>Education</h2>
-
-    <!-- ✅ changed: use the same class as News -->
-    <ul class="clean-list news-list">
+    <ul class="clean-list two-col-list">
       <li>
         <span class="item-date">2024–2026</span>
-        Stanford University — M.S. Mechanical Engineering
+        Stanford University — M.S. Mechanical Engineering <span class="muted"></span>
       </li>
       <li>
         <span class="item-date">2020–2024</span>
@@ -97,9 +95,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
 <div class="home-sections">
   <div class="home-section">
     <h2>Experience</h2>
-
-    <!-- ✅ changed: use the same class as News -->
-    <ul class="clean-list news-list">
+    <ul class="clean-list two-col-list">
       <li>
         <span class="item-date">2024–Present</span>
         Research Assistant, Stanford Artificial Intelligence Laboratory (SAIL)
