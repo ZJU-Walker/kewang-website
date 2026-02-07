@@ -196,43 +196,14 @@ a {
 }
 
 /* =========================
-   Research: PI-like timeline (not too wide, retro, no rounded corners)
+   Research: base text styles (no timeline geometry here)
    ========================= */
-
-.research-timeline {
-  position: relative;
-  margin-top: 2.2rem;
-  padding-left: 1.6rem;
-
-
-  /* keep content narrower like PI */
-  max-width: 760px;
-}
 
 /* each entry is a link block */
 .r-entry {
-  position: relative;
   display: block;
   color: var(--text-color);
   text-decoration: none;
-  margin: 0 0 2.2rem 0;
-}
-
-/* left dot */
-.r-entry::before {
-  content: "";
-  position: absolute;
-  left: -0.38rem;
-  top: 0.55rem;
-  width: 0.62rem;
-  height: 0.62rem;
-  background: var(--bg-color);
-  border: 1px solid rgba(140, 160, 170, 0.85);
-}
-
-/* text body */
-.r-body {
-  padding-left: 0.6rem;
 }
 
 /* header: title left, date right */
@@ -269,60 +240,11 @@ a {
   color: rgba(140, 160, 170, 0.72);
 }
 
-/* published: framed + shadow (retro box), no rounded corners */
-.r-entry.published .r-body {
-  border: 2px solid var(--text-color);
-  padding: 0.85rem 0.95rem;
-  margin-left: -0.95rem;
-  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.22);
-}
-
 /* hover: subtle */
 .r-entry:hover .r-title {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-}
-
-/* =========================
-   Dark mode: make line/frames visible + published dot filled white
-   ========================= */
-
-@media (prefers-color-scheme: dark) {
-  .research-timeline {
-    border-left-color: rgba(230, 237, 243, 0.35);
-  }
-
-  .r-entry::before {
-    border-color: rgba(230, 237, 243, 0.75);
-  }
-
-  .r-entry.published .r-body {
-    border-color: rgba(230, 237, 243, 0.9);
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
-  }
-
-  /* published marker becomes solid white */
-  .r-entry.published::before {
-    background: rgba(230, 237, 243, 0.95);
-    border-color: rgba(230, 237, 243, 0.95);
-  }
-}
-
-/* manual dark override too */
-html[data-theme="dark"] .research-timeline {
-  border-left-color: rgba(230, 237, 243, 0.35);
-}
-html[data-theme="dark"] .r-entry::before {
-  border-color: rgba(230, 237, 243, 0.75);
-}
-html[data-theme="dark"] .r-entry.published .r-body {
-  border-color: rgba(230, 237, 243, 0.9);
-  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
-}
-html[data-theme="dark"] .r-entry.published::before {
-  background: rgba(230, 237, 243, 0.95);
-  border-color: rgba(230, 237, 243, 0.95);
 }
 
 /* =========================
@@ -361,10 +283,6 @@ html[data-theme="dark"] .r-entry.published::before {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
-  }
-
-  .r-entry.published .r-body {
-    margin-left: -0.6rem;
   }
 }
 
@@ -408,61 +326,78 @@ main, .page, .container {
 }
 .news-list li::marker { content: ""; }
 
-/* =========================
-   Research timeline: marker sits ON the line
-   Paste this at the END of custom.css
-   ========================= */
+/* =========================================================
+   ✅ Research timeline (single-source-of-truth, FIXED)
+   Put this at the END of custom.css
+   ========================================================= */
 
 .research-timeline {
   position: relative;
   margin-top: 2.2rem;
-  padding-left: 1.6rem;
 
-  /* keep it not too wide */
+  /* tune these 3 to control alignment */
+  --line-x: 0.75rem;        /* x position of the vertical line */
+  --marker: 0.62rem;        /* square size */
+  --gutter: 1.35rem;        /* space between line and content */
+
+  /* content starts after line + gutter */
+  padding-left: calc(var(--line-x) + var(--gutter));
   max-width: 760px;
-
-  /* the x-position of the timeline line */
-  --timeline-x: 0.6rem;
 }
 
-/* draw the vertical line (instead of border-left) */
+/* draw the single vertical line */
 .research-timeline::before {
   content: "";
   position: absolute;
-  left: var(--timeline-x);
-  top: 0;
-  bottom: 0;
+  left: var(--line-x);
+  top: 0.2rem;
+  bottom: 0.2rem;
   width: 1px;
   background: rgba(140, 160, 170, 0.45);
 }
 
-/* each entry is relative so marker can be positioned */
+/* entry spacing */
 .r-entry {
   position: relative;
+  margin: 0 0 2.2rem 0;
 }
 
-/* marker (default: hollow square) sits ON the line */
+/* marker sits EXACTLY on the line */
 .r-entry::before {
   content: "";
   position: absolute;
+  width: var(--marker);
+  height: var(--marker);
+  left: calc(var(--line-x) - (var(--marker) / 2));
 
-  /* center marker on the line */
-  width: 0.62rem;
-  height: 0.62rem;
-  left: calc(var(--timeline-x) - 0.31rem); /* half of width */
+  /* align marker with first text line */
+  top: 1.05rem;
 
-  top: 0.55rem;
   background: var(--bg-color);
   border: 1px solid rgba(140, 160, 170, 0.85);
+  box-sizing: border-box;
 }
 
-/* published marker becomes solid */
+/* body should NOT add extra left padding (timeline already did) */
+.r-body {
+  padding-left: 0 !important;
+}
+
+/* published frame (NO negative margin -> no overlap) */
+.r-entry.published .r-body {
+  border: 2px solid var(--text-color);
+  padding: 0.85rem 0.95rem;
+  margin-left: 0 !important;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.22);
+}
+
+/* published marker filled (light mode) */
 .r-entry.published::before {
   background: var(--text-color);
   border-color: var(--text-color);
 }
 
-/* dark mode: make line/marker visible + published marker white */
+/* dark mode */
 @media (prefers-color-scheme: dark) {
   .research-timeline::before {
     background: rgba(230, 237, 243, 0.35);
@@ -472,13 +407,18 @@ main, .page, .container {
     border-color: rgba(230, 237, 243, 0.75);
   }
 
+  .r-entry.published .r-body {
+    border-color: rgba(230, 237, 243, 0.9);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
+  }
+
   .r-entry.published::before {
     background: rgba(230, 237, 243, 0.95);
     border-color: rgba(230, 237, 243, 0.95);
   }
 }
 
-/* manual dark override too (if you use html[data-theme="dark"]) */
+/* manual dark override */
 html[data-theme="dark"] .research-timeline::before {
   background: rgba(230, 237, 243, 0.35);
 }
@@ -493,23 +433,11 @@ html[data-theme="dark"] .r-entry.published::before {
 /* mobile tweak */
 @media (max-width: 700px) {
   .research-timeline {
-    padding-left: 1.2rem;
-    --timeline-x: 0.4rem;
+    --line-x: 0.55rem;
+    --gutter: 1.05rem;
   }
 
   .r-entry::before {
-    top: 0.45rem;
+    top: 0.9rem;
   }
-}
-
-/* Ensure published vs ongoing markers differ in LIGHT mode too */
-.r-entry::before {
-  background: var(--bg-color);
-  border-color: rgba(140, 160, 170, 0.85);
-}
-
-/* published = solid (light mode) */
-.r-entry.published::before {
-  background: var(--text-color);
-  border-color: var(--text-color);
 }
