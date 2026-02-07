@@ -9,7 +9,7 @@
   --border-color: #d6d1c4;
 
   /* global font scale (slightly larger than default, but not huge) */
-  --base-font-size: 1.0rem;
+  --base-font-size: 0.9rem;
 }
 
 @media (prefers-color-scheme: dark) {
