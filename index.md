@@ -110,7 +110,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
       </li>
       <li>
         <span class="item-date">2023</span>
-        Research Intern, UC Berkeley
+                Research Intern, UC Berkeley
       </li>
     </ul>
   </div>
