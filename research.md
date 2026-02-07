@@ -57,7 +57,7 @@ permalink: /research/
   <a class="r-entry published" href="https://link.springer.com/article/10.1007/s42242-023-00256-0" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
-        <div class="r-title">\Bionic lightweight design of limb leg units for hydraulic quadruped robots by additive manufacturing and topology optimization</div>
+        <div class="r-title">Bionic lightweight design of limb leg units for hydraulic quadruped robots by additive manufacturing and topology optimization</div>
         <div class="r-date">2023</div>
       </div>
       <div class="r-desc">
