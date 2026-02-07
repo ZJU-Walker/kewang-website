@@ -667,3 +667,50 @@ html[data-theme="dark"] .r-entry.published::before {
     white-space: nowrap;
   }
 }
+
+/* =========================
+   Home: aligned date column (wrap allowed)
+   Works for News + Education + Experience
+   ========================= */
+
+.home-sections ul.clean-list {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+.home-sections ul.clean-list li::marker { content: ""; }
+
+/* one variable controls date-column width */
+.home-sections {
+  --date-col: 9.5ch;   /* 你可以改大/改小：9ch ~ 12ch */
+  --row-gap: 0.7rem;
+}
+
+/* Apply the same 2-column grid to ALL home lists (News/Edu/Exp) */
+.home-sections ul.clean-list li {
+  display: grid;
+  grid-template-columns: var(--date-col) 1fr;
+  column-gap: var(--row-gap);
+  align-items: start;          /* 多行时顶端对齐 */
+}
+
+/* Date column: allow wrapping like News */
+.home-sections .item-date {
+  white-space: normal;         /* ✅ 允许换行 */
+  line-height: 1.35;
+  color: rgba(140, 160, 170, 0.8);
+  font-size: 0.9em;
+}
+
+/* The right column text naturally aligns */
+.home-sections ul.clean-list li > :not(.item-date) {
+  min-width: 0;                /* 防止长单词把布局撑爆 */
+}
+
+/* Mobile: slightly wider date column so it wraps nicely */
+@media (max-width: 768px) {
+  .home-sections {
+    --date-col: 8.5ch;          /* 手机上可以小一点 */
+    --row-gap: 0.8rem;
+  }
+}
