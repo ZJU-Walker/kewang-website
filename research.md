@@ -38,7 +38,7 @@ permalink: /research/
     </div>
   </a>
 
-  <!-- Published -->
+  <!-- unPublished -->
   <a class="r-entry" href="#" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
@@ -50,6 +50,21 @@ permalink: /research/
       </div>
       <div class="r-tags">
         Safety-Critical Control · MPC · Control Barrier Functions · Quadrupeds
+      </div>
+    </div>
+  </a>
+
+  <a class="r-entry published" href="https://link.springer.com/article/10.1007/s42242-023-00256-0" target="_self" rel="noopener noreferrer">
+    <div class="r-body">
+      <div class="r-head">
+        <div class="r-title">\Bionic lightweight design of limb leg units for hydraulic quadruped robots by additive manufacturing and topology optimization</div>
+        <div class="r-date">2023</div>
+      </div>
+      <div class="r-desc">
+        We propose a bionic lightweight limb leg unit for hydraulic quadruped robots using topology optimization and additive manufacturing. The optimized design significantly reduces structural weight while maintaining stiffness, leading to improved dynamic performance validated through simulation and experiments.
+      </div>
+      <div class="r-tags">
+        Bionic Design · Topology Optimization · Additive Manufacturing · Hydraulic Quadruped Robots
       </div>
     </div>
   </a>
