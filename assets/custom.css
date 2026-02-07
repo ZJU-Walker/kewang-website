@@ -502,3 +502,14 @@ html[data-theme="dark"] .r-entry.published::before {
   }
 }
 
+/* Ensure published vs ongoing markers differ in LIGHT mode too */
+.r-entry::before {
+  background: var(--bg-color);
+  border-color: rgba(140, 160, 170, 0.85);
+}
+
+/* published = solid (light mode) */
+.r-entry.published::before {
+  background: var(--text-color);
+  border-color: var(--text-color);
+}
