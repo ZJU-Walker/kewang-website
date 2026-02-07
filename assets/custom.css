@@ -594,3 +594,35 @@ html[data-theme="dark"] .r-entry.published::before {
 .r-entry:not(.published) .r-body {
   padding-left: 0.15rem;
 }
+
+/* =========================
+   Mobile: align Education / Experience with News
+   ========================= */
+
+@media (max-width: 768px) {
+  /* 统一所有 clean-list 在手机端的左边缩进 */
+  .clean-list {
+    list-style: none;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .clean-list li {
+    margin-left: 0 !important;
+  }
+
+  /* 去掉默认圆点 marker */
+  .clean-list li::marker {
+    content: "";
+  }
+
+  /* 如果你有些 section 用的是普通 ul 而不是 clean-list，也一起统一 */
+  .home-sections ul {
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+  .home-sections ul li::marker {
+    content: "";
+  }
+}
+
