@@ -559,3 +559,18 @@ html[data-theme="dark"] .r-entry.published::before {
     top: 0.9rem;
   }
 }
+
+/* =========================
+   FORCE mobile name size (Ke Wang)
+   ========================= */
+
+@media (max-width: 768px) {
+  body .home-name,
+  main .home-name,
+  .page .home-name {
+    font-size: clamp(3.4rem, 9vw, 4.2rem) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.015em;
+    margin-bottom: 1.2rem;
+  }
+}
