@@ -7,7 +7,7 @@ title: CV
   <a class="cv-btn secondary"
      href="{{ "/assets/CV_KE_2.pdf" | relative_url }}"
      download>
-    Download
+    Download CV (PDF)
   </a>
 </div>
 
