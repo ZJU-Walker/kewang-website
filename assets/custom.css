@@ -636,3 +636,16 @@ html[data-theme="dark"] .r-entry.published::before {
 }
 
 
+/* Force padding inside published research cards */
+body .r-entry.published .r-body,
+main .r-entry.published .r-body,
+.page .r-entry.published .r-body {
+  padding: 1.15rem 1.2rem 1.05rem 1.5rem !important;
+}
+@media (max-width: 768px) {
+  body .r-entry.published .r-body,
+  main .r-entry.published .r-body,
+  .page .r-entry.published .r-body {
+    padding: 1.15rem 1.2rem 1.05rem 1.5rem !important;
+  }
+}
