@@ -4,6 +4,11 @@ title: Research
 permalink: /research/
 ---
 
+<div class="typewriter-line research-typewriter">
+  <span class="tw-prompt">&gt;</span>
+  <span id="tw-research" class="tw-text" data-text="I am building something interesting..."></span>
+</div>
+
 <div class="research-timeline">
 
   <!-- Published -->

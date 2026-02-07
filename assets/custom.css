@@ -677,3 +677,11 @@ header .menu a[aria-current="page"] {
 .publications-content {
   max-width: 760px;
 }
+
+/* =========================
+   Research page typewriter
+   ========================= */
+
+.research-typewriter {
+  margin-bottom: 1.5rem;
+}
