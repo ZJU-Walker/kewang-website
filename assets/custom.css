@@ -367,3 +367,22 @@ main .cv-btn:hover {
   padding-top: 1.6rem;
   border-top: 1px dashed var(--border-color);
 }
+
+/* Two-column list layout (match News style) */
+.two-col-list li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+
+.two-col-list .item-date {
+  min-width: 4.5rem; /* same as news */
+  font-size: 0.85em;
+  color: rgba(140, 160, 170, 0.8);
+}
+
+/* subtle muted text for "(expected)" */
+.muted {
+  color: rgba(140, 160, 170, 0.8);
+  font-size: 0.9em;
+}
