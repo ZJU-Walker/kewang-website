@@ -44,10 +44,10 @@ permalink: /research/
   </a>
 
   <!-- unPublished -->
-  <a class="r-entry" href="#" target="_self" rel="noopener noreferrer">
+  <a class="r-entry" href="https://zju-walker.github.io/cbf-project/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
-        <div class="r-title">Safety-Critical Control for Quadruped Robots (MPC + CBF)</div>
+        <div class="r-title">Safety-Critical Control for Legged Robots (MPC + CBF)</div>
         <div class="r-date">2023</div>
       </div>
       <div class="r-desc">
