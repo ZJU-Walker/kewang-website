@@ -624,6 +624,16 @@ html[data-theme="dark"] .r-entry.published::before {
   .home-sections ul li::marker {
     content: "";
   }
+
+  /* Stack date above description on mobile so right text aligns properly */
+  .news-list li {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .news-list .item-date {
+    min-width: unset;
+  }
 }
 
 /* =========================
