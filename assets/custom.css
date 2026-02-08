@@ -678,6 +678,12 @@ header .menu a[aria-current="page"] {
   max-width: 760px;
 }
 
+/* Publication venue/journal name styling */
+.venue {
+  font-style: italic;
+  color: var(--muted-color, rgba(140, 160, 170, 0.85));
+}
+
 /* =========================
    Research page typewriter
    ========================= */
