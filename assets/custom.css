@@ -633,6 +633,7 @@ html[data-theme="dark"] .r-entry.published::before {
 
   .news-list .item-date {
     min-width: unset;
+    white-space: nowrap;
   }
 }
 
