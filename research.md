@@ -28,7 +28,7 @@ permalink: /research/
   </a>
 
   <!-- Ongoing -->
-  <a class="r-entry" href="#" target="_self" rel="noopener noreferrer">
+  <a class="r-entry" href="https://zju-walker.github.io/gradnav-onboard-web/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">GRaD-Nav-Onboard: Vision-Based Drone Navigation</div>
