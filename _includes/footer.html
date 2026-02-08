@@ -1,8 +1,4 @@
 <footer>
   {{ site.footer }}
-  <span class="site-copyright">&copy; <span id="year"></span> Ke Wang</span>
+  <span class="site-copyright">&copy; {{ site.time | date: '%Y' }} Ke Wang</span>
 </footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
