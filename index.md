@@ -24,8 +24,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
     </p>
 
     <p class="home-paragraph">
-      My research focuses on robot learning for real-world autonomy, including dexterous humanoid manipulation
-      with egocentric human data and onboard drone navigation in dynamic environments.
+      My research focuses on leveraging human data to train robots for dexterous manipulation, and on using GS-Splat–based simulation to generate scalable, high-fidelity training data for real-world robot autonomy.
     </p>
 
     <div class="home-actions">
