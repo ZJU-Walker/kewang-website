@@ -16,13 +16,11 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
     <h1 class="home-name">Ke Wang</h1>
 
     <p class="home-paragraph">
-      I am an incoming Ph.D. student at Stanford University and currently a Master's student in Mechanical Engineering at Stanford University and a Research Assistant at
-      Stanford Artificial Intelligence Laboratory (SAIL), advised by
+      I am an incoming Ph.D. student at Stanford University and currently a Master's student in Mechanical Engineering at Stanford University, advised by
       <a href="https://ai.stanford.edu/~cbfinn/" target="_blank" rel="noopener noreferrer">Prof. Chelsea Finn</a>
       and
       <a href="https://web.stanford.edu/~schwager/" target="_blank" rel="noopener noreferrer">Prof. Mac Schwager</a>.
     </p>
-
     <p class="home-paragraph">
       My research focuses on leveraging human data to train robots for dexterous manipulation, and on using GS-Splat–based simulation to generate scalable, high-fidelity training data for real-world robot autonomy.
     </p>
