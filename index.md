@@ -22,7 +22,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
       <a href="https://web.stanford.edu/~schwager/" target="_blank" rel="noopener noreferrer">Prof. Mac Schwager</a>.
     </p>
     <p class="home-paragraph">
-      My research focuses on leveraging human data to train robots for dexterous manipulation, and on using GS-Splat–based simulation to generate scalable, high-fidelity training data for real-world robot autonomy.
+      My research focuses on robot learning for real-world autonomy, particularly vision-language-action (VLA) models and dexterous manipulation.
     </p>
 
     <div class="home-actions">
