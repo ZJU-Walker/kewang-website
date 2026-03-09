@@ -56,10 +56,6 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
     <h2>News</h2>
     <ul class="clean-list news-list">
       <li>
-        <span class="item-date">Feb 2026</span>
-        Received admission offer to the Ph.D. program in Aeronautics & Astronautics at Stanford University.
-      </li>
-      <li>
         <span class="item-date">Jun 2025</span>
         Joined the Stanford Multi-Robot Systems Lab (MSL) as a Research Assistant.
       </li>
