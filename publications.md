@@ -6,6 +6,10 @@ title: Publications
 <div class="publications-content" markdown="1">
 
 ## 2026
+Breaking Lock-In: Preserving Steerability under Low-Data VLA Post-Training
+S. Huang, J. Shao, K. Wang, Q. Chen, J. Sun, Y. Guo, M. Schwager, and J. Bohg
+<span class="venue">arXiv, 2026</span>
+
 Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data
 J. W. Kim\*, **K. Wang**\*, Z. Fu, S. Chen, C. Zhao, J. Lai, and C. Finn (\* Equal contribution)
 <span class="venue">CVPR findings, 2026</span>
