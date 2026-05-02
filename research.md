@@ -12,10 +12,24 @@ permalink: /research/
 <div class="research-timeline">
 
   <!-- Published -->
+  <a class="r-entry published" href="https://arxiv.org/abs/2604.23121" target="_self" rel="noopener noreferrer">
+    <div class="r-body">
+      <div class="r-head">
+        <div class="r-title">Breaking Lock-In: Preserving Steerability under Low-Data VLA Post-Training</div>
+      </div>
+      <div class="r-desc">
+        Mitigating lock-in in low-data VLA post-training by preserving visual grounding and using test-time contrastive prompt guidance to improve instruction steerability.
+      </div>
+      <div class="r-tags">
+        Vision-Language-Action · Robot Learning · Post-Training · Manipulation
+      </div>
+    </div>
+  </a>
+
   <a class="r-entry published" href="https://zju-walker.github.io/ego-pi/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
-        <div class="r-title">Ego-Pi: Egocentric Human Data for Humanoid Manipulation</div>
+        <div class="r-title">Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data</div>
       </div>
       <div class="r-desc">
         Fine-tuning vision-language-action (VLA) models for dexterous humanoid manipulation using aligned egocentric human demonstrations and robot data.
