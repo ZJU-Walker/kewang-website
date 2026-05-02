@@ -12,7 +12,7 @@ permalink: /research/
 <div class="research-timeline">
 
   <!-- Published -->
-  <a class="r-entry published" href="https://arxiv.org/abs/2604.23121" target="_self" rel="noopener noreferrer">
+  <a class="r-entry published" href="https://suninghuang19.github.io/delock_page/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">Breaking Lock-In: Preserving Steerability under Low-Data VLA Post-Training</div>
