@@ -16,7 +16,6 @@ permalink: /research/
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">Ego-Pi: Egocentric Human Data for Humanoid Manipulation</div>
-        <div class="r-date">2025–Present</div>
       </div>
       <div class="r-desc">
         Fine-tuning vision-language-action (VLA) models for dexterous humanoid manipulation using aligned egocentric human demonstrations and robot data.
@@ -32,7 +31,6 @@ permalink: /research/
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">GRaD-Nav-Onboard: Vision-Based Drone Navigation</div>
-        <div class="r-date">2025–Present</div>
       </div>
       <div class="r-desc">
         Vision-only onboard navigation for drones in dynamic environments, integrating efficient perception, velocity estimation, and safety-aware autonomy on embedded platforms.
@@ -48,7 +46,6 @@ permalink: /research/
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">Safety-Critical Control for Legged Robots (MPC + CBF)</div>
-        <div class="r-date">2023</div>
       </div>
       <div class="r-desc">
         Safety-aware control using Control Barrier Functions integrated with Model Predictive Control (MPC), enabling reliable quadruped navigation under constraints.
@@ -63,7 +60,6 @@ permalink: /research/
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">Bionic lightweight design of limb leg units for hydraulic quadruped robots by additive manufacturing and topology optimization</div>
-        <div class="r-date">2023</div>
       </div>
       <div class="r-desc">
         We design a bionic lightweight limb leg unit for hydraulic quadruped using topology optimization and additive manufacturing, reduced weight and improved performance.
