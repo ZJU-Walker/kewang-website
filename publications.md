@@ -7,7 +7,7 @@ title: Publications
 
 ## 2026
 Breaking Lock-In: Preserving Steerability under Low-Data VLA Post-Training
-S. Huang, J. Shao, K. Wang, Q. Chen, J. Sun, Y. Guo, M. Schwager, and J. Bohg
+S. Huang, J. Shao, **K. Wang**, Q. Chen, J. Sun, Y. Guo, M. Schwager, and J. Bohg
 <span class="venue">arXiv, 2026</span>
 
 Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data
