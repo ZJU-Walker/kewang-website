@@ -35,7 +35,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
          href="mailto:kewalk@stanford.edu">Email</a>
 
       <a class="home-btn secondary"
-         href="https://scholar.google.com/citations?user=Fqchg9QAAAAJ&hl=en"
+         href="https://scholar.google.com/citations?user=DGQBYKgAAAAJ&hl=en"
          target="_blank"
          rel="noopener noreferrer">
         Google Scholar
