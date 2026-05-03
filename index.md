@@ -27,18 +27,25 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
 
     <div class="home-actions">
       <a class="home-btn"
-         href="https://github.com/ZJU-Walker"
-         target="_blank"
-         rel="noopener noreferrer">GitHub</a>
+        href="https://github.com/ZJU-Walker"
+        target="_blank"
+        rel="noopener noreferrer">GitHub</a>
 
       <a class="home-btn"
-         href="mailto:kewalk@stanford.edu">Email</a>
+        href="mailto:kewalk@stanford.edu">Email</a>
 
       <a class="home-btn secondary"
-         href="https://scholar.google.com/citations?user=DGQBYKgAAAAJ&hl=en"
-         target="_blank"
-         rel="noopener noreferrer">
+        href="https://scholar.google.com/citations?user=DGQBYKgAAAAJ&hl=en"
+        target="_blank"
+        rel="noopener noreferrer">
         Google Scholar
+      </a>
+
+      <a class="home-btn secondary"
+        href="https://x.com/ke_wang123"
+        target="_blank"
+        rel="noopener noreferrer">
+        X / Twitter
       </a>
     </div>
 
