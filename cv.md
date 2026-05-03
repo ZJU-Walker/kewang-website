@@ -39,6 +39,10 @@ title: CV
     <!-- ✅ changed to EXACTLY match News -->
     <ul class="clean-list news-list">
       <li>
+        <span class="item-date">2026–Present</span>
+        Teaching Assistant, CS224R: Deep Reinforcement Learning, Stanford University
+      </li>
+      <li>
         <span class="item-date">2024–Present</span>
         Research Assistant, Stanford Artificial Intelligence Laboratory (SAIL)
       </li>
