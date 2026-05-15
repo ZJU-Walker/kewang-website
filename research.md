@@ -26,7 +26,20 @@ permalink: /research/
     </div>
   </a>
 
-  <a class="r-entry published" href="https://zju-walker.github.io/ego-pi/" target="_self" rel="noopener noreferrer">
+  <!-- <a class="r-entry published" href="https://zju-walker.github.io/ego-pi/" target="_self" rel="noopener noreferrer">
+    <div class="r-body">
+      <div class="r-head">
+        <div class="r-title">Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data</div>
+      </div>
+      <div class="r-desc">
+        Fine-tuning vision-language-action (VLA) models for dexterous humanoid manipulation using aligned egocentric human demonstrations and robot data.
+      </div>
+      <div class="r-tags">
+        Vision-Language-Action · Humanoid Manipulation · Imitation Learning · Foundation Models
+      </div>
+    </div>
+  </a> -->
+  <a class="r-entry" href="https://zju-walker.github.io/ego-pi/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data</div>
