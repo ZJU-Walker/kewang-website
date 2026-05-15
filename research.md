@@ -55,7 +55,7 @@ permalink: /research/
     </div>
   </a>
 
-  <!-- unPublished -->
+  <!-- unPublished
   <a class="r-entry" href="https://zju-walker.github.io/cbf-project/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
@@ -68,7 +68,7 @@ permalink: /research/
         Safety-Critical Control · MPC · Control Barrier Functions · Quadrupeds
       </div>
     </div>
-  </a>
+  </a> -->
 
   <a class="r-entry published" href="https://link.springer.com/article/10.1007/s42242-023-00256-0" target="_self" rel="noopener noreferrer">
     <div class="r-body">
