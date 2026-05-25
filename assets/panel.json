@@ -1,0 +1,28 @@
+{
+  "profile": {
+    "name": "Ke Wang",
+    "tagline": "MS @ Stanford | Robotics | RL | Safe Control",
+    "email": "kewalk@stanford.edu",
+    "links": {
+      "github": "https://github.com/ZJU-Walker",
+      "scholar": "",
+      "linkedin": "",
+      "x": "",
+      "old_site": "https://zju-walker.github.io/"
+    }
+  },
+  "news": [
+    { "date": "2026-02-06", "text": "Launched the new academic website." }
+  ],
+  "publications": [
+    {
+      "key": "egopi",
+      "year": "2026",
+      "venue": "CVPR 2026 submission",
+      "title": "Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data",
+      "authors": "J. W. Kim*, Ke Wang*, ...",
+      "link": "",
+      "bibtex": "@inproceedings{egopi2026,\n  title={Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data},\n  author={Kim, Ji Woong and Wang, Ke and ...},\n  booktitle={CVPR},\n  year={2026}\n}"
+    }
+  ]
+}
