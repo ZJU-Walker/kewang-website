@@ -8,7 +8,11 @@ title: Publications
 ## 2026
 Breaking Lock-In: Preserving Steerability under Low-Data VLA Post-Training
 S. Huang, J. Shao, **K. Wang**, Q. Chen, J. Sun, Y. Guo, M. Schwager, and J. Bohg
-<span class="venue">arXiv, 2026</span>
+<span class="venue">In submission, 2026</span>
+
+WIGS: Training VLAs for Humanoid Loco-Manipulation in a 3DGS Simulator
+H. Kim, T. Chen, J. Sun, L. Osterberg, Q. Chen, **K. Wang**, and M. Schwager
+<span class="venue">In submission, 2026</span>
 
 Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data
 J. W. Kim\*, **K. Wang**\*, Z. Fu, S. Chen, C. Zhao, J. Lai, and C. Finn (\* Equal contribution)
