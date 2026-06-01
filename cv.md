@@ -1,15 +1,15 @@
 ---
 layout: page
-title: CV
+title: Experience
 ---
 
-<div class="cv-links">
+<!-- <div class="cv-links">
   <a class="cv-btn secondary"
      href="{{ "/assets/CV_KE_2.pdf" | relative_url }}"
      download>
     Download CV (PDF)
   </a>
-</div>
+</div> -->
 
 
 <!-- Education -->
