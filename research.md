@@ -26,7 +26,7 @@ permalink: /research/
     </div>
   </a>
 
-  <a class="r-entry published" href="https://kewang.ai/research/" target="_self" rel="noopener noreferrer">
+  <a class="r-entry published" href="https://egopipaper.github.io/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
         <div class="r-title">Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data</div>
