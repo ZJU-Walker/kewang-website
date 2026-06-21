@@ -84,8 +84,8 @@ a {
 }
 
 .home-name {
-  font-family: "Cormorant Garamond", serif;
-  font-weight: 600;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
   font-size: 2.9rem;
   line-height: 1.05;
   margin: 0 0 1rem 0;
