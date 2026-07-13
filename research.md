@@ -35,7 +35,7 @@ permalink: /research/
         LEGS composites the robot and objects over a photorealistic 3D Gaussian Splatting background inside MuJoCo, and procedurally generates labeled demonstrations — no teleoperation, no seed demos, no human video.
       </div>
       <div class="r-tags">
-        Vision-Language-Action · Robot Learning · Post-Training · Manipulation
+        Vision-Language-Action · Robot Learning · Gaussian Splatting
       </div>
     </div>
   </a>
