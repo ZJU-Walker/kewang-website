@@ -26,6 +26,20 @@ permalink: /research/
     </div>
   </a>
 
+  <a class="r-entry published" href="https://legsvla.github.io/" target="_self" rel="noopener noreferrer">
+    <div class="r-body">
+      <div class="r-head">
+        <div class="r-title">LEGS: Fine-Tuning Teleop-Free VLAs for Humanoid Loco-manipulation in an Embodied Gaussian Splatting World</div>
+      </div>
+      <div class="r-desc">
+        LEGS composites the robot and objects over a photorealistic 3D Gaussian Splatting background inside MuJoCo, and procedurally generates labeled demonstrations — no teleoperation, no seed demos, no human video.
+      </div>
+      <div class="r-tags">
+        Vision-Language-Action · Robot Learning · Post-Training · Manipulation
+      </div>
+    </div>
+  </a>
+
   <a class="r-entry published" href="https://egopipaper.github.io/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">
