@@ -16,7 +16,7 @@ H. Kim, T. Chen, J. Sun, L. Osterberg, Q. Chen, **K. Wang**, and M. Schwager
 
 Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data
 J. W. Kim\*, **K. Wang**\*, Z. Fu, S. Chen, C. Zhao, J. Lai, and C. Finn (\* Equal contribution)
-<span class="venue">CVPR findings, 2026</span>
+<span class="venue">CVPR, 2026</span>
 
 ## 2024
 Bionic lightweight design of limb leg units for hydraulic quadruped robots by additive manufacturing and topology optimization
