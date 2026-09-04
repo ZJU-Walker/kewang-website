@@ -10,7 +10,7 @@ Breaking Lock-In: Preserving Steerability under Low-Data VLA Post-Training
 S. Huang, J. Shao, **K. Wang**, Q. Chen, J. Sun, Y. Guo, M. Schwager, and J. Bohg
 <span class="venue">In submission, 2026</span>
 
-WIGS: Training VLAs for Humanoid Loco-Manipulation in a 3DGS Simulator
+LEGS: Fine-Tuning Teleop-Free VLAs for Humanoid Loco-manipulation in an Embodied Gaussian Splatting World
 H. Kim, T. Chen, J. Sun, L. Osterberg, Q. Chen, **K. Wang**, and M. Schwager
 <span class="venue">CoRL, 2026</span>
 
