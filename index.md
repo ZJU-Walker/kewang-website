@@ -16,7 +16,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
     <h1 class="home-name">Ke Wang</h1>
 
     <p class="home-paragraph">
-      I am a Ph.D. student at Stanford University, advised by
+      I am a Ph.D. student at Stanford University, working with
       <a href="https://ai.stanford.edu/~cbfinn/" target="_blank" rel="noopener noreferrer">Prof. Chelsea Finn</a>
       and
       <a href="https://web.stanford.edu/~schwager/" target="_blank" rel="noopener noreferrer">Prof. Mac Schwager</a>.
