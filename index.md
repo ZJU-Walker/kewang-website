@@ -22,7 +22,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
       <a href="https://web.stanford.edu/~schwager/" target="_blank" rel="noopener noreferrer">Prof. Mac Schwager</a>.
     </p>
     <p class="home-paragraph">
-      My research focuses on robot learning, with particular interests in long-context memory policies, vision-language-action models, and human-robot interaction.
+      My research focuses on robot learning, long context policy, reasoning and human-robot interaction.
     </p>
 
     <div class="home-actions">
