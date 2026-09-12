@@ -20,6 +20,10 @@ title: Experience
     <!-- ✅ changed to EXACTLY match News -->
     <ul class="clean-list news-list">
       <li>
+        <span class="item-date">2026–now</span>
+        Stanford University — Ph.D. Aero & Astro <span class="muted"></span>
+      </li>
+      <li>
         <span class="item-date">2024–2026</span>
         Stanford University — M.S. Mechanical Engineering <span class="muted"></span>
       </li>
@@ -39,7 +43,7 @@ title: Experience
     <!-- ✅ changed to EXACTLY match News -->
     <ul class="clean-list news-list">
       <li>
-        <span class="item-date">2026–Present</span>
+        <span class="item-date">2026 spring</span>
         Teaching Assistant, CS224R: Deep Reinforcement Learning, Stanford University
       </li>
       <li>

@@ -16,13 +16,13 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
     <h1 class="home-name">Ke Wang</h1>
 
     <p class="home-paragraph">
-      I am an incoming Ph.D. student at Stanford University and currently a Master's student in Mechanical Engineering at Stanford University, advised by
+      I am a Ph.D. student at Stanford University, advised by
       <a href="https://ai.stanford.edu/~cbfinn/" target="_blank" rel="noopener noreferrer">Prof. Chelsea Finn</a>
       and
       <a href="https://web.stanford.edu/~schwager/" target="_blank" rel="noopener noreferrer">Prof. Mac Schwager</a>.
     </p>
     <p class="home-paragraph">
-      My research focuses on robot learning for real-world autonomy, particularly vision-language-action (VLA) models and dexterous manipulation.
+      My research focuses on robot learning, with particular interests in long-context memory policies, vision-language-action models, and human-robot interaction.
     </p>
 
     <div class="home-actions">
