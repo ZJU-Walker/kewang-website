@@ -54,21 +54,6 @@ permalink: /research/
     </div>
   </a>
 
-  <!-- Ongoing -->
-  <a class="r-entry" href="https://zju-walker.github.io/gradnav-onboard-web/" target="_self" rel="noopener noreferrer">
-    <div class="r-body">
-      <div class="r-head">
-        <div class="r-title">GRaD-Nav-Onboard: Vision-Based Drone Navigation</div>
-      </div>
-      <div class="r-desc">
-        Vision-only onboard navigation for drones in dynamic environments, integrating efficient perception, velocity estimation, and safety-aware autonomy on embedded platforms.
-      </div>
-      <div class="r-tags">
-        Onboard Autonomy · Drone Navigation · Safe RL · Real-Time Systems
-      </div>
-    </div>
-  </a>
-
   <!-- unPublished
   <a class="r-entry" href="https://zju-walker.github.io/cbf-project/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
