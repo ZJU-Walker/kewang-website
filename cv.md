@@ -6,8 +6,9 @@ title: Experience
 <div class="cv-links">
   <a class="cv-btn secondary"
      href="{{ "/assets/CV_Ke_Wang.pdf" | relative_url }}"
-     download>
-    Download CV (PDF)
+     target="_blank"
+     rel="noopener">
+    View CV (PDF)
   </a>
 </div>
 
