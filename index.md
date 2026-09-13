@@ -7,7 +7,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
 
 <div class="home-intro">
   <img
-    src="{{ "/assets/img/profile.jpg" | relative_url }}"
+    src="{{ "/assets/img/keimage.png" | relative_url }}"
     alt="Ke Wang"
     class="profile-img"
   />
