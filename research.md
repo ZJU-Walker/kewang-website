@@ -12,6 +12,20 @@ permalink: /research/
 <div class="research-timeline">
 
   <!-- Published -->
+  <a class="r-entry published" href="https://ecomem.github.io/" target="_self" rel="noopener noreferrer">
+    <div class="r-body">
+      <div class="r-head">
+        <div class="r-title">ECoMEM: Explicit Concept Memory for Memory-Dependent Robot Control</div>
+      </div>
+      <div class="r-desc">
+        Adds explicit concept memory to VLA policies, preserving task-relevant past information for memory-dependent robot control.
+      </div>
+      <div class="r-tags">
+        Vision-Language-Action · Memory
+      </div>
+    </div>
+  </a>
+
   <a class="r-entry published" href="https://suninghuang19.github.io/delock_page/" target="_self" rel="noopener noreferrer">
     <div class="r-body">
       <div class="r-head">

@@ -6,9 +6,13 @@ title: Publications
 <div class="publications-content" markdown="1">
 
 ## 2026
+ECoMEM: Explicit Concept Memory for Memory-Dependent Robot Control
+Y. Liu, <strong>K. Wang</strong>, M. Schwager, Y. Xu, and J. Wu
+<span class="venue">arXiv, 2026</span>
+
 Breaking Lock-In: Preserving Steerability under Low-Data VLA Post-Training
 S. Huang, J. Shao, **K. Wang**, Q. Chen, J. Sun, Y. Guo, M. Schwager, and J. Bohg
-<span class="venue">In submission, 2026</span>
+<span class="venue">arXiv, 2026</span>
 
 LEGS: Fine-Tuning Teleop-Free VLAs for Humanoid Loco-manipulation in an Embodied Gaussian Splatting World
 H. Kim, T. Chen, J. Sun, L. Osterberg, Q. Chen, **K. Wang**, and M. Schwager
