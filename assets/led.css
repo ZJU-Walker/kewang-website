@@ -267,9 +267,10 @@ main h2::before {
   transition: opacity 0.4s ease;
 }
 
-/* the photo is hidden from the start so it never flashes before the dots
-   draw; assets/nojs.css (loaded via <noscript>) shows it when JS is off */
-.dot-portrait img.profile-img { opacity: 0; pointer-events: none; }
+/* the photo is not in the page at all (the script loads it from data-src),
+   so nothing can flash before the dots draw; an <img> only exists inside
+   <noscript> for browsers with JavaScript off */
+.dot-portrait img.profile-img { opacity: 1; }
 
 /* ---------- Research timeline ---------- */
 

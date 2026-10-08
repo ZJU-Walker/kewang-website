@@ -9,6 +9,7 @@
    data-crop   : x,y,w,h fractions of the photo to use (default: whole photo)
    data-levels : "off" to skip the automatic contrast stretch
    data-bg     : colour behind transparent pixels of a cut-out PNG (default black = unlit)
+   data-src    : photo URL; use this instead of an <img> so nothing shows before the dots
    data-colors : palette size after quantisation (default 28)
    data-gap    : gap between dots as a fraction of the pitch (default 0.2)
    data-dark   : luminance (0–255) below which a cell stays unlit (default 16)
@@ -118,7 +119,7 @@
   }
 
   function render(wrapper, animate) {
-    var img = wrapper.querySelector('img');
+    var img = wrapper._dotImage || wrapper.querySelector('img');
     if (!img || !img.naturalWidth) return;
 
     var pitch = parseFloat(wrapper.getAttribute('data-pitch')) || 3;
@@ -217,7 +218,15 @@
 
   function setup(wrapper) {
     var img = wrapper.querySelector('img');
-    if (!img) return;
+    if (!img) {
+      /* no <img> in the page: load the photo off-DOM so it can never flash */
+      var src = wrapper.getAttribute('data-src');
+      if (!src) return;
+      img = new Image();
+      img.decoding = 'async';
+      img.src = src;
+      wrapper._dotImage = img;
+    }
 
     var booted = false;
     var go = function () {
