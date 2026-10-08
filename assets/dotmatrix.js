@@ -5,7 +5,7 @@
 
    data-pitch  : grid spacing in CSS px (default 3 → ~100 dots across 320px)
    data-lift   : brightness lift, gamma style (default 1.15)
-   data-sat    : saturation multiplier (default 1.3)
+   data-sat    : saturation multiplier (default 1.5)
    data-crop   : x,y,w,h fractions of the photo to use (default: whole photo)
    data-levels : "off" to skip the automatic contrast stretch
    data-colors : palette size after quantisation (default 28)
@@ -73,22 +73,19 @@
     return { centers: centers, assign: assign };
   }
 
-  /* stretch each channel so the 1st..99th percentile spans 0..255;
-     faded photos otherwise turn into a wall of grey-brown dots */
+  /* stretch brightness so the 1st..99th luminance percentile spans 0..255.
+     All three channels get the same scale, so hues are preserved; faded
+     photos otherwise turn into a wall of grey dots */
   function autoLevels(samples) {
-    var n = samples.length, lo = [], hi = [], ch, i;
-    for (ch = 0; ch < 3; ch++) {
-      var vals = new Array(n);
-      for (i = 0; i < n; i++) vals[i] = samples[i][ch];
-      vals.sort(function (a, b) { return a - b; });
-      lo[ch] = vals[Math.floor(n * 0.01)];
-      hi[ch] = vals[Math.floor(n * 0.99)];
-      if (hi[ch] - lo[ch] < 32) { lo[ch] = 0; hi[ch] = 255; }
-    }
+    var n = samples.length, i, ch;
+    var l = new Array(n);
+    for (i = 0; i < n; i++) l[i] = lum(samples[i]);
+    l.sort(function (a, b) { return a - b; });
+    var lo = l[Math.floor(n * 0.01)], hi = l[Math.floor(n * 0.99)];
+    if (hi - lo < 32) return;
+    var scale = 255 / (hi - lo);
     for (i = 0; i < n; i++) {
-      for (ch = 0; ch < 3; ch++) {
-        samples[i][ch] = clamp255((samples[i][ch] - lo[ch]) * 255 / (hi[ch] - lo[ch]));
-      }
+      for (ch = 0; ch < 3; ch++) samples[i][ch] = clamp255((samples[i][ch] - lo) * scale);
     }
   }
 
@@ -129,7 +126,7 @@
     var lift_ = parseFloat(wrapper.getAttribute('data-lift'));
     if (isNaN(lift_)) lift_ = 1.15;
     var sat_ = parseFloat(wrapper.getAttribute('data-sat'));
-    if (isNaN(sat_)) sat_ = 1.3;
+    if (isNaN(sat_)) sat_ = 1.5;
 
     var canvas = wrapper.querySelector('canvas.dot-canvas');
     if (!canvas) {
@@ -161,10 +158,12 @@
       samples[n] = [data[n * 4], data[n * 4 + 1], data[n * 4 + 2]];
     }
     if (wrapper.getAttribute('data-levels') !== 'off') autoLevels(samples);
+    /* brighten and saturate before clustering so greens and greys land in
+       different palette entries instead of averaging into mud */
+    for (n = 0; n < samples.length; n++) samples[n] = saturate(lift(samples[n], lift_), sat_);
     var q = kmeans(samples, k, 8);
     var palette = q.centers.map(function (c) {
-      var s = saturate(lift(c, lift_), sat_);
-      return { rgb: 'rgb(' + Math.round(s[0]) + ',' + Math.round(s[1]) + ',' + Math.round(s[2]) + ')', lit: lum(s) >= dark };
+      return { rgb: 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')', lit: lum(c) >= dark };
     });
 
     var ctx = canvas.getContext('2d');

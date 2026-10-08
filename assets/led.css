@@ -19,8 +19,8 @@
 
   /* body text screen: dot pitch (CSS px) and dot radius */
   --screen-pitch: 2px;
-  --screen-dot: 0.62px;
-  --screen-edge: 0.95px;
+  --screen-dot: 0.74px;
+  --screen-edge: 1.05px;
 }
 
 /* ---------- Panel ---------- */
@@ -89,7 +89,7 @@ header .menu {
 header .menu ul li { margin-left: 1.4rem; }
 
 header .menu a {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -141,7 +141,7 @@ a:hover {
 
 .home-btn, .cv-btn {
   display: inline-block;
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -177,11 +177,11 @@ a:hover {
   margin: 0.1rem 0 1.2rem 0;
 }
 
-.home-paragraph { font-size: 1.02rem; line-height: 1.7; }
+.home-paragraph { font-size: 1.12rem; line-height: 1.75; }
 
 .typewriter-line {
   border-top: 2px dotted var(--led-ink-faint);
-  font-size: 1.1rem;
+  font-size: 1.18rem;
   font-weight: 700;
   color: var(--led-ink-dim);
 }
@@ -205,7 +205,7 @@ a:hover {
 .home-section h2,
 .publications-content h2,
 main h2 {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -229,7 +229,7 @@ main h2::before {
 
 .home-sections + .home-sections { border-top: 2px dotted var(--led-ink-faint); }
 
-.item-date { color: var(--led-ink-dim); font-size: 0.95em; font-weight: 800; letter-spacing: 0.03em; }
+.item-date { color: var(--led-ink-dim); font-size: 1em; font-weight: 800; letter-spacing: 0.03em; }
 
 /* the console theme prefixes list items with "-"; the LED list uses dates instead */
 .news-list li::before { content: none !important; }
@@ -240,8 +240,8 @@ main h2::before {
 .dot-portrait {
   position: relative;
   flex: none;
-  width: 320px;
-  height: 320px;
+  width: 330px;
+  height: 330px;
   background: #000;
   border: 2px dotted var(--led-ink-faint);
   padding: 6px;                        /* black bezel around the panel */
@@ -309,24 +309,24 @@ main h2::before {
 
 .r-entry, .r-entry:hover { background: none; box-shadow: none; color: var(--led-ink); }
 
-.r-title { font-size: 1.2rem; font-weight: 800; line-height: 1.35; letter-spacing: 0.01em; }
-.r-desc { color: #a3adb6; }
-.r-tags { color: var(--led-ink-dim); font-size: 0.9rem; letter-spacing: 0.04em; }
+.r-title { font-size: 1.32rem; font-weight: 800; line-height: 1.35; letter-spacing: 0.01em; }
+.r-desc { color: #a3adb6; font-size: 1.04rem; line-height: 1.7; }
+.r-tags { color: var(--led-ink-dim); font-size: 0.98rem; letter-spacing: 0.04em; }
 
-.research-typewriter { font-size: 1.1rem; border-top: none; }
+.research-typewriter { font-size: 1.18rem; border-top: none; }
 
 /* ---------- Publications ---------- */
 
-.publications-content p { line-height: 1.7; }
+.publications-content p { line-height: 1.75; font-size: 1.04rem; }
 .publications-content strong { color: var(--led-blue); font-weight: 700; }
-.venue { color: var(--led-ink-dim); font-style: italic; font-size: 0.95em; }
+.venue { color: var(--led-ink-dim); font-style: italic; font-size: 0.97em; }
 
 /* ---------- Footer ---------- */
 
 footer {
   border-top: 2px dotted var(--led-ink-faint) !important;
   color: var(--led-ink-dim) !important;
-  font-size: 0.95rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
 }
 
