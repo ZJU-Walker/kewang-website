@@ -10,7 +10,7 @@
   --border-color: rgba(236, 230, 214, 0.3);
 
   /* global font scale (slightly larger than default, but not huge) */
-  --base-font-size: 0.86rem;
+  --base-font-size: 0.9rem;
 }
 
 html,
@@ -230,7 +230,7 @@ a {
 
 @media (max-width: 720px) {
   :root {
-    --base-font-size: 1rem;
+    --base-font-size: 1.04rem;
   }
 
   .container {

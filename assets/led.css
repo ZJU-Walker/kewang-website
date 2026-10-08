@@ -177,7 +177,7 @@ a:hover {
   margin: 0.1rem 0 1.2rem 0;
 }
 
-.home-paragraph { font-size: 0.94rem; line-height: 1.7; }
+.home-paragraph { font-size: 0.98rem; line-height: 1.7; }
 
 .typewriter-line {
   border-top: 2px dotted var(--led-ink-faint);
@@ -267,8 +267,9 @@ main h2::before {
   transition: opacity 0.4s ease;
 }
 
-/* once the dots are drawn, the photo stays hidden (it only shows if JS fails) */
-.dot-portrait.is-ready img.profile-img { opacity: 0; pointer-events: none; }
+/* the photo is hidden from the start so it never flashes before the dots
+   draw; assets/nojs.css (loaded via <noscript>) shows it when JS is off */
+.dot-portrait img.profile-img { opacity: 0; pointer-events: none; }
 
 /* ---------- Research timeline ---------- */
 
@@ -308,15 +309,15 @@ main h2::before {
 
 .r-entry, .r-entry:hover { background: none; box-shadow: none; color: var(--led-ink); }
 
-.r-title { font-size: 1.1rem; font-weight: 800; line-height: 1.35; letter-spacing: 0.01em; }
-.r-desc { color: #a3adb6; font-size: 0.92rem; line-height: 1.65; }
+.r-title { font-size: 1.14rem; font-weight: 800; line-height: 1.35; letter-spacing: 0.01em; }
+.r-desc { color: #a3adb6; font-size: 0.95rem; line-height: 1.65; }
 .r-tags { color: var(--led-ink-dim); font-size: 0.86rem; letter-spacing: 0.04em; }
 
 .research-typewriter { font-size: 1rem; border-top: none; }
 
 /* ---------- Publications ---------- */
 
-.publications-content p { line-height: 1.7; font-size: 0.92rem; }
+.publications-content p { line-height: 1.7; font-size: 0.95rem; }
 .publications-content strong { color: var(--led-blue); font-weight: 700; }
 .venue { color: var(--led-ink-dim); font-style: italic; font-size: 0.97em; }
 
