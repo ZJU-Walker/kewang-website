@@ -267,9 +267,8 @@ main h2::before {
   transition: opacity 0.4s ease;
 }
 
-/* once the dots are drawn, hide the photo; hover shows it again */
-.dot-portrait.is-ready img.profile-img { opacity: 0; }
-.dot-portrait.is-ready:hover img.profile-img { opacity: 1; }
+/* once the dots are drawn, the photo stays hidden (it only shows if JS fails) */
+.dot-portrait.is-ready img.profile-img { opacity: 0; pointer-events: none; }
 
 /* ---------- Research timeline ---------- */
 
