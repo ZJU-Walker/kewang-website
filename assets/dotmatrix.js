@@ -105,7 +105,8 @@
     mid.width = cols * 4; mid.height = rows * 4;
     var mctx = mid.getContext('2d');
     mctx.imageSmoothingEnabled = true; mctx.imageSmoothingQuality = 'high';
-    /* transparent areas (e.g. a cut-out portrait) take the panel colour */
+    /* transparent areas (e.g. a cut-out portrait) take the panel colour;
+       black means unlit, so the figure floats on the page */
     mctx.fillStyle = bg || '#000';
     mctx.fillRect(0, 0, mid.width, mid.height);
     mctx.drawImage(img, sx, sy, sw, sh, 0, 0, mid.width, mid.height);
@@ -178,8 +179,7 @@
 
     function draw(progress) {
       ctx.globalAlpha = 1;
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);   /* unlit cells stay transparent */
       for (var y = 0; y < rows; y++) {
         for (var x = 0; x < cols; x++) {
           var p = palette[q.assign[y * cols + x]];

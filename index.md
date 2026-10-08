@@ -6,10 +6,10 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
 ---
 
 <div class="home-intro">
-  <div class="dot-portrait" data-pitch="2.5" data-colors="40" data-gap="0.14" data-lift="1.45" data-sat="1.45"
-       data-src="{{ "/assets/img/ke_try_soft.jpg" | relative_url }}"
+  <div class="dot-portrait" data-pitch="2.5" data-colors="40" data-gap="0.14" data-lift="1.3" data-sat="1.35" data-dark="22"
+       data-src="{{ "/assets/img/ke_try_float.png" | relative_url }}"
        role="img" aria-label="Ke Wang, drawn as a dot-matrix portrait">
-    <noscript><img src="{{ "/assets/img/ke_try_soft.jpg" | relative_url }}" alt="Ke Wang" class="profile-img" /></noscript>
+    <noscript><img src="{{ "/assets/img/ke_try_float.png" | relative_url }}" alt="Ke Wang" class="profile-img" /></noscript>
   </div>
 
   <div class="home-text">
