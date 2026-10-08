@@ -6,11 +6,13 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
 ---
 
 <div class="home-intro">
-  <img
-    src="{{ "/assets/img/keimage.jpg" | relative_url }}"
-    alt="Ke Wang"
-    class="profile-img"
-  />
+  <div class="dot-portrait" data-pitch="3" data-colors="32" data-crop="0.04,0.10,0.86,0.86" aria-label="Ke Wang, drawn as a dot-matrix portrait">
+    <img
+      src="{{ "/assets/img/keimage.jpg" | relative_url }}"
+      alt="Ke Wang"
+      class="profile-img"
+    />
+  </div>
 
   <div class="home-text">
     <h1 class="home-name">Ke Wang</h1>
@@ -64,11 +66,11 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
     <ul class="clean-list news-list">
       <li>
         <span class="item-date">Jun 2025</span>
-        Joined the Stanford Multi-Robot Systems Lab (MSL) as a Research Assistant.
+        <span class="item-text">Joined the Stanford Multi-Robot Systems Lab (MSL) as a Research Assistant.</span>
       </li>
       <li>
         <span class="item-date">Apr 2025</span>
-        Joined Stanford Artificial Intelligence Laboratory (SAIL) as a Research Assistant.
+        <span class="item-text">Joined Stanford Artificial Intelligence Laboratory (SAIL) as a Research Assistant.</span>
       </li>
     </ul>
   </div>
