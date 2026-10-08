@@ -18,9 +18,9 @@
   --dot-rond: 100;                    /* 0 = square pixels, 100 = round dots */
 
   /* body text screen: dot pitch (CSS px) and dot radius */
-  --screen-pitch: 2px;
-  --screen-dot: 0.74px;
-  --screen-edge: 1.05px;
+  --screen-pitch: 1.5px;
+  --screen-dot: 0.56px;
+  --screen-edge: 0.8px;
 }
 
 /* ---------- Panel ---------- */
@@ -241,7 +241,7 @@ main h2::before {
   position: relative;
   flex: none;
   width: 300px;
-  height: 300px;
+  height: 330px;                       /* matches the photo's 726:799 shape, no crop */
   background: #000;
   border: 2px dotted var(--led-ink-faint);
   padding: 6px;                        /* black bezel around the panel */
@@ -337,8 +337,8 @@ footer {
 
 @media (max-width: 720px) {
   .home-intro { align-items: center; }
-  .dot-portrait { width: min(320px, 100%); height: auto; aspect-ratio: 1 / 1; }
-  .dot-portrait .dot-canvas { height: auto; aspect-ratio: 1 / 1; }
+  .dot-portrait { width: min(320px, 100%); height: auto; aspect-ratio: 726 / 799; }
+  .dot-portrait .dot-canvas { height: auto; aspect-ratio: 726 / 799; }
   .home-name { font-size: clamp(3rem, 13vw, 4rem) !important; }
   header .menu ul li { margin-left: 0.9rem; }
   header .menu a { font-size: 0.95rem; letter-spacing: 0.06em; }
