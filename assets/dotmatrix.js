@@ -8,6 +8,7 @@
    data-sat    : saturation multiplier (default 1.5)
    data-crop   : x,y,w,h fractions of the photo to use (default: whole photo)
    data-levels : "off" to skip the automatic contrast stretch
+   data-bg     : colour behind transparent pixels of a cut-out PNG (default black = unlit)
    data-colors : palette size after quantisation (default 28)
    data-gap    : gap between dots as a fraction of the pitch (default 0.2)
    data-dark   : luminance (0–255) below which a cell stays unlit (default 16)
@@ -91,7 +92,7 @@
 
   /* average colour per grid cell. `crop` is [x, y, w, h] as fractions of
      the source image; the result is then cover-fitted to the grid. */
-  function sampleGrid(img, cols, rows, crop) {
+  function sampleGrid(img, cols, rows, crop, bg) {
     var iw = img.naturalWidth, ih = img.naturalHeight;
     var sx = 0, sy = 0, sw = iw, sh = ih;
     if (crop) { sx = crop[0] * iw; sy = crop[1] * ih; sw = crop[2] * iw; sh = crop[3] * ih; }
@@ -103,6 +104,9 @@
     mid.width = cols * 4; mid.height = rows * 4;
     var mctx = mid.getContext('2d');
     mctx.imageSmoothingEnabled = true; mctx.imageSmoothingQuality = 'high';
+    /* transparent areas (e.g. a cut-out portrait) take the panel colour */
+    mctx.fillStyle = bg || '#000';
+    mctx.fillRect(0, 0, mid.width, mid.height);
     mctx.drawImage(img, sx, sy, sw, sh, 0, 0, mid.width, mid.height);
 
     var small = document.createElement('canvas');
@@ -152,7 +156,7 @@
       if (crop.length !== 4 || crop.some(isNaN)) crop = null;
     }
 
-    var data = sampleGrid(img, cols, rows, crop);
+    var data = sampleGrid(img, cols, rows, crop, wrapper.getAttribute('data-bg'));
     var samples = new Array(cols * rows);
     for (var n = 0; n < cols * rows; n++) {
       samples[n] = [data[n * 4], data[n * 4 + 1], data[n * 4 + 2]];
