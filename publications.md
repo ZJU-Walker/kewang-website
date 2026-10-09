@@ -20,7 +20,7 @@ title: Publications
 <span class="venue">Conference on Robot Learning (CoRL), 2026</span>
 
 <span class="pub-title">Ego-Pi: VLA Fine-Tuning for Ego-Centric Human and Robot Data</span>
-<span class="pub-authors">**K. Wang**\*, J. W. Kim\*, Z. Fu, S. Chen, C. Zhao, J. Lai, and C. Finn (\* Equal contribution)</span>
+<span class="pub-authors">J. W. Kim\*, **K. Wang**\*, Z. Fu, S. Chen, C. Zhao, J. Lai, and C. Finn (\* Equal contribution)</span>
 <span class="venue">Conference on Computer Vision and Pattern Recognition (CVPR), 2026</span>
 
 ## 2024
