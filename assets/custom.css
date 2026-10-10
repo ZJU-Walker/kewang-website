@@ -1,5 +1,5 @@
 /* =========================
-   Theme: LED dot-matrix panel (always dark)
+   Theme: LED dot-matrix panel (dark by default, light via the menu switch)
    Component styles live in led.css
    ========================= */
 
@@ -11,6 +11,13 @@
 
   /* global font scale (slightly larger than default, but not huge) */
   --base-font-size: 0.9rem;
+}
+
+html[data-theme="light"] {
+  --bg-color: #f3efe6;
+  --text-color: #1c1b19;
+  --accent-color: #1b6fd1;
+  --border-color: rgba(28, 27, 25, 0.3);
 }
 
 html,

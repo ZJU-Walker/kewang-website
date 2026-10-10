@@ -1,6 +1,6 @@
 /* =========================================================
    LED dot-matrix theme
-   Everything on a pure black panel. Display text is set in
+   Everything on a pure black panel (or warm paper in light mode). Display text is set in
    Doto (a round dot-matrix typeface); running text keeps a
    fine dot screen; images are re-drawn as a grid of lit dots.
    ========================================================= */
@@ -13,6 +13,22 @@
   --led-blue: #5db1ff;
   --led-teal: #3fd0c0;
   --led-amber: #ffb547;
+  --led-ink-soft: #a3adb6;            /* descriptions, author lists */
+  --led-grid: rgba(255, 255, 255, 0.045);   /* unlit LED grid behind the page */
+
+  /* glows: LEDs bloom on the dark panel; switched off in light mode */
+  --glow-ink: 0 0 10px rgba(236, 230, 214, 0.55);
+  --glow-ink-soft: 0 0 22px rgba(236, 230, 214, 0.28);
+  --glow-blue: 0 0 12px rgba(93, 177, 255, 0.55);
+  --glow-teal: 0 0 10px rgba(63, 208, 192, 0.6);
+  --glow-amber: 0 0 10px rgba(255, 181, 71, 0.9);
+  --glow-box-ink: 0 0 16px rgba(236, 230, 214, 0.45);
+  --glow-box-blue: 0 0 14px rgba(93, 177, 255, 0.55);
+  --glow-box-card: 0 0 18px rgba(236, 230, 214, 0.12);
+
+  /* portrait panel: a black LED matrix in dark mode, a dot print on paper in light mode */
+  --panel-color: #000;
+  --panel-mode: led;
 
   --font-dot: "Doto", "JetBrains Mono", monospace;
   --dot-rond: 100;                    /* 0 = square pixels, 100 = round dots */
@@ -21,6 +37,32 @@
   --screen-pitch: 1.5px;
   --screen-dot: 0.56px;
   --screen-edge: 0.8px;
+}
+
+/* ---------- Light mode: the same panel, printed on warm paper ---------- */
+
+html[data-theme="light"] {
+  --led-bg: #f3efe6;
+  --led-ink: #1c1b19;
+  --led-ink-dim: #5c6670;
+  --led-ink-faint: rgba(28, 27, 25, 0.3);
+  --led-ink-soft: #4d565e;
+  --led-blue: #1b6fd1;
+  --led-teal: #0c9586;
+  --led-amber: #d4860a;
+  --led-grid: rgba(28, 27, 25, 0.075);
+
+  --glow-ink: none;
+  --glow-ink-soft: none;
+  --glow-blue: none;
+  --glow-teal: none;
+  --glow-amber: none;
+  --glow-box-ink: none;
+  --glow-box-blue: none;
+  --glow-box-card: none;
+
+  --panel-color: #f3efe6;
+  --panel-mode: print;
 }
 
 /* ---------- Panel ---------- */
@@ -32,13 +74,13 @@ html, body {
 
 /* unlit LED grid behind everything, barely visible */
 body {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.045) 0.9px, transparent 1.25px);
+  background-image: radial-gradient(circle, var(--led-grid) 0.9px, transparent 1.25px);
   background-size: 6px 6px;
   background-position: 3px 3px;
   min-height: 100vh;
 }
 
-::selection { background: var(--led-ink); color: #000; }
+::selection { background: var(--led-ink); color: var(--led-bg); }
 
 /* ---------- Dot typeface for display text ---------- */
 
@@ -101,13 +143,13 @@ header .menu a {
 header .menu a:hover {
   background: none !important;
   color: var(--led-ink) !important;
-  text-shadow: 0 0 10px rgba(236, 230, 214, 0.55);
+  text-shadow: var(--glow-ink);
 }
 
 header .menu a[aria-current="page"] {
   color: var(--led-blue) !important;
   text-decoration: none;
-  text-shadow: 0 0 12px rgba(93, 177, 255, 0.55);
+  text-shadow: var(--glow-blue);
 }
 
 /* a lit dot before the current page */
@@ -118,10 +160,66 @@ header .menu a[aria-current="page"]::before {
   height: 0.42em;
   border-radius: 50%;
   background: var(--led-blue);
-  box-shadow: 0 0 8px var(--led-blue);
+  box-shadow: var(--glow-blue);
   margin-right: 0.45em;
   vertical-align: 0.12em;
 }
+
+/* dark / light switch: a two-way LED toggle at the end of the menu */
+.theme-toggle-item { margin-left: 1.6rem; }
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  margin: 0;
+  padding: 0.12rem 0.5rem;
+  background: none;
+  border: 2px dotted var(--led-ink-faint);
+  border-radius: 0;
+  color: var(--led-ink-dim);
+  font-family: var(--font-dot);
+  font-variation-settings: "ROND" var(--dot-rond);
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.6;
+  cursor: pointer;
+  vertical-align: 0.05em;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle:hover { border-color: var(--led-ink); color: var(--led-ink); }
+.theme-toggle:focus-visible { outline: 2px dotted var(--led-blue); outline-offset: 2px; }
+
+.theme-toggle .tt-opt { opacity: 0.45; transition: opacity 0.15s ease, color 0.15s ease; }
+
+/* the little LED sits between the two words and slides toward the active one */
+.theme-toggle .tt-led {
+  position: relative;
+  width: 1.6em;
+  height: 0.8em;
+  border: 2px dotted var(--led-ink-faint);
+  box-sizing: border-box;
+}
+.theme-toggle .tt-led::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0.12em;
+  width: 0.42em;
+  height: 0.42em;
+  margin-top: -0.21em;
+  border-radius: 50%;
+  background: var(--led-amber);
+  box-shadow: var(--glow-amber);
+  transition: left 0.2s ease;
+}
+
+html[data-theme="dark"] .theme-toggle .tt-dark,
+html[data-theme="light"] .theme-toggle .tt-light { opacity: 1; color: var(--led-amber); text-shadow: var(--glow-amber); }
+html[data-theme="light"] .theme-toggle .tt-led::after { left: calc(100% - 0.54em); }
 
 /* ---------- Links & buttons ---------- */
 
@@ -133,10 +231,10 @@ a {
 }
 
 a:hover {
-  color: #000;
+  color: var(--led-bg);
   background: var(--led-blue);
   text-decoration: none;
-  box-shadow: 0 0 14px rgba(93, 177, 255, 0.55);
+  box-shadow: var(--glow-box-blue);
 }
 
 .home-btn, .cv-btn {
@@ -155,11 +253,11 @@ a:hover {
 .home-btn.secondary, .cv-btn.secondary { color: var(--led-ink-dim); }
 
 .home-btn:hover, .cv-btn:hover {
-  color: #000;
+  color: var(--led-bg);
   background: var(--led-ink);
   border-color: var(--led-ink);
   border-style: solid;
-  box-shadow: 0 0 16px rgba(236, 230, 214, 0.45);
+  box-shadow: var(--glow-box-ink);
 }
 
 /* ---------- Home: name, intro, typewriter ---------- */
@@ -173,7 +271,7 @@ a:hover {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--led-ink);
-  text-shadow: 0 0 22px rgba(236, 230, 214, 0.28);
+  text-shadow: var(--glow-ink-soft);
   margin: 0.1rem 0 1.2rem 0;
 }
 
@@ -186,7 +284,7 @@ a:hover {
   color: var(--led-ink-dim);
 }
 
-.tw-prompt { color: var(--led-teal); text-shadow: 0 0 10px rgba(63, 208, 192, 0.6); }
+.tw-prompt { color: var(--led-teal); text-shadow: var(--glow-teal); }
 
 .tw-text::after {
   content: "";
@@ -196,7 +294,7 @@ a:hover {
   margin-left: 0.2rem;
   vertical-align: -0.12em;
   background: var(--led-amber);
-  box-shadow: 0 0 10px var(--led-amber);
+  box-shadow: var(--glow-amber);
   animation: blink 1s step-end infinite;
 }
 
@@ -223,7 +321,7 @@ main h2::before {
   height: 0.5em;
   border-radius: 50%;
   background: var(--led-teal);
-  box-shadow: 0 0 10px var(--led-teal);
+  box-shadow: var(--glow-teal);
   flex: none;
 }
 
@@ -242,7 +340,7 @@ main h2::before {
   flex: none;
   width: 300px;
   height: 330px;                       /* matches the photo's 726:799 shape, no crop */
-  background: #000;
+  background: var(--panel-color);
   border: 2px dotted var(--led-ink-faint);
   padding: 6px;                        /* black bezel around the panel */
   box-sizing: border-box;
@@ -285,14 +383,14 @@ main h2::before {
   height: 0.7rem !important;
   left: calc(var(--line-x) - 0.35rem) !important;
   border-radius: 50%;
-  background: #000 !important;
+  background: var(--led-bg) !important;
   border: 2px solid var(--led-ink-dim) !important;
 }
 
 .r-entry.published::before {
   background: var(--led-blue) !important;
   border-color: var(--led-blue) !important;
-  box-shadow: 0 0 10px var(--led-blue);
+  box-shadow: var(--glow-blue);
 }
 
 .r-entry.published .r-body {
@@ -303,15 +401,15 @@ main h2::before {
 
 .r-entry.published:hover .r-body {
   border-color: var(--led-ink) !important;
-  box-shadow: 0 0 18px rgba(236, 230, 214, 0.12) !important;
+  box-shadow: var(--glow-box-card) !important;
 }
 
-.r-entry:hover .r-title { text-decoration: none; color: var(--led-blue); text-shadow: 0 0 10px rgba(93, 177, 255, 0.5); }
+.r-entry:hover .r-title { text-decoration: none; color: var(--led-blue); text-shadow: var(--glow-blue); }
 
 .r-entry, .r-entry:hover { background: none; box-shadow: none; color: var(--led-ink); }
 
 .r-title { font-size: 1.08rem; font-weight: 700; line-height: 1.45; letter-spacing: 0; color: var(--led-ink); }
-.r-desc { color: #a3adb6; font-size: 0.95rem; line-height: 1.65; }
+.r-desc { color: var(--led-ink-soft); font-size: 0.95rem; line-height: 1.65; }
 .r-tags { color: var(--led-ink-dim); font-size: 0.86rem; letter-spacing: 0.04em; }
 
 .research-typewriter { font-size: 1rem; border-top: none; }
@@ -321,7 +419,7 @@ main h2::before {
 .publications-content p { line-height: 1.7; font-size: 0.95rem; margin-bottom: 1.4rem; white-space: normal; }
 .publications-content h2 { margin-bottom: 1rem; }
 .pub-title { display: block; color: var(--led-ink); font-weight: 700; font-size: 1.06em; margin-bottom: 0.15em; }
-.pub-authors { display: block; color: #a3adb6; font-weight: 500; }
+.pub-authors { display: block; color: var(--led-ink-soft); font-weight: 500; }
 .publications-content strong { color: var(--led-blue); font-weight: 700; }
 .venue { display: block; color: var(--led-ink-dim); font-style: italic; font-size: 0.92em; margin-top: 0.1em; }
 
@@ -347,9 +445,12 @@ footer {
   .home-name { font-size: clamp(3rem, 13vw, 4rem) !important; }
   header .menu ul li { margin-left: 0.9rem; }
   header .menu a { font-size: 0.95rem; letter-spacing: 0.06em; }
+  .theme-toggle-item { margin-left: 0.9rem; }
+  .theme-toggle { font-size: 0.72rem; padding: 0.08rem 0.4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .tw-text::after { animation: none; }
   .dot-portrait img.profile-img { transition: none; }
+  .theme-toggle .tt-led::after { transition: none; }
 }

@@ -13,7 +13,12 @@
    data-colors : palette size after quantisation (default 28)
    data-gap    : gap between dots as a fraction of the pitch (default 0.2)
    data-dark   : luminance (0–255) below which a cell stays unlit (default 16)
-*/
+
+   The panel itself comes from CSS on the wrapper:
+   --panel-color : colour behind the dots (black LED panel / paper)
+   --panel-mode  : "led" (dark cells stay unlit, colours lifted) or
+                   "print" (every cell is drawn, no lift: a halftone on paper)
+   A `kw-theme` event on document re-renders every portrait. */
 (function () {
   'use strict';
 
@@ -133,6 +138,18 @@
     var sat_ = parseFloat(wrapper.getAttribute('data-sat'));
     if (isNaN(sat_)) sat_ = 1.5;
 
+    var cs = window.getComputedStyle(wrapper);
+    var panel = (cs.getPropertyValue('--panel-color') || '').trim() || '#000';
+    var print = (cs.getPropertyValue('--panel-mode') || '').trim() === 'print';
+    if (print) {
+      /* ink on paper: keep the photo's own tones, draw the dark cells too */
+      lift_ = parseFloat(wrapper.getAttribute('data-print-lift'));
+      if (isNaN(lift_)) lift_ = 1.0;
+      var psat = parseFloat(wrapper.getAttribute('data-print-sat'));
+      if (!isNaN(psat)) sat_ = psat;
+      dark = -1;
+    }
+
     var canvas = wrapper.querySelector('canvas.dot-canvas');
     if (!canvas) {
       canvas = document.createElement('canvas');
@@ -157,7 +174,7 @@
       if (crop.length !== 4 || crop.some(isNaN)) crop = null;
     }
 
-    var data = sampleGrid(img, cols, rows, crop, wrapper.getAttribute('data-bg'));
+    var data = sampleGrid(img, cols, rows, crop, wrapper.getAttribute('data-bg') || panel);
     var samples = new Array(cols * rows);
     for (var n = 0; n < cols * rows; n++) {
       samples[n] = [data[n * 4], data[n * 4 + 1], data[n * 4 + 2]];
@@ -178,7 +195,7 @@
 
     function draw(progress) {
       ctx.globalAlpha = 1;
-      ctx.fillStyle = '#000';
+      ctx.fillStyle = panel;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       for (var y = 0; y < rows; y++) {
         for (var x = 0; x < cols; x++) {
@@ -247,6 +264,9 @@
     };
     if (window.ResizeObserver) new ResizeObserver(onResize).observe(wrapper);
     else window.addEventListener('resize', onResize);
+
+    /* dark <-> light: redraw on the new panel with the boot sweep */
+    document.addEventListener('kw-theme', function () { if (booted) render(wrapper, true); });
   }
 
   function init() {
