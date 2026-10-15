@@ -368,6 +368,12 @@ footer {
   .home-name { font-size: clamp(3rem, 13vw, 4rem) !important; }
   header .menu ul li { margin-left: 0.9rem; }
   header .menu a { font-size: 0.95rem; letter-spacing: 0.06em; }
+
+  /* running text reads small on a phone: scale the serif up there */
+  .dot-screen, .news-list .item-text, .home-section p, main > p, main > ul > li { font-size: 1.36rem; }
+  .home-paragraph { font-size: 1.42rem; }
+  .r-title { font-size: 1.55rem; }
+  .r-desc, .publications-content p { font-size: 1.32rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
