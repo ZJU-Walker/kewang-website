@@ -366,14 +366,13 @@ footer {
   .dot-portrait { width: min(320px, 100%); height: auto; aspect-ratio: 726 / 799; }
   .dot-portrait .dot-canvas { height: auto; aspect-ratio: 726 / 799; }
   .home-name { font-size: clamp(3rem, 13vw, 4rem) !important; }
-  header .menu ul li { margin-left: 0.9rem; }
-  header .menu a { font-size: 0.95rem; letter-spacing: 0.06em; }
-
-  /* running text reads small on a phone: scale the serif up there */
-  .dot-screen, .news-list .item-text, .home-section p, main > p, main > ul > li { font-size: 1.36rem; }
-  .home-paragraph { font-size: 1.42rem; }
-  .r-title { font-size: 1.55rem; }
-  .r-desc, .publications-content p { font-size: 1.32rem; }
+  /* compact nav row that wraps cleanly instead of overflowing */
+  header .menu ul { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.25rem 0.85rem; }
+  header .menu ul li { margin-left: 0; }
+  header .menu a { font-size: 0.76rem; letter-spacing: 0.04em; white-space: nowrap; }
+  header .menu a[aria-current="page"]::before { margin-right: 0.35em; }
+  .r-title { font-size: 1.3rem; }
+  .typewriter-line, .research-typewriter { font-size: 0.9rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
