@@ -194,7 +194,13 @@ a:hover {
   margin: 0.1rem 0 1.2rem 0;
 }
 
-.home-paragraph { font-size: 0.98rem; line-height: 1.7; }
+/* intro paragraphs: a worn letterpress serif, like old book type */
+.home-paragraph {
+  font-family: "IM Fell DW Pica", "Iowan Old Style", Georgia, serif;
+  font-size: 1.22rem;
+  line-height: 1.55;
+  letter-spacing: 0.005em;
+}
 
 .typewriter-line {
   border-top: 2px dotted var(--led-ink-faint);
