@@ -374,10 +374,10 @@ footer {
   .typewriter-line, .research-typewriter { font-size: 0.9rem; }
 
   /* phone sizes: comfortable, not huge */
-  .dot-screen, .news-list .item-text, .home-section p, main > p, main > ul > li { font-size: 1.02rem; line-height: 1.5; }
-  .home-paragraph { font-size: 1.06rem; line-height: 1.5; }
-  .r-title { font-size: 1.14rem; line-height: 1.3; }
-  .r-desc, .publications-content p { font-size: 1rem; line-height: 1.5; }
+  .dot-screen, .news-list .item-text, .home-section p, main > p, main > ul > li { font-size: 0.96rem; line-height: 1.5; }
+  .home-paragraph { font-size: 1rem; line-height: 1.5; }
+  .r-title { font-size: 1.08rem; line-height: 1.3; }
+  .r-desc, .publications-content p { font-size: 0.94rem; line-height: 1.5; }
   .home-name { margin-bottom: 0.7rem; }
 
   /* tighter vertical rhythm so the page is not mostly black space */
@@ -385,7 +385,7 @@ footer {
   header .menu { margin-bottom: 16px; }
   header .menu ul { margin-top: 9px; margin-bottom: 9px; }
   .home-intro { gap: 1.1rem; margin-top: 1rem; margin-bottom: 1rem; }
-  .dot-portrait { width: min(250px, 78%); }
+  .dot-portrait { width: min(300px, 92%); }
   .home-paragraph { margin-bottom: 0.7rem; }
   .home-actions { margin-top: 0.7rem; gap: 0.45rem; }
   .home-btn, .cv-btn { font-size: 0.78rem; padding: 0.35rem 0.7rem; }
