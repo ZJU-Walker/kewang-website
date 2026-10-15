@@ -71,11 +71,28 @@ footer {
 .home-section p,
 main > p,
 main > ul > li {
-  -webkit-mask-image: radial-gradient(circle, #000 var(--screen-dot), transparent var(--screen-edge));
-  -webkit-mask-size: var(--screen-pitch) var(--screen-pitch);
-  mask-image: radial-gradient(circle, #000 var(--screen-dot), transparent var(--screen-edge));
-  mask-size: var(--screen-pitch) var(--screen-pitch);
   font-weight: 500;
+}
+
+/* The screen is a CSS mask. Mobile WebKit sometimes fails to paint
+   masked text at all (the paragraph simply goes missing until a repaint),
+   and at phone sizes a 1.5px screen is finer than the eye resolves, so the
+   mask is only applied on mouse/trackpad devices. */
+@media (hover: hover) and (pointer: fine) {
+  .dot-screen,
+  .home-paragraph,
+  .news-list .item-text,
+  .r-title,
+  .r-desc,
+  .publications-content p,
+  .home-section p,
+  main > p,
+  main > ul > li {
+    -webkit-mask-image: radial-gradient(circle, #000 var(--screen-dot), transparent var(--screen-edge));
+    -webkit-mask-size: var(--screen-pitch) var(--screen-pitch);
+    mask-image: radial-gradient(circle, #000 var(--screen-dot), transparent var(--screen-edge));
+    mask-size: var(--screen-pitch) var(--screen-pitch);
+  }
 }
 
 
