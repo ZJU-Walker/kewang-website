@@ -367,9 +367,9 @@ footer {
   .dot-portrait .dot-canvas { height: auto; aspect-ratio: 726 / 799; }
   .home-name { font-size: clamp(3rem, 13vw, 4rem) !important; }
   /* compact nav row that wraps cleanly instead of overflowing */
-  header .menu ul { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.25rem 0.85rem; }
+  header .menu ul { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 0.6rem; }
   header .menu ul li { margin-left: 0; }
-  header .menu a { font-size: 0.62rem; letter-spacing: 0.04em; white-space: nowrap; }
+  header .menu a { font-size: 0.74rem; letter-spacing: 0.05em; white-space: nowrap; padding: 0.1rem 0; }
   header .menu a[aria-current="page"]::before { margin-right: 0.35em; }
   .typewriter-line, .research-typewriter { font-size: 0.68rem; }
   .item-date { font-size: 0.68rem; }
@@ -385,7 +385,7 @@ footer {
   /* tighter vertical rhythm so the page is not mostly black space */
   header { margin-top: 14px; margin-bottom: 6px; }
   header .menu { margin-bottom: 16px; }
-  header .menu ul { margin-top: 9px; margin-bottom: 9px; }
+  header .menu ul { margin-top: 5px; margin-bottom: 5px; }
   .home-intro { gap: 1.1rem; margin-top: 1rem; margin-bottom: 1rem; }
   .dot-portrait { width: min(300px, 92%); }
   .home-paragraph { margin-bottom: 0.7rem; }
@@ -405,6 +405,12 @@ footer {
   .publications-content h2 { margin-bottom: 0.6rem; }
   .publications-content p { margin-bottom: 1rem; }
   footer { margin-top: 12px; }
+}
+
+/* very small phones: keep the four nav items on one line */
+@media (max-width: 360px) {
+  header .menu a { font-size: 0.64rem; letter-spacing: 0.03em; }
+  header .menu ul { gap: 0.2rem 0.4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
