@@ -36,6 +36,25 @@
   {%- endif -%}
   <link rel="stylesheet" href="{{ "/assets/custom.css" | relative_url }}?v={{ site.time | date: '%s' }}">
   <link rel="stylesheet" href="{{ "/assets/led.css" | relative_url }}?v={{ site.time | date: '%s' }}">
+  <script>
+    /* Body-text dot screen: pick a pitch that is a whole number of device
+       pixels (about 4.5 of them) and hand the lattice to CSS as an SVG
+       tile, so WebKit rasterises it correctly on the very first paint. */
+    (function () {
+      var dpr = window.devicePixelRatio || 1;
+      var dev = Math.max(2, Math.round(1.5 * dpr));
+      var pitch = dev / dpr;
+      var r = pitch * 0.45, c = pitch / 2;
+      var d = 'M0 0h' + pitch + 'v' + pitch + 'H0z' +
+              'M' + c + ' ' + (c - r) + 'a' + r + ' ' + r + ' 0 1 0 0 ' + (2 * r) +
+              'a' + r + ' ' + r + ' 0 1 0 0 ' + (-2 * r) + 'z';
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + pitch + '" height="' + pitch +
+                '" viewBox="0 0 ' + pitch + ' ' + pitch + '"><path fill="#000" fill-rule="evenodd" d="' + d + '"/></svg>';
+      var st = document.documentElement.style;
+      st.setProperty('--screen-pitch', pitch + 'px');
+      st.setProperty('--screen-tile', 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+    })();
+  </script>
   <script defer src="{{ "/assets/typewriter.js" | relative_url }}?v={{ site.time | date: '%s' }}"></script>
   <script defer src="{{ "/assets/dotmatrix.js" | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 

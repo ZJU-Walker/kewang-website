@@ -17,10 +17,14 @@
   --font-dot: "Doto", "JetBrains Mono", monospace;
   --dot-rond: 100;                    /* 0 = square pixels, 100 = round dots */
 
-  /* body text screen: dot pitch (CSS px) and dot radius */
+  /* body text screen: dot pitch (CSS px) and dot radius. A tiny inline
+     script in head.html overrides --screen-pitch / --screen-tile so the
+     pitch is a whole number of device pixels and the tile is an SVG
+     image (see the comment at the screen rules below). */
   --screen-pitch: 1.5px;
   --screen-dot: 0.56px;
   --screen-edge: 0.8px;
+  --screen-tile: radial-gradient(circle, transparent var(--screen-dot), var(--led-bg) var(--screen-edge));
 }
 
 /* ---------- Panel ---------- */
@@ -77,8 +81,10 @@ main > ul > li {
 /* The screen is NOT a mask: mobile WebKit intermittently failed to paint
    mask-image text at all on first load. Instead every running-text block
    gets a lattice of panel-black laid over it, with round holes on the
-   same pitch, so the text shows through as dots. Plain background
-   painting, nothing exotic, identical look. */
+   same pitch, so the text shows through as dots. The CSS fallback tile
+   is a gradient; head.html swaps in an SVG tile sized to whole device
+   pixels (1.5px is 4.5 device px on a 3x phone, and WebKit would not
+   rasterise that fractional tile on first paint). */
 .dot-screen,
 .home-paragraph,
 .news-list .item-text,
@@ -105,8 +111,9 @@ main > ul > li::after {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background-image: radial-gradient(circle, transparent var(--screen-dot), var(--led-bg) var(--screen-edge));
+  background-image: var(--screen-tile);
   background-size: var(--screen-pitch) var(--screen-pitch);
+  background-repeat: repeat;
 }
 
 
