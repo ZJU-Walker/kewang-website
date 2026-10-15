@@ -74,10 +74,11 @@ main > ul > li {
   font-weight: 500;
 }
 
-/* The screen is a CSS mask. Mobile WebKit has at times failed to paint
-   masked text until a repaint, so on touch devices each masked block is
-   promoted to its own compositing layer, which sidesteps the stale-paint
-   path. */
+/* The screen is NOT a mask: mobile WebKit intermittently failed to paint
+   mask-image text at all on first load. Instead every running-text block
+   gets a lattice of panel-black laid over it, with round holes on the
+   same pitch, so the text shows through as dots. Plain background
+   painting, nothing exotic, identical look. */
 .dot-screen,
 .home-paragraph,
 .news-list .item-text,
@@ -87,25 +88,25 @@ main > ul > li {
 .home-section p,
 main > p,
 main > ul > li {
-  -webkit-mask-image: radial-gradient(circle, #000 var(--screen-dot), transparent var(--screen-edge));
-  -webkit-mask-size: var(--screen-pitch) var(--screen-pitch);
-  mask-image: radial-gradient(circle, #000 var(--screen-dot), transparent var(--screen-edge));
-  mask-size: var(--screen-pitch) var(--screen-pitch);
+  position: relative;
+  isolation: isolate;
 }
-@media (hover: none), (pointer: coarse) {
-  .dot-screen,
-  .home-paragraph,
-  .news-list .item-text,
-  .r-title,
-  .r-desc,
-  .publications-content p,
-  .home-section p,
-  main > p,
-  main > ul > li {
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
+.dot-screen::after,
+.home-paragraph::after,
+.news-list .item-text::after,
+.r-title::after,
+.r-desc::after,
+.publications-content p::after,
+.home-section p::after,
+main > p::after,
+main > ul > li::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, transparent var(--screen-dot), var(--led-bg) var(--screen-edge));
+  background-size: var(--screen-pitch) var(--screen-pitch);
 }
 
 
