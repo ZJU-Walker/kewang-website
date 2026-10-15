@@ -141,9 +141,16 @@
       wrapper.insertBefore(canvas, wrapper.firstChild);
     }
 
+    /* a re-render (resize, rotation) must stop the previous boot sweep,
+       otherwise its frames keep painting the old, smaller grid over the
+       new canvas and the picture ends up half drawn */
+    if (wrapper._raf) { cancelAnimationFrame(wrapper._raf); wrapper._raf = null; }
+
     var cssW = canvas.clientWidth || wrapper.clientWidth;
     var cssH = canvas.clientHeight || cssW;
     if (!cssW || !cssH) return;
+    wrapper._drawnW = cssW; wrapper._drawnH = cssH;
+    wrapper._drawnDpr = Math.min(window.devicePixelRatio || 1, 3);
 
     var cols = Math.max(8, Math.round(cssW / pitch));
     var rows = Math.max(8, Math.round(cssH / pitch));
@@ -209,9 +216,9 @@
         if (start === null) start = ts;
         var p = Math.min(1, (ts - start) / duration);
         draw(p);
-        if (p < 1) requestAnimationFrame(frame);
+        wrapper._raf = p < 1 ? requestAnimationFrame(frame) : null;
       };
-      requestAnimationFrame(frame);
+      wrapper._raf = requestAnimationFrame(frame);
     }
     wrapper.classList.add('is-ready');
   }
@@ -237,16 +244,30 @@
     if (img.complete && img.naturalWidth) go();
     else img.addEventListener('load', go, { once: true });
 
-    /* re-render when the layout changes size (e.g. phone rotation) */
-    var timer = null, lastW = wrapper.clientWidth;
-    var onResize = function () {
-      if (wrapper.clientWidth === lastW) return;
-      lastW = wrapper.clientWidth;
-      clearTimeout(timer);
-      timer = setTimeout(function () { if (booted) render(wrapper, false); }, 120);
+    /* re-render whenever the drawn canvas no longer matches its layout
+       size: phone rotation, the address bar collapsing, fonts arriving,
+       a zoom change, or the page coming back from the tab switcher */
+    var timer = null;
+    var stale = function () {
+      var c = wrapper.querySelector('canvas.dot-canvas');
+      if (!c) return true;
+      var dpr = Math.min(window.devicePixelRatio || 1, 3);
+      return c.clientWidth !== wrapper._drawnW || c.clientHeight !== wrapper._drawnH ||
+             dpr !== wrapper._drawnDpr;
     };
-    if (window.ResizeObserver) new ResizeObserver(onResize).observe(wrapper);
-    else window.addEventListener('resize', onResize);
+    var check = function () {
+      if (!booted || !stale()) return;
+      clearTimeout(timer);
+      timer = setTimeout(function () { if (stale()) render(wrapper, false); }, 120);
+    };
+    if (window.ResizeObserver) new ResizeObserver(check).observe(wrapper);
+    window.addEventListener('resize', check);
+    window.addEventListener('orientationchange', check);
+    window.addEventListener('pageshow', check);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') check();
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
   }
 
   function init() {
