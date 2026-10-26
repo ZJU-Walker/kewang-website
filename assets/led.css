@@ -2,8 +2,25 @@
    LED dot-matrix theme
    Everything on a pure black panel. Display text is set in
    Doto (a round dot-matrix typeface); running text keeps a
-   JetBrains Mono; images are re-drawn as a grid of lit dots.
+   Comic Mono (self-hosted); images are re-drawn as a grid of lit dots.
    ========================================================= */
+
+/* Comic Mono (MIT, see assets/fonts/LICENSE-comic-mono.txt), self-hosted
+   so the CSP font-src 'self' covers it. Only 400 and 700 exist; 600 maps to 700. */
+@font-face {
+  font-family: "Comic Mono";
+  src: url("/assets/fonts/comic-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Comic Mono";
+  src: url("/assets/fonts/comic-mono-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --led-bg: #000;
@@ -15,7 +32,7 @@
   --led-amber: #ffb547;
 
   --font-dot: "Doto", "JetBrains Mono", monospace;
-  --font-text: "JetBrains Mono", "Courier New", monospace; /* running text */
+  --font-text: "Comic Mono", "JetBrains Mono", monospace; /* running text */
   --dot-rond: 100;                    /* 0 = square pixels, 100 = round dots */
 }
 

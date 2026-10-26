@@ -17,7 +17,7 @@ html,
 body {
   background-color: var(--bg-color) !important;
   color: var(--text-color) !important;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Comic Mono", "JetBrains Mono", monospace;
   font-size: var(--base-font-size);
   line-height: 1.65;
 }
