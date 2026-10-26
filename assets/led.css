@@ -1,8 +1,8 @@
 /* =========================================================
    LED dot-matrix theme
-   Everything on a pure black panel. Display text is set in
-   Doto (a round dot-matrix typeface); running text keeps a
-   Roboto Mono; images are re-drawn as a grid of lit dots.
+   Everything on a pure black panel. All text is set in
+   Roboto Mono (display text bold, running text regular);
+   images are re-drawn as a grid of lit dots.
    ========================================================= */
 
 :root {
@@ -14,9 +14,8 @@
   --led-teal: #3fd0c0;
   --led-amber: #ffb547;
 
-  --font-dot: "Doto", "JetBrains Mono", monospace;
+  --font-dot: "Roboto Mono", "Courier New", monospace;    /* display text (was Doto) */
   --font-text: "Roboto Mono", "Courier New", monospace;   /* running text */
-  --dot-rond: 100;                    /* 0 = square pixels, 100 = round dots */
 }
 
 /* ---------- Panel ---------- */
@@ -49,7 +48,6 @@ h1, h2, h3, h4,
 .r-tags,
 footer {
   font-family: var(--font-dot);
-  font-variation-settings: "ROND" var(--dot-rond);
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
 }
@@ -87,7 +85,7 @@ header .menu ul li { margin-left: 1.4rem; }
 
 header .menu a {
   font-size: 0.95rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--led-ink-dim) !important;
@@ -139,7 +137,7 @@ a:hover {
 .home-btn, .cv-btn {
   display: inline-block;
   font-size: 0.9rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--led-ink);
@@ -165,7 +163,7 @@ a:hover {
 
 .home-name {
   font-size: 3.6rem;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -208,7 +206,7 @@ a:hover {
 .publications-content h2,
 main h2 {
   font-size: 1.15rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--led-ink);
@@ -231,7 +229,7 @@ main h2::before {
 
 .home-sections + .home-sections { border-top: 2px dotted var(--led-ink-faint); }
 
-.item-date { color: var(--led-ink-dim); font-size: 1em; font-weight: 800; letter-spacing: 0.03em; }
+.item-date { color: var(--led-ink-dim); font-size: 1em; font-weight: 700; letter-spacing: 0.03em; }
 
 /* the console theme prefixes list items with "-"; the LED list uses dates instead */
 .news-list li::before { content: none !important; }
