@@ -56,20 +56,3 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
     </div>
   </div>
 </div>
-
-<!-- News -->
-<div class="home-sections">
-  <div class="home-section">
-    <h2>News</h2>
-    <ul class="clean-list news-list">
-      <li>
-        <span class="item-date">Jun 2025</span>
-        <span class="item-text">Joined the Stanford Multi-Robot Systems Lab (MSL) as a Research Assistant.</span>
-      </li>
-      <li>
-        <span class="item-date">Apr 2025</span>
-        <span class="item-text">Joined Stanford Artificial Intelligence Laboratory (SAIL) as a Research Assistant.</span>
-      </li>
-    </ul>
-  </div>
-</div>

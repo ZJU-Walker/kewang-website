@@ -181,7 +181,7 @@ a:hover {
 .home-intro { gap: 2.4rem; margin-top: 2.2rem; }
 
 .home-name {
-  font-size: 3.6rem;
+  font-size: 5.4rem;                   /* sized so the text column ends level with the portrait */
   font-weight: 900;
   line-height: 1;
   letter-spacing: 0.02em;
