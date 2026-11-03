@@ -4,7 +4,9 @@
    glyph is chosen by brightness (dense glyphs for bright cells) and painted
    in the cell's own colour.
 
-   data-cols   : characters across the panel (default 140)
+   data-cols   : characters across the panel (default 140); rounded to a
+                 whole-device-pixel pitch, so the real count depends on the screen
+   data-line   : row pitch as a multiple of the font size (default 1)
    data-weight : glyph weight, 400 or 700 (default 700)
    data-font   : font family (default "JetBrains Mono", monospace)
    data-lift   : brightness lift, gamma style (default 1.5)
@@ -124,20 +126,24 @@
     canvas.height = Math.round(cssH * dpr);
 
     var ctx = canvas.getContext('2d');
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var devW = canvas.width, devH = canvas.height;
 
-    /* cell size from the font's real advance width, so the grid fills the
-       panel exactly whatever monospace face ends up being used */
-    var cellW = cssW / cols;
+    /* The character grid is laid out in whole device pixels. A fractional
+       pitch (e.g. 1.65px per glyph) beats against the pixel grid and shows
+       up as dark moire bands every few cells, so the requested column count
+       is rounded to the nearest integer pitch of at least 2 device pixels. */
     ctx.font = weight + ' 10px ' + family;
     var adv = ctx.measureText('M').width / 10 || 0.6;
-    var fontSize = cellW / adv;
-    var cellH = fontSize;                       /* line pitch 1.0 */
-    var rows = Math.max(8, Math.round(cssH / cellH));
-    cellH = cssH / rows;
-    ctx.font = weight + ' ' + fontSize.toFixed(3) + 'px ' + family;
-    ctx.textBaseline = 'middle';
-    ctx.textAlign = 'center';
+    var pitchX = Math.max(2, Math.round(devW / cols));
+    cols = Math.max(8, Math.floor(devW / pitchX));
+    var fontPx = pitchX / adv;                         /* device px */
+    var lineRatio = parseFloat(wrapper.getAttribute('data-line'));
+    if (isNaN(lineRatio)) lineRatio = 1;
+    var pitchY = Math.max(2, Math.round(fontPx * lineRatio));
+    var rows = Math.max(8, Math.floor(devH / pitchY));
+    var offX = Math.floor((devW - cols * pitchX) / 2);
+    var offY = Math.floor((devH - rows * pitchY) / 2);
+    var fontSpec = weight + ' ' + fontPx.toFixed(3) + 'px ' + family;
 
     var crop = null, cropAttr = wrapper.getAttribute('data-crop');
     if (cropAttr) {
@@ -145,7 +151,7 @@
       if (crop.length !== 4 || crop.some(isNaN)) crop = null;
     }
 
-    var data = sampleGrid(img, cols, rows, cssW / cssH, crop, wrapper.getAttribute('data-bg'));
+    var data = sampleGrid(img, cols, rows, (cols * pitchX) / (rows * pitchY), crop, wrapper.getAttribute('data-bg'));
     var n, total = cols * rows;
     var samples = new Array(total);
     for (n = 0; n < total; n++) samples[n] = [data[n * 4], data[n * 4 + 1], data[n * 4 + 2]];
@@ -166,12 +172,11 @@
     /* draw every glyph once into an offscreen buffer; the boot sweep then
        only composites that buffer, so a 300+ column grid animates smoothly */
     var buf = document.createElement('canvas');
-    buf.width = canvas.width; buf.height = canvas.height;
+    buf.width = devW; buf.height = devH;
     var bctx = buf.getContext('2d');
-    bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     bctx.fillStyle = '#000';
-    bctx.fillRect(0, 0, cssW, cssH);
-    bctx.font = ctx.font;
+    bctx.fillRect(0, 0, devW, devH);
+    bctx.font = fontSpec;
     bctx.textBaseline = 'middle';
     bctx.textAlign = 'center';
     for (var y = 0; y < rows; y++) {
@@ -179,12 +184,11 @@
         var i = y * cols + x;
         if (!glyphs[i]) continue;
         bctx.fillStyle = colors[i];
-        bctx.fillText(glyphs[i], (x + 0.5) * cellW, (y + 0.5) * cellH);
+        bctx.fillText(glyphs[i], offX + (x + 0.5) * pitchX, offY + (y + 0.5) * pitchY);
       }
     }
 
     function draw(progress) {
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1;
       ctx.drawImage(buf, 0, 0);
       if (progress < 1) {
