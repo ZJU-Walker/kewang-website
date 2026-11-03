@@ -9,6 +9,7 @@
    data-font   : font family (default "JetBrains Mono", monospace)
    data-lift   : brightness lift, gamma style (default 1.5)
    data-sat    : saturation multiplier (default 1.5)
+   data-gain   : overall brightness multiplier on the glyph colours (default 1)
    data-crop   : x,y,w,h fractions of the photo to use (default: whole photo)
    data-levels : "off" to skip the automatic contrast stretch
    data-bg     : colour behind transparent pixels of a cut-out PNG (default black)
@@ -99,6 +100,8 @@
     if (isNaN(lift_)) lift_ = 1.5;
     var sat_ = parseFloat(wrapper.getAttribute('data-sat'));
     if (isNaN(sat_)) sat_ = 1.5;
+    var gain = parseFloat(wrapper.getAttribute('data-gain'));
+    if (isNaN(gain)) gain = 1;
 
     var canvas = wrapper.querySelector('canvas.dot-canvas');
     if (!canvas) {
@@ -156,30 +159,48 @@
       var g = ramp.charAt(idx);
       glyphs[n] = g === ' ' ? null : g;
       var c = saturate(lift(samples[n], lift_), sat_);
+      if (gain !== 1) c = [clamp255(c[0] * gain), clamp255(c[1] * gain), clamp255(c[2] * gain)];
       colors[n] = 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')';
     }
 
-    function draw(progress) {
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, cssW, cssH);
-      for (var y = 0; y < rows; y++) {
-        for (var x = 0; x < cols; x++) {
-          var i = y * cols + x;
-          if (!glyphs[i]) continue;
-          var a = 1;
-          if (progress < 1) {
-            var t = (x / cols + y / rows) / 2;        /* diagonal sweep */
-            a = (progress * 1.25 - t) / 0.25;
-            if (a <= 0) continue;
-            if (a > 1) a = 1;
-          }
-          ctx.globalAlpha = a;
-          ctx.fillStyle = colors[i];
-          ctx.fillText(glyphs[i], (x + 0.5) * cellW, (y + 0.5) * cellH);
-        }
+    /* draw every glyph once into an offscreen buffer; the boot sweep then
+       only composites that buffer, so a 300+ column grid animates smoothly */
+    var buf = document.createElement('canvas');
+    buf.width = canvas.width; buf.height = canvas.height;
+    var bctx = buf.getContext('2d');
+    bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    bctx.fillStyle = '#000';
+    bctx.fillRect(0, 0, cssW, cssH);
+    bctx.font = ctx.font;
+    bctx.textBaseline = 'middle';
+    bctx.textAlign = 'center';
+    for (var y = 0; y < rows; y++) {
+      for (var x = 0; x < cols; x++) {
+        var i = y * cols + x;
+        if (!glyphs[i]) continue;
+        bctx.fillStyle = colors[i];
+        bctx.fillText(glyphs[i], (x + 0.5) * cellW, (y + 0.5) * cellH);
       }
+    }
+
+    function draw(progress) {
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.globalAlpha = 1;
+      ctx.drawImage(buf, 0, 0);
+      if (progress < 1) {
+        /* diagonal sweep: a black-to-transparent gradient that slides
+           from the top-left corner to the bottom-right one */
+        var head = progress * 1.25, tail = head - 0.25;
+        var gx = canvas.width, gy = canvas.height;
+        var grad = ctx.createLinearGradient(0, 0, gx, gy);
+        var t0 = Math.max(0, Math.min(1, tail)), t1 = Math.max(0, Math.min(1, head));
+        grad.addColorStop(0, 'rgba(0,0,0,0)');
+        grad.addColorStop(t0, 'rgba(0,0,0,0)');
+        grad.addColorStop(t1, 'rgba(0,0,0,1)');
+        grad.addColorStop(1, 'rgba(0,0,0,1)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
     }
 
     if (!animate || reduceMotion) {
