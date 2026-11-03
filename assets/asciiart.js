@@ -1,24 +1,27 @@
-/* LED dot-matrix image renderer.
-   Finds every `.dot-portrait` wrapper, samples the image inside it on a
-   regular grid, reduces the palette to a few dozen colours and redraws it
-   as round lit dots on a black panel.
+/* Colour ASCII portrait renderer.
+   Finds every `.dot-portrait` wrapper, samples the photo inside it on a
+   character grid and redraws it as monospace glyphs on a black panel: the
+   glyph is chosen by brightness (dense glyphs for bright cells) and painted
+   in the cell's own colour.
 
-   data-pitch  : grid spacing in CSS px (default 3 → ~100 dots across 320px)
-   data-lift   : brightness lift, gamma style (default 1.15)
+   data-cols   : characters across the panel (default 140)
+   data-weight : glyph weight, 400 or 700 (default 700)
+   data-font   : font family (default "JetBrains Mono", monospace)
+   data-lift   : brightness lift, gamma style (default 1.5)
    data-sat    : saturation multiplier (default 1.5)
    data-crop   : x,y,w,h fractions of the photo to use (default: whole photo)
    data-levels : "off" to skip the automatic contrast stretch
-   data-bg     : colour behind transparent pixels of a cut-out PNG (default black = unlit)
-   data-src    : photo URL; use this instead of an <img> so nothing shows before the dots
-   data-colors : palette size after quantisation (default 28)
-   data-gap    : gap between dots as a fraction of the pitch (default 0.2)
-   data-dark   : luminance (0–255) below which a cell stays unlit (default 16)
+   data-bg     : colour behind transparent pixels of a cut-out PNG (default black)
+   data-src    : photo URL; use this instead of an <img> so nothing shows before the glyphs
+   data-ramp   : glyph ramp from empty to dense (default: classic 70-glyph ramp)
 */
 (function () {
   'use strict';
 
   var reduceMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 
   function lum(c) { return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
   function clamp255(v) { return v < 0 ? 0 : v > 255 ? 255 : v; }
@@ -32,8 +35,8 @@
     ];
   }
 
-  /* brighten with a gamma-style lift so the black gaps between dots
-     do not make the whole picture read darker than the photo */
+  /* brighten with a gamma-style lift so the black between glyph strokes
+     does not make the whole picture read darker than the photo */
   function lift(c, amount) {
     return [
       clamp255(255 * Math.pow(c[0] / 255, 1 / amount)),
@@ -42,42 +45,8 @@
     ];
   }
 
-  /* k-means in RGB, seeded by luminance so the palette spans dark → light */
-  function kmeans(samples, k, iterations) {
-    var sorted = samples.slice().sort(function (a, b) { return lum(a) - lum(b); });
-    var centers = [], i, j, n;
-    for (i = 0; i < k; i++) {
-      var pick = Math.min(sorted.length - 1, Math.floor((i + 0.5) * sorted.length / k));
-      centers.push(sorted[pick].slice());
-    }
-    var assign = new Int16Array(samples.length);
-    for (var it = 0; it < iterations; it++) {
-      var sums = [];
-      for (j = 0; j < k; j++) sums.push([0, 0, 0, 0]);
-      for (n = 0; n < samples.length; n++) {
-        var c = samples[n], best = 0, bestD = Infinity;
-        for (j = 0; j < k; j++) {
-          var e = centers[j];
-          var dr = c[0] - e[0], dg = c[1] - e[1], db = c[2] - e[2];
-          var d = dr * dr + dg * dg + db * db;
-          if (d < bestD) { bestD = d; best = j; }
-        }
-        assign[n] = best;
-        var s = sums[best];
-        s[0] += c[0]; s[1] += c[1]; s[2] += c[2]; s[3]++;
-      }
-      for (j = 0; j < k; j++) {
-        if (sums[j][3] > 0) {
-          centers[j] = [sums[j][0] / sums[j][3], sums[j][1] / sums[j][3], sums[j][2] / sums[j][3]];
-        }
-      }
-    }
-    return { centers: centers, assign: assign };
-  }
-
   /* stretch brightness so the 1st..99th luminance percentile spans 0..255.
-     All three channels get the same scale, so hues are preserved; faded
-     photos otherwise turn into a wall of grey dots */
+     All three channels get the same scale, so hues are preserved */
   function autoLevels(samples) {
     var n = samples.length, i, ch;
     var l = new Array(n);
@@ -92,20 +61,20 @@
   }
 
   /* average colour per grid cell. `crop` is [x, y, w, h] as fractions of
-     the source image; the result is then cover-fitted to the grid. */
-  function sampleGrid(img, cols, rows, crop, bg) {
+     the source image; the result is cover-fitted to `aspect` (the panel's
+     width / height, since character cells are not square). */
+  function sampleGrid(img, cols, rows, aspect, crop, bg) {
     var iw = img.naturalWidth, ih = img.naturalHeight;
     var sx = 0, sy = 0, sw = iw, sh = ih;
     if (crop) { sx = crop[0] * iw; sy = crop[1] * ih; sw = crop[2] * iw; sh = crop[3] * ih; }
-    var targetAspect = cols / rows, srcAspect = sw / sh;
-    if (srcAspect > targetAspect) { var nw = sh * targetAspect; sx += (sw - nw) / 2; sw = nw; }
-    else if (srcAspect < targetAspect) { sh = sw / targetAspect; }
+    var srcAspect = sw / sh;
+    if (srcAspect > aspect) { var nw = sh * aspect; sx += (sw - nw) / 2; sw = nw; }
+    else if (srcAspect < aspect) { var nh = sw / aspect; sy += (sh - nh) / 2; sh = nh; }
 
     var mid = document.createElement('canvas');
-    mid.width = cols * 4; mid.height = rows * 4;
+    mid.width = cols * 3; mid.height = rows * 3;
     var mctx = mid.getContext('2d');
     mctx.imageSmoothingEnabled = true; mctx.imageSmoothingQuality = 'high';
-    /* transparent areas (e.g. a cut-out portrait) take the panel colour */
     mctx.fillStyle = bg || '#000';
     mctx.fillRect(0, 0, mid.width, mid.height);
     mctx.drawImage(img, sx, sy, sw, sh, 0, 0, mid.width, mid.height);
@@ -122,14 +91,12 @@
     var img = wrapper._dotImage || wrapper.querySelector('img');
     if (!img || !img.naturalWidth) return;
 
-    var pitch = parseFloat(wrapper.getAttribute('data-pitch')) || 3;
-    var k = parseInt(wrapper.getAttribute('data-colors'), 10) || 28;
-    var gap = parseFloat(wrapper.getAttribute('data-gap'));
-    if (isNaN(gap)) gap = 0.18;
-    var dark = parseFloat(wrapper.getAttribute('data-dark'));
-    if (isNaN(dark)) dark = 16;
+    var cols = parseInt(wrapper.getAttribute('data-cols'), 10) || 140;
+    var weight = wrapper.getAttribute('data-weight') || '700';
+    var family = wrapper.getAttribute('data-font') || '"JetBrains Mono", monospace';
+    var ramp = wrapper.getAttribute('data-ramp') || RAMP;
     var lift_ = parseFloat(wrapper.getAttribute('data-lift'));
-    if (isNaN(lift_)) lift_ = 1.15;
+    if (isNaN(lift_)) lift_ = 1.5;
     var sat_ = parseFloat(wrapper.getAttribute('data-sat'));
     if (isNaN(sat_)) sat_ = 1.5;
 
@@ -141,22 +108,33 @@
       wrapper.insertBefore(canvas, wrapper.firstChild);
     }
 
-    /* a re-render (resize, rotation) must stop the previous boot sweep,
-       otherwise its frames keep painting the old, smaller grid over the
-       new canvas and the picture ends up half drawn */
+    /* a re-render (resize, rotation) must stop the previous boot sweep */
     if (wrapper._raf) { cancelAnimationFrame(wrapper._raf); wrapper._raf = null; }
 
     var cssW = canvas.clientWidth || wrapper.clientWidth;
     var cssH = canvas.clientHeight || cssW;
     if (!cssW || !cssH) return;
     wrapper._drawnW = cssW; wrapper._drawnH = cssH;
-    wrapper._drawnDpr = Math.min(window.devicePixelRatio || 1, 3);
-
-    var cols = Math.max(8, Math.round(cssW / pitch));
-    var rows = Math.max(8, Math.round(cssH / pitch));
     var dpr = Math.min(window.devicePixelRatio || 1, 3);
+    wrapper._drawnDpr = dpr;
     canvas.width = Math.round(cssW * dpr);
     canvas.height = Math.round(cssH * dpr);
+
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    /* cell size from the font's real advance width, so the grid fills the
+       panel exactly whatever monospace face ends up being used */
+    var cellW = cssW / cols;
+    ctx.font = weight + ' 10px ' + family;
+    var adv = ctx.measureText('M').width / 10 || 0.6;
+    var fontSize = cellW / adv;
+    var cellH = fontSize;                       /* line pitch 1.0 */
+    var rows = Math.max(8, Math.round(cssH / cellH));
+    cellH = cssH / rows;
+    ctx.font = weight + ' ' + fontSize.toFixed(3) + 'px ' + family;
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
 
     var crop = null, cropAttr = wrapper.getAttribute('data-crop');
     if (cropAttr) {
@@ -164,33 +142,31 @@
       if (crop.length !== 4 || crop.some(isNaN)) crop = null;
     }
 
-    var data = sampleGrid(img, cols, rows, crop, wrapper.getAttribute('data-bg'));
-    var samples = new Array(cols * rows);
-    for (var n = 0; n < cols * rows; n++) {
-      samples[n] = [data[n * 4], data[n * 4 + 1], data[n * 4 + 2]];
-    }
+    var data = sampleGrid(img, cols, rows, cssW / cssH, crop, wrapper.getAttribute('data-bg'));
+    var n, total = cols * rows;
+    var samples = new Array(total);
+    for (n = 0; n < total; n++) samples[n] = [data[n * 4], data[n * 4 + 1], data[n * 4 + 2]];
     if (wrapper.getAttribute('data-levels') !== 'off') autoLevels(samples);
-    /* brighten and saturate before clustering so greens and greys land in
-       different palette entries instead of averaging into mud */
-    for (n = 0; n < samples.length; n++) samples[n] = saturate(lift(samples[n], lift_), sat_);
-    var q = kmeans(samples, k, 8);
-    var palette = q.centers.map(function (c) {
-      return { rgb: 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')', lit: lum(c) >= dark };
-    });
 
-    var ctx = canvas.getContext('2d');
-    var cellW = canvas.width / cols, cellH = canvas.height / rows;
-    var r = Math.min(cellW, cellH) * (1 - gap) / 2;
-    var TAU = Math.PI * 2;
+    /* precompute glyph + colour per cell */
+    var glyphs = new Array(total), colors = new Array(total);
+    for (n = 0; n < total; n++) {
+      var l = lum(samples[n]);
+      var idx = Math.min(ramp.length - 1, Math.floor(l / 256 * ramp.length));
+      var g = ramp.charAt(idx);
+      glyphs[n] = g === ' ' ? null : g;
+      var c = saturate(lift(samples[n], lift_), sat_);
+      colors[n] = 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')';
+    }
 
     function draw(progress) {
       ctx.globalAlpha = 1;
       ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, cssW, cssH);
       for (var y = 0; y < rows; y++) {
         for (var x = 0; x < cols; x++) {
-          var p = palette[q.assign[y * cols + x]];
-          if (!p.lit) continue;
+          var i = y * cols + x;
+          if (!glyphs[i]) continue;
           var a = 1;
           if (progress < 1) {
             var t = (x / cols + y / rows) / 2;        /* diagonal sweep */
@@ -199,10 +175,8 @@
             if (a > 1) a = 1;
           }
           ctx.globalAlpha = a;
-          ctx.fillStyle = p.rgb;
-          ctx.beginPath();
-          ctx.arc((x + 0.5) * cellW, (y + 0.5) * cellH, r, 0, TAU);
-          ctx.fill();
+          ctx.fillStyle = colors[i];
+          ctx.fillText(glyphs[i], (x + 0.5) * cellW, (y + 0.5) * cellH);
         }
       }
       ctx.globalAlpha = 1;
@@ -223,6 +197,16 @@
     wrapper.classList.add('is-ready');
   }
 
+  /* resolve once the glyph font is usable, or after a short grace period
+     so a slow font download can never leave the panel blank */
+  function fontReady(wrapper) {
+    var weight = wrapper.getAttribute('data-weight') || '700';
+    var family = wrapper.getAttribute('data-font') || '"JetBrains Mono", monospace';
+    if (!document.fonts || !document.fonts.load) return Promise.resolve();
+    var timeout = new Promise(function (res) { setTimeout(res, 2500); });
+    return Promise.race([document.fonts.load(weight + ' 10px ' + family).catch(function () {}), timeout]);
+  }
+
   function setup(wrapper) {
     var img = wrapper.querySelector('img');
     if (!img) {
@@ -241,8 +225,11 @@
       booted = true;
     };
 
-    if (img.complete && img.naturalWidth) go();
-    else img.addEventListener('load', go, { once: true });
+    var imgReady = new Promise(function (res) {
+      if (img.complete && img.naturalWidth) res();
+      else img.addEventListener('load', res, { once: true });
+    });
+    Promise.all([imgReady, fontReady(wrapper)]).then(go);
 
     /* re-render whenever the drawn canvas no longer matches its layout
        size: phone rotation, the address bar collapsing, fonts arriving,
@@ -267,7 +254,10 @@
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'visible') check();
     });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
+    /* the real font arriving after a fallback render: redraw once */
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { if (booted) render(wrapper, false); });
+    }
   }
 
   function init() {
