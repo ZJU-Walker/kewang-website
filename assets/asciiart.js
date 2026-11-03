@@ -4,8 +4,10 @@
    glyph is chosen by brightness (dense glyphs for bright cells) and painted
    in the cell's own colour.
 
-   data-cols   : characters across the panel (default 140); rounded to a
-                 whole-device-pixel pitch, so the real count depends on the screen
+   data-cols   : characters across the panel (default 140), the same on every screen
+   data-render : buffer pixels per column (default 2)
+   data-look   : pixels per CSS px of the intermediate "look" image (default 1.5);
+                 the glyph buffer is shrunk to this, then shown unsmoothed everywhere
    data-line   : row pitch as a multiple of the font size (default 1)
    data-weight : glyph weight, 400 or 700 (default 700)
    data-font   : font family (default "JetBrains Mono", monospace)
@@ -90,6 +92,37 @@
     return sctx.getImageData(0, 0, cols, rows).data;
   }
 
+  /* Bilinear resample of a canvas to w x h, done in JavaScript so the
+     result is identical on every browser and platform. Shrinking the 2px
+     glyph grid this way is what produces the scanline texture of the
+     portrait: the glyph rows beat against the new pixel grid. */
+  function bilinear(src, w, h) {
+    var sw = src.width, sh = src.height;
+    var data = src.getContext('2d').getImageData(0, 0, sw, sh).data;
+    var out = document.createElement('canvas');
+    out.width = w; out.height = h;
+    var octx = out.getContext('2d');
+    var img = octx.createImageData(w, h), od = img.data;
+    var sx = sw / w, sy = sh / h;
+    for (var y = 0; y < h; y++) {
+      var fy = (y + 0.5) * sy - 0.5; if (fy < 0) fy = 0;
+      var y0 = Math.floor(fy), y1 = Math.min(sh - 1, y0 + 1), wy = fy - y0;
+      for (var x = 0; x < w; x++) {
+        var fx = (x + 0.5) * sx - 0.5; if (fx < 0) fx = 0;
+        var x0 = Math.floor(fx), x1 = Math.min(sw - 1, x0 + 1), wx = fx - x0;
+        var i00 = (y0 * sw + x0) * 4, i01 = (y0 * sw + x1) * 4, i10 = (y1 * sw + x0) * 4, i11 = (y1 * sw + x1) * 4;
+        var w00 = (1 - wx) * (1 - wy), w01 = wx * (1 - wy), w10 = (1 - wx) * wy, w11 = wx * wy;
+        var o = (y * w + x) * 4;
+        od[o]     = data[i00] * w00 + data[i01] * w01 + data[i10] * w10 + data[i11] * w11 + 0.5;
+        od[o + 1] = data[i00 + 1] * w00 + data[i01 + 1] * w01 + data[i10 + 1] * w10 + data[i11 + 1] * w11 + 0.5;
+        od[o + 2] = data[i00 + 2] * w00 + data[i01 + 2] * w01 + data[i10 + 2] * w10 + data[i11 + 2] * w11 + 0.5;
+        od[o + 3] = 255;
+      }
+    }
+    octx.putImageData(img, 0, 0);
+    return out;
+  }
+
   function render(wrapper, animate) {
     var img = wrapper._dotImage || wrapper.querySelector('img');
     if (!img || !img.naturalWidth) return;
@@ -128,21 +161,29 @@
     var ctx = canvas.getContext('2d');
     var devW = canvas.width, devH = canvas.height;
 
-    /* The character grid is laid out in whole device pixels. A fractional
-       pitch (e.g. 1.65px per glyph) beats against the pixel grid and shows
-       up as dark moire bands every few cells, so the requested column count
-       is rounded to the nearest integer pitch of at least 2 device pixels. */
+    /* The glyph grid is rendered into a fixed-resolution buffer that does
+       not depend on the screen: `cols` columns at `data-render` buffer
+       pixels per column (default 2). That grid is shrunk with bilinear()
+       to the "look" image at `data-look` pixels per CSS px (default 1.5,
+       the density of a 150% Windows display, which the owner liked), and
+       the look image is then drawn onto the real canvas pixel-for-pixel
+       with smoothing off. Every device therefore shows the same scanline
+       texture instead of each getting a different grid. */
+    var renderPitch = parseInt(wrapper.getAttribute('data-render'), 10) || 2;
+    var lookScale = parseFloat(wrapper.getAttribute('data-look'));
+    if (isNaN(lookScale)) lookScale = 1.5;
+    var pitchX = Math.max(1, renderPitch);
+    var bufW = cols * pitchX;
+    var bufH = Math.round(bufW * cssH / cssW);
     ctx.font = weight + ' 10px ' + family;
     var adv = ctx.measureText('M').width / 10 || 0.6;
-    var pitchX = Math.max(2, Math.round(devW / cols));
-    cols = Math.max(8, Math.floor(devW / pitchX));
-    var fontPx = pitchX / adv;                         /* device px */
+    var fontPx = pitchX / adv;                         /* buffer px */
     var lineRatio = parseFloat(wrapper.getAttribute('data-line'));
     if (isNaN(lineRatio)) lineRatio = 1;
-    var pitchY = Math.max(2, Math.round(fontPx * lineRatio));
-    var rows = Math.max(8, Math.floor(devH / pitchY));
-    var offX = Math.floor((devW - cols * pitchX) / 2);
-    var offY = Math.floor((devH - rows * pitchY) / 2);
+    var pitchY = Math.max(1, Math.round(fontPx * lineRatio));
+    var rows = Math.max(8, Math.floor(bufH / pitchY));
+    var offX = 0;
+    var offY = Math.floor((bufH - rows * pitchY) / 2);
     var fontSpec = weight + ' ' + fontPx.toFixed(3) + 'px ' + family;
 
     var crop = null, cropAttr = wrapper.getAttribute('data-crop');
@@ -169,13 +210,13 @@
       colors[n] = 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')';
     }
 
-    /* draw every glyph once into an offscreen buffer; the boot sweep then
-       only composites that buffer, so a 300+ column grid animates smoothly */
+    /* draw every glyph once into the offscreen buffer; the boot sweep then
+       only composites that buffer, so a dense grid animates smoothly */
     var buf = document.createElement('canvas');
-    buf.width = devW; buf.height = devH;
+    buf.width = bufW; buf.height = bufH;
     var bctx = buf.getContext('2d');
     bctx.fillStyle = '#000';
-    bctx.fillRect(0, 0, devW, devH);
+    bctx.fillRect(0, 0, bufW, bufH);
     bctx.font = fontSpec;
     bctx.textBaseline = 'middle';
     bctx.textAlign = 'center';
@@ -187,10 +228,12 @@
         bctx.fillText(glyphs[i], offX + (x + 0.5) * pitchX, offY + (y + 0.5) * pitchY);
       }
     }
+    var look = bilinear(buf, Math.round(cssW * lookScale), Math.round(cssH * lookScale));
+    ctx.imageSmoothingEnabled = false;
 
     function draw(progress) {
       ctx.globalAlpha = 1;
-      ctx.drawImage(buf, 0, 0);
+      ctx.drawImage(look, 0, 0, devW, devH);
       if (progress < 1) {
         /* diagonal sweep: a black-to-transparent gradient that slides
            from the top-left corner to the bottom-right one */
