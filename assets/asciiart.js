@@ -14,6 +14,9 @@
    data-lift   : brightness lift, gamma style (default 1.5)
    data-sat    : saturation multiplier (default 1.5)
    data-gain   : overall brightness multiplier on the glyph colours (default 1)
+   data-coverage: reference ink coverage the drawn panel is normalised to (default 0.468,
+                 what desktop Chrome draws); platforms that rasterise the glyphs
+                 thinner or fatter are scaled to match
    data-crop   : x,y,w,h fractions of the photo to use (default: whole photo)
    data-levels : "off" to skip the automatic contrast stretch
    data-bg     : colour behind transparent pixels of a cut-out PNG (default black)
@@ -228,7 +231,39 @@
         bctx.fillText(glyphs[i], offX + (x + 0.5) * pitchX, offY + (y + 0.5) * pitchY);
       }
     }
+    /* Brightness calibration. The glyphs are tiny, and each platform's text
+       rasteriser gives them a different ink coverage (iOS Safari draws them
+       thinner than desktop Chrome, so the same panel comes out darker).
+       Measure how bright the drawn buffer is relative to a solid fill of the
+       same cell colours and scale it to the reference coverage, which is what
+       desktop Chrome produces. */
+    var targetCov = parseFloat(wrapper.getAttribute('data-coverage'));
+    if (isNaN(targetCov)) targetCov = 0.468;
+    var solid = 0, lit = 0;
+    for (n = 0; n < total; n++) {
+      if (!glyphs[n]) continue;
+      var cc = saturate(lift(samples[n], lift_), sat_);
+      solid += lum(cc) * gain; lit++;
+    }
+    solid = total ? solid / total : 0;
+    var bd = bctx.getImageData(0, 0, bufW, bufH).data, drawn = 0, px = bufW * bufH;
+    for (n = 0; n < bd.length; n += 4) drawn += 0.2126 * bd[n] + 0.7152 * bd[n + 1] + 0.0722 * bd[n + 2];
+    drawn = px ? drawn / px : 0;
+    var coverage = solid > 0 ? drawn / solid : targetCov;
+    var fix = targetCov / (coverage || targetCov);
+    if (fix < 0.7) fix = 0.7;
+    if (fix > 1.8) fix = 1.8;
+    wrapper.setAttribute('data-measured', coverage.toFixed(3) + ' x' + fix.toFixed(2));
+
     var look = bilinear(buf, Math.round(cssW * lookScale), Math.round(cssH * lookScale));
+    if (Math.abs(fix - 1) > 0.03) {
+      var lctx = look.getContext('2d');
+      var li = lctx.getImageData(0, 0, look.width, look.height), ld = li.data;
+      for (n = 0; n < ld.length; n += 4) {
+        ld[n] = clamp255(ld[n] * fix); ld[n + 1] = clamp255(ld[n + 1] * fix); ld[n + 2] = clamp255(ld[n + 2] * fix);
+      }
+      lctx.putImageData(li, 0, 0);
+    }
     ctx.imageSmoothingEnabled = false;
 
     function draw(progress) {
