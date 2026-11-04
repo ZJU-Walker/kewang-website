@@ -1,0 +1,360 @@
+/* LED dot-matrix image renderer.
+   Finds every `.dot-portrait` wrapper, samples the image inside it on a
+   regular grid, reduces the palette to a few dozen colours and redraws it
+   as round lit dots on a black panel.
+
+   data-pitch  : grid spacing in CSS px (default 3 → ~100 dots across 320px)
+   data-lift   : brightness lift, gamma style (default 1.15)
+   data-sat    : saturation multiplier (default 1.5)
+   data-crop   : x,y,w,h fractions of the photo to use (default: whole photo)
+   data-levels : "off" to skip the automatic contrast stretch
+   data-bg     : colour behind transparent pixels of a cut-out PNG (default black = unlit)
+   data-src    : photo URL; use this instead of an <img> so nothing shows before the dots
+   data-colors : palette size after quantisation (default 28)
+   data-gap    : gap between dots as a fraction of the pitch (default 0.2)
+   data-dark   : luminance (0–255) below which a cell stays unlit (default 16)
+   data-render : buffer pixels per CSS px the dots are drawn at (default 4)
+
+   The dots are drawn into a fixed buffer (data-render px per CSS px,
+   independent of the screen) and that buffer is area-averaged down to the
+   real canvas by resample(). Every platform therefore shows the same
+   picture: a 1x Linux monitor gets a faithful average of the same dots a
+   2x Mac or 3x iPhone shows, instead of circles drawn at a fractional
+   pixel pitch, which looked uneven at 1x.
+*/
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function lum(c) { return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
+  function clamp255(v) { return v < 0 ? 0 : v > 255 ? 255 : v; }
+
+  function saturate(c, amount) {
+    var g = lum(c);
+    return [
+      clamp255(g + (c[0] - g) * amount),
+      clamp255(g + (c[1] - g) * amount),
+      clamp255(g + (c[2] - g) * amount)
+    ];
+  }
+
+  /* brighten with a gamma-style lift so the black gaps between dots
+     do not make the whole picture read darker than the photo */
+  function lift(c, amount) {
+    return [
+      clamp255(255 * Math.pow(c[0] / 255, 1 / amount)),
+      clamp255(255 * Math.pow(c[1] / 255, 1 / amount)),
+      clamp255(255 * Math.pow(c[2] / 255, 1 / amount))
+    ];
+  }
+
+  /* k-means in RGB, seeded by luminance so the palette spans dark → light */
+  function kmeans(samples, k, iterations) {
+    var sorted = samples.slice().sort(function (a, b) { return lum(a) - lum(b); });
+    var centers = [], i, j, n;
+    for (i = 0; i < k; i++) {
+      var pick = Math.min(sorted.length - 1, Math.floor((i + 0.5) * sorted.length / k));
+      centers.push(sorted[pick].slice());
+    }
+    var assign = new Int16Array(samples.length);
+    for (var it = 0; it < iterations; it++) {
+      var sums = [];
+      for (j = 0; j < k; j++) sums.push([0, 0, 0, 0]);
+      for (n = 0; n < samples.length; n++) {
+        var c = samples[n], best = 0, bestD = Infinity;
+        for (j = 0; j < k; j++) {
+          var e = centers[j];
+          var dr = c[0] - e[0], dg = c[1] - e[1], db = c[2] - e[2];
+          var d = dr * dr + dg * dg + db * db;
+          if (d < bestD) { bestD = d; best = j; }
+        }
+        assign[n] = best;
+        var s = sums[best];
+        s[0] += c[0]; s[1] += c[1]; s[2] += c[2]; s[3]++;
+      }
+      for (j = 0; j < k; j++) {
+        if (sums[j][3] > 0) {
+          centers[j] = [sums[j][0] / sums[j][3], sums[j][1] / sums[j][3], sums[j][2] / sums[j][3]];
+        }
+      }
+    }
+    return { centers: centers, assign: assign };
+  }
+
+  /* stretch brightness so the 1st..99th luminance percentile spans 0..255.
+     All three channels get the same scale, so hues are preserved; faded
+     photos otherwise turn into a wall of grey dots */
+  function autoLevels(samples) {
+    var n = samples.length, i, ch;
+    var l = new Array(n);
+    for (i = 0; i < n; i++) l[i] = lum(samples[i]);
+    l.sort(function (a, b) { return a - b; });
+    var lo = l[Math.floor(n * 0.01)], hi = l[Math.floor(n * 0.99)];
+    if (hi - lo < 32) return;
+    var scale = 255 / (hi - lo);
+    for (i = 0; i < n; i++) {
+      for (ch = 0; ch < 3; ch++) samples[i][ch] = clamp255((samples[i][ch] - lo) * scale);
+    }
+  }
+
+  /* average colour per grid cell. `crop` is [x, y, w, h] as fractions of
+     the source image; the result is then cover-fitted to the grid. */
+  function sampleGrid(img, cols, rows, crop, bg) {
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    var sx = 0, sy = 0, sw = iw, sh = ih;
+    if (crop) { sx = crop[0] * iw; sy = crop[1] * ih; sw = crop[2] * iw; sh = crop[3] * ih; }
+    var targetAspect = cols / rows, srcAspect = sw / sh;
+    if (srcAspect > targetAspect) { var nw = sh * targetAspect; sx += (sw - nw) / 2; sw = nw; }
+    else if (srcAspect < targetAspect) { sh = sw / targetAspect; }
+
+    var mid = document.createElement('canvas');
+    mid.width = cols * 4; mid.height = rows * 4;
+    var mctx = mid.getContext('2d');
+    mctx.imageSmoothingEnabled = true; mctx.imageSmoothingQuality = 'high';
+    /* transparent areas (e.g. a cut-out portrait) take the panel colour */
+    mctx.fillStyle = bg || '#000';
+    mctx.fillRect(0, 0, mid.width, mid.height);
+    mctx.drawImage(img, sx, sy, sw, sh, 0, 0, mid.width, mid.height);
+
+    var small = document.createElement('canvas');
+    small.width = cols; small.height = rows;
+    var sctx = small.getContext('2d');
+    sctx.imageSmoothingEnabled = true; sctx.imageSmoothingQuality = 'high';
+    sctx.drawImage(mid, 0, 0, cols, rows);
+    return sctx.getImageData(0, 0, cols, rows).data;
+  }
+
+  /* Box-filter (area-average) downscale of a canvas to w x h, separable,
+     with fractional edge weights. Exact for integer ratios and free of the
+     beat patterns bilinear sampling produces at ratios like 1.6. */
+  function resample(src, w, h) {
+    var sw = src.width, sh = src.height;
+    var out = document.createElement('canvas');
+    out.width = w; out.height = h;
+    var octx = out.getContext('2d');
+    if (w >= sw && h >= sh) {
+      octx.imageSmoothingEnabled = true; octx.imageSmoothingQuality = 'high';
+      octx.drawImage(src, 0, 0, w, h);
+      return out;
+    }
+    var data = src.getContext('2d').getImageData(0, 0, sw, sh).data;
+    function weights(n, m) {
+      var list = [], scale = n / m, t;
+      for (t = 0; t < m; t++) {
+        var a = t * scale, b = a + scale, i0 = Math.floor(a), i1 = Math.min(n, Math.ceil(b));
+        var ws = [];
+        for (var i = i0; i < i1; i++) {
+          var lo = Math.max(a, i), hi = Math.min(b, i + 1);
+          if (hi > lo) ws.push(i, (hi - lo) / scale);
+        }
+        list.push(ws);
+      }
+      return list;
+    }
+    var wx = weights(sw, w), wy = weights(sh, h);
+    var tmp = new Float32Array(sh * w * 3), x, y, k, ws, row, acc;
+    for (y = 0; y < sh; y++) {
+      row = y * sw * 4;
+      for (x = 0; x < w; x++) {
+        ws = wx[x]; var r = 0, g = 0, b = 0;
+        for (k = 0; k < ws.length; k += 2) {
+          var si = row + ws[k] * 4, wt = ws[k + 1];
+          r += data[si] * wt; g += data[si + 1] * wt; b += data[si + 2] * wt;
+        }
+        acc = (y * w + x) * 3; tmp[acc] = r; tmp[acc + 1] = g; tmp[acc + 2] = b;
+      }
+    }
+    var img = octx.createImageData(w, h), od = img.data;
+    for (y = 0; y < h; y++) {
+      ws = wy[y];
+      for (x = 0; x < w; x++) {
+        var r2 = 0, g2 = 0, b2 = 0;
+        for (k = 0; k < ws.length; k += 2) {
+          var ti = (ws[k] * w + x) * 3, wt2 = ws[k + 1];
+          r2 += tmp[ti] * wt2; g2 += tmp[ti + 1] * wt2; b2 += tmp[ti + 2] * wt2;
+        }
+        var oi = (y * w + x) * 4;
+        od[oi] = r2 + 0.5; od[oi + 1] = g2 + 0.5; od[oi + 2] = b2 + 0.5; od[oi + 3] = 255;
+      }
+    }
+    octx.putImageData(img, 0, 0);
+    return out;
+  }
+
+  function render(wrapper, animate) {
+    var img = wrapper._dotImage || wrapper.querySelector('img');
+    if (!img || !img.naturalWidth) return;
+
+    var pitch = parseFloat(wrapper.getAttribute('data-pitch')) || 3;
+    var k = parseInt(wrapper.getAttribute('data-colors'), 10) || 28;
+    var gap = parseFloat(wrapper.getAttribute('data-gap'));
+    if (isNaN(gap)) gap = 0.18;
+    var dark = parseFloat(wrapper.getAttribute('data-dark'));
+    if (isNaN(dark)) dark = 16;
+    var lift_ = parseFloat(wrapper.getAttribute('data-lift'));
+    if (isNaN(lift_)) lift_ = 1.15;
+    var sat_ = parseFloat(wrapper.getAttribute('data-sat'));
+    if (isNaN(sat_)) sat_ = 1.5;
+
+    var canvas = wrapper.querySelector('canvas.dot-canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.className = 'dot-canvas';
+      canvas.setAttribute('aria-hidden', 'true');
+      wrapper.insertBefore(canvas, wrapper.firstChild);
+    }
+
+    /* a re-render (resize, rotation) must stop the previous boot sweep,
+       otherwise its frames keep painting the old, smaller grid over the
+       new canvas and the picture ends up half drawn */
+    if (wrapper._raf) { cancelAnimationFrame(wrapper._raf); wrapper._raf = null; }
+
+    var cssW = canvas.clientWidth || wrapper.clientWidth;
+    var cssH = canvas.clientHeight || cssW;
+    if (!cssW || !cssH) return;
+    wrapper._drawnW = cssW; wrapper._drawnH = cssH;
+    wrapper._drawnDpr = Math.min(window.devicePixelRatio || 1, 3);
+
+    var cols = Math.max(8, Math.round(cssW / pitch));
+    var rows = Math.max(8, Math.round(cssH / pitch));
+    var dpr = Math.min(window.devicePixelRatio || 1, 3);
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+
+    var crop = null, cropAttr = wrapper.getAttribute('data-crop');
+    if (cropAttr) {
+      crop = cropAttr.split(',').map(parseFloat);
+      if (crop.length !== 4 || crop.some(isNaN)) crop = null;
+    }
+
+    var data = sampleGrid(img, cols, rows, crop, wrapper.getAttribute('data-bg'));
+    var samples = new Array(cols * rows);
+    for (var n = 0; n < cols * rows; n++) {
+      samples[n] = [data[n * 4], data[n * 4 + 1], data[n * 4 + 2]];
+    }
+    if (wrapper.getAttribute('data-levels') !== 'off') autoLevels(samples);
+    /* brighten and saturate before clustering so greens and greys land in
+       different palette entries instead of averaging into mud */
+    for (n = 0; n < samples.length; n++) samples[n] = saturate(lift(samples[n], lift_), sat_);
+    var q = kmeans(samples, k, 8);
+    var palette = q.centers.map(function (c) {
+      return { rgb: 'rgb(' + Math.round(c[0]) + ',' + Math.round(c[1]) + ',' + Math.round(c[2]) + ')', lit: lum(c) >= dark };
+    });
+
+    var ctx = canvas.getContext('2d');
+    var devW = canvas.width, devH = canvas.height;
+    var S = parseFloat(wrapper.getAttribute('data-render'));
+    if (isNaN(S) || S <= 0) S = 4;
+    var bufW = Math.round(cssW * S), bufH = Math.round(cssH * S);
+    var buf = document.createElement('canvas');
+    buf.width = bufW; buf.height = bufH;
+    var bctx = buf.getContext('2d');
+    var cellW = bufW / cols, cellH = bufH / rows;
+    var r = Math.min(cellW, cellH) * (1 - gap) / 2;
+    var TAU = Math.PI * 2;
+
+    /* all dots once, into the fixed-resolution buffer */
+    bctx.fillStyle = '#000';
+    bctx.fillRect(0, 0, bufW, bufH);
+    for (var y = 0; y < rows; y++) {
+      for (var x = 0; x < cols; x++) {
+        var p = palette[q.assign[y * cols + x]];
+        if (!p.lit) continue;
+        bctx.fillStyle = p.rgb;
+        bctx.beginPath();
+        bctx.arc((x + 0.5) * cellW, (y + 0.5) * cellH, r, 0, TAU);
+        bctx.fill();
+      }
+    }
+    var scaled = resample(buf, devW, devH);
+
+    function draw(progress) {
+      ctx.globalAlpha = 1;
+      ctx.drawImage(scaled, 0, 0);
+      if (progress < 1) {
+        /* diagonal boot sweep: a black-to-transparent gradient that slides
+           from the top-left corner to the bottom-right one */
+        var head = progress * 1.25, tail = head - 0.25;
+        var grad = ctx.createLinearGradient(0, 0, devW, devH);
+        var t0 = Math.max(0, Math.min(1, tail)), t1 = Math.max(0, Math.min(1, head));
+        grad.addColorStop(0, 'rgba(0,0,0,0)');
+        grad.addColorStop(t0, 'rgba(0,0,0,0)');
+        grad.addColorStop(t1, 'rgba(0,0,0,1)');
+        grad.addColorStop(1, 'rgba(0,0,0,1)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, devW, devH);
+      }
+    }
+
+    if (!animate || reduceMotion) {
+      draw(1);
+    } else {
+      var start = null, duration = 1200;
+      var frame = function (ts) {
+        if (start === null) start = ts;
+        var pr = Math.min(1, (ts - start) / duration);
+        draw(pr);
+        wrapper._raf = pr < 1 ? requestAnimationFrame(frame) : null;
+      };
+      wrapper._raf = requestAnimationFrame(frame);
+    }
+    wrapper.classList.add('is-ready');
+  }
+
+  function setup(wrapper) {
+    var img = wrapper.querySelector('img');
+    if (!img) {
+      /* no <img> in the page: load the photo off-DOM so it can never flash */
+      var src = wrapper.getAttribute('data-src');
+      if (!src) return;
+      img = new Image();
+      img.decoding = 'async';
+      img.src = src;
+      wrapper._dotImage = img;
+    }
+
+    var booted = false;
+    var go = function () {
+      render(wrapper, !booted);
+      booted = true;
+    };
+
+    if (img.complete && img.naturalWidth) go();
+    else img.addEventListener('load', go, { once: true });
+
+    /* re-render whenever the drawn canvas no longer matches its layout
+       size: phone rotation, the address bar collapsing, fonts arriving,
+       a zoom change, or the page coming back from the tab switcher */
+    var timer = null;
+    var stale = function () {
+      var c = wrapper.querySelector('canvas.dot-canvas');
+      if (!c) return true;
+      var dpr = Math.min(window.devicePixelRatio || 1, 3);
+      return c.clientWidth !== wrapper._drawnW || c.clientHeight !== wrapper._drawnH ||
+             dpr !== wrapper._drawnDpr;
+    };
+    var check = function () {
+      if (!booted || !stale()) return;
+      clearTimeout(timer);
+      timer = setTimeout(function () { if (stale()) render(wrapper, false); }, 120);
+    };
+    if (window.ResizeObserver) new ResizeObserver(check).observe(wrapper);
+    window.addEventListener('resize', check);
+    window.addEventListener('orientationchange', check);
+    window.addEventListener('pageshow', check);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') check();
+    });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
+  }
+
+  function init() {
+    var wrappers = document.querySelectorAll('.dot-portrait');
+    for (var i = 0; i < wrappers.length; i++) setup(wrappers[i]);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
