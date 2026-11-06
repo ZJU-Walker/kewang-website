@@ -181,6 +181,30 @@ a:hover {
 
 .home-paragraph { font-size: 1rem; line-height: 1.65; }
 
+/* The name types itself once on load. The ghost copy keeps the h1's
+   size so nothing shifts; the typed copy sits on top of it. Without
+   JavaScript the ghost stays visible and the name simply shows. */
+.home-name { position: relative; display: block; }
+.home-name .name-ghost { visibility: visible; }
+.home-name.is-typing .name-ghost { visibility: hidden; }
+.home-name .name-typed {
+  position: absolute;
+  left: 0; top: 0;
+  white-space: pre;
+}
+.home-name.is-typing .name-typed::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.86em;
+  margin-left: 0.08em;
+  vertical-align: -0.04em;
+  background: currentColor;
+  box-shadow: 0 0 14px rgba(255, 225, 140, 0.8);
+  animation: blink 0.9s step-end infinite;
+}
+.home-name.is-done .name-typed::after { display: none; }
+
 .typewriter-line {
   border-top: 2px dotted var(--led-ink-faint);
   font-size: 1rem;

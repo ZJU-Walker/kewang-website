@@ -48,6 +48,36 @@
     loop();
   }
 
+  // ========== Home page: the name types itself once, then stays ==========
+  const nameEl = document.getElementById("home-name");
+  if (nameEl) {
+    const typed = nameEl.querySelector(".name-typed");
+    const full = (nameEl.getAttribute("aria-label") || nameEl.textContent).trim();
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const NAME_START_MS = 350;
+    const NAME_TYPE_MS = 130;
+    const NAME_CURSOR_HOLD_MS = 1400;
+
+    if (typed) {
+      nameEl.classList.add("is-typing");
+      if (reduce) {
+        typed.textContent = full;
+        nameEl.classList.add("is-done");
+      } else {
+        (async () => {
+          typed.textContent = "";
+          await sleep(NAME_START_MS);
+          for (let i = 0; i < full.length; i++) {
+            typed.textContent += full[i];
+            await sleep(NAME_TYPE_MS);
+          }
+          await sleep(NAME_CURSOR_HOLD_MS);
+          nameEl.classList.add("is-done");
+        })();
+      }
+    }
+  }
+
   // ========== Research page: types once, cursor stays ==========
   const researchEl = document.getElementById("tw-research");
   if (researchEl) {
