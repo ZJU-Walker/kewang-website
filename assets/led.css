@@ -13,7 +13,6 @@
   --led-blue: #5db1ff;
   --led-teal: #3fd0c0;
   --led-amber: #ffb547;
-  --led-pink: #ff6f9c;
 
   --font-dot: "Doto", "JetBrains Mono", monospace;
   --font-text: "JetBrains Mono", "Courier New", monospace; /* running text */
@@ -86,34 +85,26 @@ header .menu {
 
 header .menu ul li { margin-left: 1.4rem; }
 
-/* one LED colour per nav item, in page order (Home, Research,
-   Publications, Experience); the current page glows in its own colour */
-header .menu ul li { --nav-c: var(--led-ink-dim); --nav-glow: rgba(236, 230, 214, 0.55); }
-header .menu ul li:nth-child(1) { --nav-c: var(--led-blue);  --nav-glow: rgba(93, 177, 255, 0.55); }
-header .menu ul li:nth-child(2) { --nav-c: var(--led-amber); --nav-glow: rgba(255, 181, 71, 0.55); }
-header .menu ul li:nth-child(3) { --nav-c: var(--led-teal);  --nav-glow: rgba(63, 208, 192, 0.55); }
-header .menu ul li:nth-child(4) { --nav-c: var(--led-pink);  --nav-glow: rgba(255, 111, 156, 0.55); }
-
 header .menu a {
   font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--nav-c) !important;
+  color: var(--led-ink-dim) !important;
   padding: 0.15rem 0.1rem;
   transition: color 0.15s ease, text-shadow 0.15s ease;
 }
 
 header .menu a:hover {
   background: none !important;
-  color: var(--nav-c) !important;
-  text-shadow: 0 0 10px var(--nav-glow);
+  color: var(--led-ink) !important;
+  text-shadow: 0 0 10px rgba(236, 230, 214, 0.55);
 }
 
 header .menu a[aria-current="page"] {
-  color: var(--nav-c) !important;
+  color: var(--led-blue) !important;
   text-decoration: none;
-  text-shadow: 0 0 12px var(--nav-glow);
+  text-shadow: 0 0 12px rgba(93, 177, 255, 0.55);
 }
 
 /* a lit dot before the current page */
@@ -123,8 +114,8 @@ header .menu a[aria-current="page"]::before {
   width: 0.42em;
   height: 0.42em;
   border-radius: 50%;
-  background: var(--nav-c);
-  box-shadow: 0 0 8px var(--nav-c);
+  background: var(--led-blue);
+  box-shadow: 0 0 8px var(--led-blue);
   margin-right: 0.45em;
   vertical-align: 0.12em;
 }
