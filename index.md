@@ -13,9 +13,7 @@ seo_title: "Ke Wang | Robotics & Robot Learning @ Stanford University"
   </div>
 
   <div class="home-text">
-    <h1 class="home-name" id="home-name" aria-label="Ke Wang">
-      <span class="name-ghost" aria-hidden="true">Ke Wang</span><span class="name-typed" aria-hidden="true"></span>
-    </h1>
+    <h1 class="home-name">Ke Wang</h1>
 
     <p class="home-paragraph">
       I am a Ph.D. student at Stanford University, working with
