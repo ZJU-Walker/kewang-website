@@ -10,6 +10,7 @@ title: Publications
 <span class="pub-title">ECoMEM: Explicit Concept Memory for Memory-Dependent Robot Control</span>
 <span class="pub-authors">Y. Liu, **K. Wang**, M. Schwager, Y. Xu, and J. Wu</span>
 <span class="venue">arXiv, 2026</span>
+<span class="pub-award">Best Paper Award · RoboMem Workshop @ CoRL 2026</span>
 
 <span class="pub-title">Breaking Lock-In: Preserving Steerability under Low-Data VLA Post-Training</span>
 <span class="pub-authors">S. Huang, J. Shao, **K. Wang**, Q. Chen, J. Sun, Y. Guo, M. Schwager, and J. Bohg</span>
