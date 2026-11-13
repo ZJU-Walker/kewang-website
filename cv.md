@@ -5,7 +5,7 @@ title: Experience
 
 <div class="cv-links">
   <a class="cv-btn secondary"
-     href="{{ "/assets/CV_Ke_Wang.pdf" | relative_url }}"
+     href="{{ "/assets/CV_Ke_Wang.pdf" | relative_url }}?v={{ site.time | date: '%s' }}"
      target="_blank"
      rel="noopener">
     View CV (PDF)
